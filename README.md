@@ -13,5 +13,5 @@ bun i
 Execute `serve`
 
 ```bash
-bun server
+bun serve
 ```
