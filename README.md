@@ -15,3 +15,10 @@ Execute `serve`
 ```bash
 bun serve
 ```
+
+## Docs
+
+- <https://github.com/oven-sh/bun>
+- <https://bun.sh>
+- <https://blog.logrocket.com/bun-javascript-runtime-taking-node-js-deno>
+- <https://betterprogramming.pub/write-a-express-like-api-using-bunjs-79e77a6a7a31>
