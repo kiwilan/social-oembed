@@ -10,10 +10,10 @@ Download dependencies
 bun i
 ```
 
-Execute `serve`
+Execute `start`
 
 ```bash
-bun serve
+bun start
 ```
 
 ## Docs
