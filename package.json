@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "clean": "rm -rf dist out node_modules",
+    "serve": "bun http.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "bun-types": "^0.2.1"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.27.0",
+    "eslint": "^8.26.0"
+  }
+}
