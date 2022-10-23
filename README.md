@@ -10,6 +10,12 @@ Download dependencies
 bun i
 ```
 
+Create `.env`
+
+```bash
+cp .env.example .env
+```
+
 Execute `start`
 
 ```bash

@@ -36,7 +36,7 @@ Bun.serve({
   // certFile: './cert.pem',
   // keyFile: './key.pem',
 
-  port: 3000, // number or string
+  port: Number(process.env.PORT ?? 3000), // number or string
 })
 // Start a fast HTTP server from the main file's export
 // export default {
