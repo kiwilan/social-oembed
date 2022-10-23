@@ -20,10 +20,6 @@ build-job:
   script:
     - apt install unzip
     - curl https://bun.sh/install | bash
-    - export BUN_INSTALL="$HOME/.bun"
-    - export PATH="$BUN_INSTALL/bin:$PATH"
-    - bun i
-    - bun build
   only:
     - main
 
