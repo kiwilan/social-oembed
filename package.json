@@ -1,7 +1,8 @@
 {
   "scripts": {
     "clean": "rm -rf dist out node_modules",
-    "start": "bun ./src/index.ts",
+    "start": "bun --hot ./src/index.ts",
+    "nodemon": "nodemon bun ./src/index.ts",
     "build": "bun bun ./src/index.ts && ./node_modules.bun > node_modules.js",
     "deploy": "pm2 start bun --name \"bun_in_production\" -- start",
     "lint": "eslint .",
@@ -9,10 +10,13 @@
   },
   "dependencies": {
     "bun-types": "^0.2.1",
-    "bunrest": "^1.1.6"
+    "bunrest": "^1.1.6",
+    "cheerio": "^1.0.0-rc.12",
+    "typescript": "^4.8.4"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.27.0",
-    "eslint": "^8.26.0"
+    "eslint": "^8.26.0",
+    "nodemon": "^2.0.20"
   }
 }
