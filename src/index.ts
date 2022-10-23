@@ -16,7 +16,7 @@ Bun.serve({
       format: api.format,
       options: {
         query: {
-          api_key: 'required, type string',
+          api_key: apiKeyEnable ? 'required, type string' : 'disable on this instance',
           url: 'required, type string',
           format: 'optional, type `oembed` | `opengraph`, default `oembed`',
         },
