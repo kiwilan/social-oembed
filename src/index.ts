@@ -1,17 +1,19 @@
+import type { OpenGraph } from './Models/OpenGraph'
+import ApiService from './Services/ApiService'
 import OpenGraphSevice from '@/Services/OpenGraphService'
 
 // Start a fast HTTP server from a function
-console.log('Serve on: http://localhost:3000')
+console.warn(`\nServe on: http://localhost:${process.env.PORT || 3000}\n`)
 
 Bun.serve({
   async fetch(req: Request) {
-    const url = 'https://github.com'
-    const og = await OpenGraphSevice.make(url)
+    const params = ApiService.queryParams(req)
+    const url = params.get('url') || undefined
+    let og: OpenGraph | undefined
+    if (url)
+      og = await OpenGraphSevice.make(url)
 
-    // const og = await OpenGraphService.make(url)
-    // console.log(og)
     const response = {
-      message: `Echo: ${req.url}`,
       url,
       og,
     }
@@ -24,9 +26,9 @@ Bun.serve({
   // baseURI: "http://localhost:3000",
 
   // this is called when fetch() throws or rejects
-  // error(err: Error) {
-  //   return new Response("uh oh! :(\n" + err.toString(), { status: 500 });
-  // },
+  error(err: Error) {
+    return new Response(`uh oh! :(\n${err.toString()}`, { status: 500 })
+  },
 
   // this boolean enables bun's default error handler
   development: process.env.NODE_ENV !== 'production',
