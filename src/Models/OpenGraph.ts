@@ -3,7 +3,9 @@ import type { MetaNode, MetaValues } from '@/types/Meta'
 import { metaNodes } from '@/constants'
 
 export class OpenGraph {
+  public ok = false
   public originalUrl: string
+  public error?: string
   public title?: string
   public description?: string
   public image?: string
@@ -21,13 +23,16 @@ export class OpenGraph {
     const og = new OpenGraph(originalUrl)
 
     const body = await og.fetchUrl()
-    const metaValues = og.parseHtml(body)
-    og.setOpenGraph(metaValues)
+    if (body) {
+      const metaValues = og.parseHtml(body)
+      og.setOpenGraph(metaValues)
+      og.ok = true
+    }
 
     return og
   }
 
-  protected setOpenGraph(metaValues: MetaValues) {
+  private setOpenGraph(metaValues: MetaValues) {
     this.title = metaValues.title
     this.description = metaValues.description
     this.image = metaValues.image
@@ -36,9 +41,12 @@ export class OpenGraph {
     this.siteName = metaValues.siteName
     this.locale = metaValues.locale
     this.themeColor = metaValues.themeColor
+
+    this.siteUrl = this.checkUrl()
+    this.image = this.checkImage()
   }
 
-  protected parseHtml(html: string): MetaValues {
+  private parseHtml(html: string): MetaValues {
     const $ = cheerio.load(html)
 
     const metaValues: MetaValues = {}
@@ -60,13 +68,43 @@ export class OpenGraph {
     return metaValues
   }
 
-  protected async fetchUrl() {
+  private async fetchUrl(): Promise<string | null> {
+    const res = await fetch(this.originalUrl)
+      .then(async (res) => {
+        if (res && res.ok)
+          return await res.text()
+      })
+      .catch((err) => {
+        console.warn(err)
+        this.error = err
+        return null
+      })
+
+    return res
+  }
+
+  private checkUrl(): string {
+    let url: URL
+
     try {
-      const res = await fetch(this.originalUrl)
-      return await res.text()
+      url = new URL(this.siteUrl)
     }
     catch (error) {
-      console.log(error)
+      url = new URL(this.originalUrl)
     }
+
+    let current = url.href
+    current = current.replace(/\/$/, '')
+
+    return current
+  }
+
+  private checkImage(): string {
+    const image = this.image
+
+    if (!image || image.startsWith('/'))
+      return `${this.siteUrl}${image}`
+
+    return this.image
   }
 }

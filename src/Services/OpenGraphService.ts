@@ -13,7 +13,9 @@ export default class OpenGraphService {
     const service = new OpenGraphService(url)
 
     if (url.includes('twitter')) {
-      // TODO twitter
+      // let twitter = await OpenGraphTwitter.make(service.url)
+      // service.openGraph = twitter.getOpenGraph()
+      service.is_twitter = true
     }
 
     // TODO twitter webpage into website settings, media lozad

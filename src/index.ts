@@ -7,15 +7,15 @@ console.warn(`\nServe on: http://localhost:${process.env.PORT || 3000}\n`)
 
 Bun.serve({
   async fetch(req: Request) {
-    const params = ApiService.queryParams(req)
-    const url = params.get('url') || undefined
+    const api = ApiService.make(req)
     let og: OpenGraph | undefined
-    if (url)
-      og = await OpenGraphSevice.make(url)
+    if (api.url)
+      og = await OpenGraphSevice.make(api.url)
 
     const response = {
-      url,
-      og,
+      url: api.url,
+      format: api.format,
+      openGraph: og,
     }
 
     return new Response(JSON.stringify(response), {
