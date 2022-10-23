@@ -1,4 +1,4 @@
-import type { Meta } from '@/types/Meta'
+import type { Meta } from '@/types'
 
 export const metaNodes: Meta = {
   title: [

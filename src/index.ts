@@ -1,4 +1,3 @@
-import packageJson from '../package.json'
 import type { OpenGraph } from './Models/OpenGraph'
 import ApiService from './Services/ApiService'
 import OpenGraphSevice from '@/Services/OpenGraphService'
@@ -8,32 +7,17 @@ console.warn(`\nServe on: http://localhost:${process.env.PORT || 3000}\n`)
 
 Bun.serve({
   async fetch(req: Request) {
-    const apiKey = process.env.API_KEY || undefined
-    const apiKeyEnable = Boolean(process.env.API_KEY_ENABLE)
     const api = ApiService.make(req)
     let response = {}
-    const meta = {
-      url: api.url ? api.url : 'query param `url` is required',
-      format: api.format,
-      options: {
-        query: {
-          api_key: apiKeyEnable ? 'required, type string' : 'disable on this instance',
-          url: 'required, type string',
-          format: 'optional, type `oembed` | `opengraph`, default `oembed`',
-        },
-        example: `${process.env.BASE_URL || 'http://localhost:3000'}?url=https://github.com&format=opengraph&api_key=${api.apiKey}`,
-      },
-      apiKeyEnable,
-      version: packageJson.version,
-    }
 
-    if (apiKeyEnable && api.apiKey !== apiKey) {
+    if (api.apiKeyEnable && api.apiKey !== process.env.API_KEY) {
       response = {
         response: {
           ok: false,
           error: 'Invalid API key with query param `api_key`',
         },
-        meta,
+        meta: api.meta,
+        service: api.service,
       }
 
       return new Response(JSON.stringify(response), {
@@ -48,8 +32,8 @@ Bun.serve({
 
     response = {
       response: api.format === 'opengraph' ? og : 'coming soon',
-      meta,
-
+      meta: api.meta,
+      service: api.service,
     }
 
     return new Response(JSON.stringify(response), {
@@ -61,7 +45,10 @@ Bun.serve({
 
   // this is called when fetch() throws or rejects
   error(err: Error) {
-    return new Response(`uh oh! :(\n${err.toString()}`, { status: 500 })
+    return new Response(JSON.stringify(`uh oh! :(\n${err.toString()}`), {
+      headers: { 'content-type': 'application/json' },
+      status: 500,
+    })
   },
 
   // this boolean enables bun's default error handler

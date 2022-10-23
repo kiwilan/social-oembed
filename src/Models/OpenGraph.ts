@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio'
-import type { MetaNode, MetaValues } from '@/types/Meta'
+import type { MetaNode, MetaValues } from '@/types'
 import { metaNodes } from '@/constants'
 
 export class OpenGraph {
