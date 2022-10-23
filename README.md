@@ -4,9 +4,9 @@
 
 *VERY EXPERIMENTAL*
 
-API to offer OpenGraph meta or oEmbed media.
+API to offer [OpenGraph](https://ogp.me/) meta or [oEmbed](https://oembed.com/) media.
 
-> OpenGraph example: <https://social-oembed.git-projects.xyz/?url=https://github.com>
+> OpenGraph example: <https://social-oembed.git-projects.xyz?url=https://github.com&format=opengraph>
 
 ## **Setup**
 
@@ -27,6 +27,13 @@ Execute `start`
 ```bash
 bun start
 ```
+
+## Features
+
+- [x] OpenGraph
+- [ ] Twitter Cards
+- [ ] oEmbed
+  - [ ] Major social networks support
 
 ## Docs
 
