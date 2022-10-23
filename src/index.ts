@@ -1,3 +1,4 @@
+import packageJson from '../package.json'
 import type { OpenGraph } from './Models/OpenGraph'
 import ApiService from './Services/ApiService'
 import OpenGraphSevice from '@/Services/OpenGraphService'
@@ -23,6 +24,7 @@ Bun.serve({
         example: `${process.env.BASE_URL || 'http://localhost:3000'}?url=https://github.com&format=opengraph&api_key=${api.apiKey}`,
       },
       apiKeyEnable,
+      version: packageJson.version,
     }
 
     if (apiKeyEnable && api.apiKey !== apiKey) {

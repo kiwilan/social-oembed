@@ -1,4 +1,18 @@
 {
+  "name": "social-oembed",
+  "description": "API to offer OpenGraph meta or oEmbed media.",
+  "author": {
+    "name": "Ewilan Rivière",
+    "email": "ewilan.riviere@gmail.com"
+  },
+  "homepage": "https://github.com/kiwilan/social-oembed",
+  "license": "MIT",
+  "packageManager": "bun@0.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kiwilan/social-oembed"
+  },
+  "version": "0.0.1",
   "scripts": {
     "clean": "rm -rf dist out node_modules",
     "start": "bun ./src/index.ts",
