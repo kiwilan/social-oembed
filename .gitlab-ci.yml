@@ -18,9 +18,9 @@ build-job:
     paths:
       - node_modules/
   script:
-    - npm i -g pnpm
-    - pnpm install --no-frozen-lockfile
-    - pnpm build
+    - curl https://bun.sh/install | bash
+    - bun i
+    - bun build
   only:
     - main
 
@@ -37,6 +37,8 @@ deploy-job:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - ssh $SSH_USER@$SSH_IP "
+      export BUN_INSTALL="$HOME/.bun" &&
+      export PATH="$BUN_INSTALL/bin:$PATH" &&
       cd /home/ewilan/www/$CI_PROJECT_NAME &&
       git pull &&
       /home/ewilan/.bun/bin/bun i &&
