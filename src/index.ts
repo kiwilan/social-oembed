@@ -7,15 +7,47 @@ console.warn(`\nServe on: http://localhost:${process.env.PORT || 3000}\n`)
 
 Bun.serve({
   async fetch(req: Request) {
+    const apiKey = process.env.API_KEY || undefined
+    const apiKeyEnable = Boolean(process.env.API_KEY_ENABLE)
     const api = ApiService.make(req)
+    let response = {}
+    const meta = {
+      url: api.url ? api.url : 'query param `url` is required',
+      format: api.format,
+      options: {
+        query: {
+          api_key: 'required, type string',
+          url: 'required, type string',
+          format: 'optional, type `oembed` | `opengraph`, default `oembed`',
+        },
+        example: `${process.env.BASE_URL || 'http://localhost:3000'}?url=https://github.com&format=opengraph&api_key=${api.apiKey}`,
+      },
+      apiKeyEnable,
+    }
+
+    if (apiKeyEnable && api.apiKey !== apiKey) {
+      response = {
+        response: {
+          ok: false,
+          error: 'Invalid API key with query param `api_key`',
+        },
+        meta,
+      }
+
+      return new Response(JSON.stringify(response), {
+        headers: { 'content-type': 'application/json' },
+        status: 401,
+      })
+    }
+
     let og: OpenGraph | undefined
-    if (api.url)
+    if (api.url && api.format === 'opengraph')
       og = await OpenGraphSevice.make(api.url)
 
-    const response = {
-      url: api.url,
-      format: api.format,
-      openGraph: og,
+    response = {
+      response: api.format === 'opengraph' ? og : 'coming soon',
+      meta,
+
     }
 
     return new Response(JSON.stringify(response), {
@@ -23,7 +55,7 @@ Bun.serve({
     })
   },
 
-  // baseURI: "http://localhost:3000",
+  baseURI: process.env.BASE_URL || 'http://localhost:3000',
 
   // this is called when fetch() throws or rejects
   error(err: Error) {
