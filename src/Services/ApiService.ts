@@ -1,3 +1,4 @@
+import { route } from '@/router'
 import type { DotEnvConfig, Format, ResponseMeta, Service } from '@/types'
 import packageJson from '~/package.json'
 
@@ -71,6 +72,7 @@ export default class ApiService {
     return {
       url: this.url ? this.url : 'query param `url` is required',
       format: this.format,
+      docs: route('/docs'),
     }
   }
 }

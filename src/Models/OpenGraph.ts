@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio'
-import type { MetaNode, MetaValues } from '@/types'
+import type { MetaNode, MetaValues, OpenGraphResponse } from '@/types'
 import { metaNodes } from '@/constants'
 
 export class OpenGraph {
@@ -30,6 +30,30 @@ export class OpenGraph {
     }
 
     return og
+  }
+
+  public getOk(): boolean {
+    return this.ok
+  }
+
+  public getOpenGraph(): OpenGraphResponse {
+    return {
+      // ok: this.ok,
+      // originalUrl: this.originalUrl,
+      // error: this.error,
+      title: this.title,
+      description: this.description,
+      image: this.image,
+      siteUrl: this.siteUrl,
+      type: this.type,
+      siteName: this.siteName,
+      locale: this.locale,
+      themeColor: this.themeColor,
+    }
+  }
+
+  public getError(): string {
+    return this.error || ''
   }
 
   private setOpenGraph(metaValues: MetaValues) {

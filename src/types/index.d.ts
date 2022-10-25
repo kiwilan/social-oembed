@@ -63,4 +63,35 @@ export type Format = 'oembed' | 'opengraph'
 export interface ResponseMeta {
   url: string
   format: Format
+  docs: string
+}
+
+export interface Route {
+  [key: string]: (req: Request) => Response
+}
+
+export type Router = '/' | '/docs' | '/api'
+
+export interface RouteResponse {
+  response: object
+  status?: number
+  redirect?: Router
+}
+
+export interface DataResponse {
+  ok: boolean
+  message?: string
+  error?: string
+  response?: OpenGraphResponse
+}
+
+export interface OpenGraphResponse {
+  title?: string
+  description?: string
+  image?: string
+  siteUrl?: string
+  type?: string
+  siteName?: string
+  locale?: string
+  themeColor?: string
 }

@@ -1,43 +1,39 @@
-import type { OpenGraph } from './Models/OpenGraph'
-import ApiService from './Services/ApiService'
-import OpenGraphSevice from '@/Services/OpenGraphService'
+import type { RouteResponse } from './types'
+import { formatRoute, router } from '@/router'
 
 // Start a fast HTTP server from a function
 console.warn(`\nServe on: http://localhost:${process.env.PORT || 3000}\n`)
 
 Bun.serve({
   async fetch(req: Request) {
-    const api = ApiService.make(req)
-    let response = {}
+    const url = formatRoute(req)
 
-    if (api.apiKeyEnable && api.apiKey !== process.env.API_KEY) {
-      response = {
-        response: {
-          ok: false,
-          error: 'Invalid API key with query param `api_key`',
-        },
-        meta: api.meta,
-        service: api.service,
-      }
+    let route: (req: Request) => Promise<RouteResponse> = router.home
+    switch (url.route) {
+      case '/':
+        route = router.home
+        break
 
-      return new Response(JSON.stringify(response), {
-        headers: { 'content-type': 'application/json' },
-        status: 401,
-      })
+      case '/api':
+        route = router.api
+        break
+
+      case '/docs':
+        route = router.docs
+        break
+
+      default:
+        route = router.home
+        break
     }
 
-    let og: OpenGraph | undefined
-    if (api.url && api.format === 'opengraph')
-      og = await OpenGraphSevice.make(api.url)
+    const response = await route(req)
+    if (response.redirect)
+      return Response.redirect(response.redirect, 301)
 
-    response = {
-      response: api.format === 'opengraph' ? og : 'coming soon',
-      meta: api.meta,
-      service: api.service,
-    }
-
-    return new Response(JSON.stringify(response), {
+    return new Response(JSON.stringify(response.response), {
       headers: { 'content-type': 'application/json' },
+      status: response.status || 200,
     })
   },
 
@@ -45,7 +41,9 @@ Bun.serve({
 
   // this is called when fetch() throws or rejects
   error(err: Error) {
-    return new Response(JSON.stringify(`uh oh! :(\n${err.toString()}`), {
+    return new Response(JSON.stringify({
+      error: `uh oh! :(\n${err.toString()}`,
+    }), {
       headers: { 'content-type': 'application/json' },
       status: 500,
     })

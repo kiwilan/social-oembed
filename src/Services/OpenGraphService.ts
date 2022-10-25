@@ -1,4 +1,4 @@
-import { OpenGraph } from '../Models/OpenGraph'
+import { OpenGraph } from '@/Models/OpenGraph'
 
 export default class OpenGraphService {
   protected url: string
