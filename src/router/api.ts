@@ -16,28 +16,32 @@ const api = async (req: Request): Promise<RouteResponse> => {
     }
 
     return {
-      response,
+      content: response,
       status: 401,
     }
   }
 
-  let data: object
+  let data: object = {}
+  // let meta = {}
+
   if (api.url && api.format === 'opengraph') {
     const og = await OpenGraphSevice.make(api.url)
     // data.ok = og.getOk()
     // data.message = og.getError()
     data = og.getOpenGraph()
+    if (api.meta)
+      api.meta.fetch = og.getFetchMeta()
   }
 
-  if (api.url && api.format === 'oembed') {
-    data = {
-      ok: true,
-      message: 'oEmbed format is not implemented yet',
-    }
-  }
+  // if (api.url && api.format === 'oembed') {
+  //   data = {
+  //     ok: true,
+  //     message: 'oEmbed format is not implemented yet',
+  //   }
+  // }
 
   return {
-    response: {
+    content: {
       data,
       meta: api.meta,
     },

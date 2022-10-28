@@ -2,9 +2,7 @@ import type { RouteResponse } from '@/types'
 
 const home = async (): Promise<RouteResponse> => {
   return {
-    response: {
-      message: 'redirect',
-    },
+    content: {},
     redirect: '/api',
     status: 302,
   }

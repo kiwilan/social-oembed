@@ -7,7 +7,9 @@ const docs = async (req: Request): Promise<RouteResponse> => {
   const api = ApiService.make(req)
 
   return {
-    response: api.service,
+    content: {
+      data: api.service,
+    },
   }
 }
 

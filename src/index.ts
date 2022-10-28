@@ -31,7 +31,7 @@ Bun.serve({
     if (response.redirect)
       return Response.redirect(response.redirect, response.status)
 
-    return new Response(JSON.stringify(response.response), {
+    return new Response(JSON.stringify(response.content), {
       headers: { 'content-type': 'application/json' },
       status: response.status || 200,
     })

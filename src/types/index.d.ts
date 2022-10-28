@@ -31,6 +31,25 @@ export interface MetaNode {
   value?: string
 }
 
+export interface FetchMeta {
+  ok?: boolean
+  status?: number
+  message?: string
+}
+
+export interface FetchResponse {
+  ok?: boolean
+  headers?: Headers
+  body?: ReadableStream | null
+  bodyUsed?: boolean
+  json?: unknown
+  text?: string
+  status?: number
+  statusText?: string
+  url?: string
+  response?: Response
+}
+
 export interface DotEnvConfig {
   PORT: string | undefined
   BASE_URL: string | undefined
@@ -59,6 +78,7 @@ export interface ResponseMeta {
   url: string
   format: Format
   docs: string
+  fetch?: FetchMeta
 }
 
 export interface RouterItem {
@@ -73,8 +93,13 @@ export interface Route {
   query?: RouteQuery
 }
 
+interface ResponseContent{
+  data?: any
+  meta?: object
+}
+
 export interface RouteResponse {
-  response: object
+  content: ResponseContent
   status?: number
   redirect?: Endpoint
 }

@@ -3,6 +3,7 @@ import { OpenGraph } from '@/Models/OpenGraph'
 export default class OpenGraphService {
   protected url: string
   protected openGraph?: OpenGraph
+  protected meta: any
   protected is_twitter = false
 
   protected constructor(url: string) {

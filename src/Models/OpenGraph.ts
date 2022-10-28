@@ -1,8 +1,9 @@
 import * as cheerio from 'cheerio'
-import type { MetaNode, MetaValues, OpenGraphResponse } from '@/types'
+import { Module } from './Module'
+import type { FetchMeta, FetchResponse, MetaNode, MetaValues, OpenGraphResponse } from '@/types'
 import { metaNodes } from '@/constants'
 
-export class OpenGraph {
+export class OpenGraph extends Module {
   public ok = false
   public originalUrl: string
   public error?: string
@@ -16,31 +17,31 @@ export class OpenGraph {
   public themeColor?: string
 
   protected constructor(originalUrl: string) {
+    super()
     this.originalUrl = originalUrl
   }
 
   public static async make(originalUrl: string): Promise<OpenGraph> {
     const og = new OpenGraph(originalUrl)
 
-    const body = await og.fetchUrl()
-    if (body) {
-      const metaValues = og.parseHtml(body)
+    const fetch = await og.fetchUrl()
+
+    if (fetch.ok) {
+      const metaValues = og.parseHtml(fetch.text ?? '')
       og.setOpenGraph(metaValues)
-      og.ok = true
     }
+
+    og.setMeta({
+      message: fetch.statusText,
+      ok: fetch.ok,
+      status: fetch.status,
+    })
 
     return og
   }
 
-  public getOk(): boolean {
-    return this.ok
-  }
-
   public getOpenGraph(): OpenGraphResponse {
     return {
-      // ok: this.ok,
-      // originalUrl: this.originalUrl,
-      // error: this.error,
       title: this.title,
       description: this.description,
       image: this.image,
@@ -52,8 +53,8 @@ export class OpenGraph {
     }
   }
 
-  public getError(): string {
-    return this.error || ''
+  public getFetchMeta(): FetchMeta {
+    return this.meta
   }
 
   private setOpenGraph(metaValues: MetaValues) {
@@ -92,23 +93,51 @@ export class OpenGraph {
     return metaValues
   }
 
-  private async fetchUrl(): Promise<string | null> {
-    const res = await fetch(this.originalUrl)
+  private isResponse = (object: unknown): object is Response => {
+    return Object.prototype.hasOwnProperty.call(object, 'status')
+  }
+
+  /**
+   * Fetch URL with `fetch` API, handle errors.
+   */
+  private async fetchUrl(): Promise<FetchResponse> {
+    const response: FetchResponse = await fetch(this.originalUrl)
       .then(async (res) => {
-        if (res && res.ok)
-          return await res.text()
+        const json = await res.json()
+        const text = await res.text()
+        return {
+          body: res.body,
+          bodyUsed: res.bodyUsed,
+          json,
+          text,
+          ok: res.ok,
+          headers: res.headers,
+          status: res.status,
+          statusText: res.statusText,
+          url: res.url,
+          response: res,
+        }
       })
-      .catch((err) => {
-        console.warn(err)
-        this.error = err
-        return null
+      .catch((error) => {
+        return {
+          body: undefined,
+          bodyUsed: false,
+          ok: false,
+          headers: new Headers(),
+          status: 500,
+          statusText: error,
+          url: this.originalUrl,
+        }
       })
 
-    return res
+    return response
   }
 
   private checkUrl(): string {
     let url: URL
+
+    if (!this.siteUrl)
+      return this.originalUrl
 
     try {
       url = new URL(this.siteUrl)
@@ -123,7 +152,7 @@ export class OpenGraph {
     return current
   }
 
-  private checkImage(): string {
+  private checkImage(): string | undefined {
     const image = this.image
 
     if (!image || image.startsWith('/'))
