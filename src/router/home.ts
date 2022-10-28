@@ -6,6 +6,7 @@ const home = async (): Promise<RouteResponse> => {
       message: 'redirect',
     },
     redirect: '/api',
+    status: 302,
   }
 }
 

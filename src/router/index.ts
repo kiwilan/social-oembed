@@ -1,29 +1,66 @@
 import home from './home'
 import docs from './docs'
 import api from './api'
-import type { Router } from '@/types'
+import type { Endpoint, Route, RouteQuery } from '@/types'
 
-export const route = (route: Router) => `${process.env.BASE_URL}${route}`
-
-export const formatRoute = (req: Request) => {
-  const url = req.url.replace(process.env.BASE_URL, '').replace(/\/$/, '')
-
-  const splitted = url.split('?')
-  const params = splitted.length > 1 ? splitted[1].split('&') : []
-  let paramsList = {}
-  params.forEach((param) => {
-    const [key, value] = param.split('=')
-    paramsList = { ...paramsList, [key]: value }
-  })
-
-  const route = splitted[0] ?? '/'
-
-  return {
-    route,
-    params: paramsList,
-  }
+/**
+ * Check if current `object` is `Route`
+ */
+const isRoute = (object: unknown): object is Route => {
+  return Object.prototype.hasOwnProperty.call(object, 'endpoint')
 }
 
+/**
+ * Create an url from `Endpoint` or `Route`
+ */
+export const route = (route: Endpoint | Route): string => {
+  let current: Route
+  if (!isRoute(route))
+    current = { endpoint: route }
+  else
+    current = route
+
+  const url = new URL(current.endpoint, process.env.BASE_URL)
+
+  if (current.query) {
+    Object.keys(current.query).forEach((key) => {
+      url.searchParams.append(key, current.query[key])
+    })
+  }
+
+  return url.toString()
+}
+
+/**
+ * Create a `Route` from `Request`
+ */
+export const routeBuilder = (req: Request): Route => {
+  const url = req.url.replace(process.env.BASE_URL, '').replace(/\/$/, '')
+  let route: Route = { endpoint: '/' }
+
+  const splitted = url.split('?')
+  if (splitted.length === 1) {
+    route = { endpoint: splitted[0] as Endpoint }
+    return route
+  }
+
+  route.endpoint = splitted[0] as Endpoint
+
+  // get query params
+  const query = splitted[1]
+  const params = new URLSearchParams(query)
+  const queryObject: RouteQuery = {}
+  params.forEach((value, key) => {
+    queryObject[key] = value
+  })
+  route.query = queryObject
+
+  return route
+}
+
+/**
+ * Application main router
+ */
 export const router = {
   home: () => home(),
   api: (req: Request) => api(req),

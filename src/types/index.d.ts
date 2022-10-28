@@ -44,17 +44,12 @@ export interface Service {
   apiKeyEnable: boolean
   instance: string
   options: {
-    // query: {
-    //   url: string | undefined
-    //   format: string | undefined
-    //   api_key: string | undefined
-    // }
     query: {
       [key: string]: string
     }
   }
   examples: {
-    openGraph: string
+    [key: string]: string
   }
 }
 
@@ -66,16 +61,23 @@ export interface ResponseMeta {
   docs: string
 }
 
-export interface Route {
+export interface RouterItem {
   [key: string]: (req: Request) => Response
 }
 
-export type Router = '/' | '/docs' | '/api'
+export type Endpoint = '/' | '/docs' | '/api'
+export type RouteQueryKey = 'url' | 'format' | 'apiKey'
+type RouteQueryValue = string
+export type RouteQuery = Record<RouteQueryKey, RouteQueryValue>
+export interface Route {
+  endpoint: Endpoint
+  query?: RouteQuery
+}
 
 export interface RouteResponse {
   response: object
   status?: number
-  redirect?: Router
+  redirect?: Endpoint
 }
 
 export interface DataResponse {

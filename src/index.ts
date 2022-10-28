@@ -1,15 +1,15 @@
 import type { RouteResponse } from './types'
-import { formatRoute, router } from '@/router'
+import { routeBuilder, router } from '@/router'
 
 // Start a fast HTTP server from a function
 console.warn(`\nServe on: http://localhost:${process.env.PORT || 3000}\n`)
 
 Bun.serve({
   async fetch(req: Request) {
-    const url = formatRoute(req)
+    const url = routeBuilder(req)
 
     let route: (req: Request) => Promise<RouteResponse> = router.home
-    switch (url.route) {
+    switch (url.endpoint) {
       case '/':
         route = router.home
         break
@@ -29,7 +29,7 @@ Bun.serve({
 
     const response = await route(req)
     if (response.redirect)
-      return Response.redirect(response.redirect, 301)
+      return Response.redirect(response.redirect, response.status)
 
     return new Response(JSON.stringify(response.response), {
       headers: { 'content-type': 'application/json' },

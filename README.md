@@ -3,12 +3,14 @@
 [![bun](https://img.shields.io/static/v1?label=Bun&message=v0.2&color=000000&style=flat-square&logo=bun&logoColor=ffffff)](https://bun.sh)
 ![pipeline](https://gitlab.com/ewilan-riviere/social-oembed/badges/main/pipeline.svg)
 
-> *VERY EXPERIMENTAL*
-> Bun.sh is still in early development, and this application is not stable.
+![logo](/public/logo.svg)
+
+> *VERY EXPERIMENTAL*  
+> Bun.sh is still in early development, and this application is not stable.  
 
 API to offer [OpenGraph](https://ogp.me/) meta or [oEmbed](https://oembed.com/) media.
 
-> OpenGraph example: <https://social-oembed.git-projects.xyz?url=https://github.com&format=opengraph>
+> OpenGraph example: <https://social-oembed.git-projects.xyz/api?url=https://github.com&format=opengraph>
 
 ## Features
 

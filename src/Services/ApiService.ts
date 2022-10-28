@@ -1,9 +1,9 @@
-import { route } from '@/router'
-import type { DotEnvConfig, Format, ResponseMeta, Service } from '@/types'
+import { route, routeBuilder } from '@/router'
+import type { DotEnvConfig, Format, ResponseMeta, Route, Service } from '@/types'
 import packageJson from '~/package.json'
 
 export default class ApiService {
-  private params?: URLSearchParams
+  private route?: Route
   private dotenv?: DotEnvConfig
   public url?: string
   public format: Format = 'opengraph'
@@ -20,24 +20,18 @@ export default class ApiService {
 
     api.dotenv = api.setDotenvConfig()
 
-    api.params = api.setQueryParams(req)
-    api.url = api.params.get('url') || undefined
-    api.format = api.params.get('format') as Format || 'opengraph'
-    api.apiKey = api.params.get('api_key') || undefined
+    const route = routeBuilder(req)
+    api.route = route
 
+    api.url = api.route.query.url || undefined
+    api.format = api.route.query?.format as Format || 'opengraph'
+    api.apiKey = api.route.query?.apiKey || undefined
     api.apiKeyEnable = Boolean(api.dotenv.API_KEY_ENABLE === 'true')
+
     api.service = api.setService()
     api.meta = api.setMeta()
 
     return api
-  }
-
-  private setQueryParams(req: Request): URLSearchParams {
-    const queryParams = req.url.split('?')
-    const query = queryParams[1] || ''
-    const params = new URLSearchParams(query)
-
-    return params
   }
 
   private setDotenvConfig(): DotEnvConfig {
@@ -63,7 +57,11 @@ export default class ApiService {
         },
       },
       examples: {
-        openGraph: `${this.dotenv.BASE_URL}?url=https://github.com&format=opengraph&api_key=${this.apiKey}`,
+        // TODO: add examples, add query params with `route()` helper
+        opengraph: route({
+          endpoint: '/api',
+          query: { url: 'https://github.com', format: 'opengraph', api_key: this.apiKey },
+        }),
       },
     }
   }

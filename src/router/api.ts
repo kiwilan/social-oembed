@@ -21,19 +21,12 @@ const api = async (req: Request): Promise<RouteResponse> => {
     }
   }
 
-  let data = {
-    ok: false,
-    message: 'Invalid URL',
-  }
-
+  let data: object
   if (api.url && api.format === 'opengraph') {
     const og = await OpenGraphSevice.make(api.url)
-    data.ok = og.getOk()
-    data.message = og.getError()
-    data = {
-      ...data,
-      ...og.getOpenGraph(),
-    }
+    // data.ok = og.getOk()
+    // data.message = og.getError()
+    data = og.getOpenGraph()
   }
 
   if (api.url && api.format === 'oembed') {
