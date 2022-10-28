@@ -66,9 +66,8 @@ export interface RouterItem {
 }
 
 export type Endpoint = '/' | '/docs' | '/api'
-export type RouteQueryKey = 'url' | 'format' | 'apiKey'
-type RouteQueryValue = string
-export type RouteQuery = Record<RouteQueryKey, RouteQueryValue>
+export type RouteQueryKey = 'url' | 'format' | 'api_key'
+export type RouteQuery = Record<RouteQueryKey, string | undefined> | undefined
 export interface Route {
   endpoint: Endpoint
   query?: RouteQuery

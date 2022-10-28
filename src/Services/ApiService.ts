@@ -23,9 +23,9 @@ export default class ApiService {
     const route = routeBuilder(req)
     api.route = route
 
-    api.url = api.route.query.url || undefined
+    api.url = api.route.query?.url || undefined
     api.format = api.route.query?.format as Format || 'opengraph'
-    api.apiKey = api.route.query?.apiKey || undefined
+    api.apiKey = api.route.query?.api_key || undefined
     api.apiKeyEnable = Boolean(api.dotenv.API_KEY_ENABLE === 'true')
 
     api.service = api.setService()
@@ -48,7 +48,7 @@ export default class ApiService {
       name: packageJson.name,
       version: packageJson.version,
       apiKeyEnable: this.apiKeyEnable,
-      instance: this.dotenv.BASE_URL,
+      instance: this.dotenv?.BASE_URL ?? 'http://localhost:3000',
       options: {
         query: {
           api_key: this.apiKeyEnable ? 'required, type string' : 'disable on this instance',

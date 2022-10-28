@@ -24,7 +24,8 @@ export const route = (route: Endpoint | Route): string => {
 
   if (current.query) {
     Object.keys(current.query).forEach((key) => {
-      url.searchParams.append(key, current.query[key])
+      if (current.query)
+        url.searchParams.append(key, current.query[key])
     })
   }
 
@@ -49,11 +50,12 @@ export const routeBuilder = (req: Request): Route => {
   // get query params
   const query = splitted[1]
   const params = new URLSearchParams(query)
-  const queryObject: RouteQuery = {}
+  const queryObject = {}
   params.forEach((value, key) => {
-    queryObject[key] = value
+    if (queryObject)
+      queryObject[key] = value
   })
-  route.query = queryObject
+  route.query = queryObject as RouteQuery
 
   return route
 }
