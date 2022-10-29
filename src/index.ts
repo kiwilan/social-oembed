@@ -1,4 +1,5 @@
 import type { RouteResponse } from './types'
+import Cors from './Utils/Cors'
 import { routeBuilder, router } from '@/router'
 
 // Start a fast HTTP server from a function
@@ -6,6 +7,10 @@ console.warn(`\nServe on: http://localhost:${process.env.PORT || 3000}\n`)
 
 Bun.serve({
   async fetch(req: Request) {
+    // req.headers.append('Access-Control-Allow-Origin', '*')
+    // req.headers.append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+    // req.headers.append('Access-Control-Allow-Headers', 'Content-Type, Accept, Origin, Authorization')
+
     const url = routeBuilder(req)
 
     let route: (req: Request) => Promise<RouteResponse> = router.home
@@ -27,14 +32,19 @@ Bun.serve({
         break
     }
 
-    const response = await route(req)
-    if (response.redirect)
-      return Response.redirect(response.redirect, response.status)
+    const res = await route(req)
+    if (res.redirect)
+      return Response.redirect(res.redirect, res.status)
 
-    return new Response(JSON.stringify(response.content), {
-      headers: { 'content-type': 'application/json' },
-      status: response.status || 200,
+    // req.headers.get('host')
+    const cors = Cors.make(req)
+
+    const response = new Response(JSON.stringify(res.content), {
+      headers: cors.headers,
+      status: res.status || 200,
     })
+
+    return response
   },
 
   baseURI: process.env.BASE_URL || 'http://localhost:3000',
@@ -42,7 +52,7 @@ Bun.serve({
   // this is called when fetch() throws or rejects
   error(err: Error) {
     return new Response(JSON.stringify({
-      error: `uh oh! :(\n${err.toString()}`,
+      error: `Error ${err.toString()}`,
     }), {
       headers: { 'content-type': 'application/json' },
       status: 500,

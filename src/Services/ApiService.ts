@@ -1,5 +1,6 @@
 import { route, routeBuilder } from '@/router'
-import type { DotEnvConfig, Format, ResponseMeta, Route, Service } from '@/types'
+import type { DotEnvConfig, Format, ResponseMeta, Route, RouteResponse, Service } from '@/types'
+import Cors from '@/Utils/Cors'
 import packageJson from '~/package.json'
 
 export default class ApiService {
@@ -10,7 +11,7 @@ export default class ApiService {
   public apiKey?: string
   public apiKeyEnable = false
   public service?: Service
-  public meta?: ResponseMeta
+  public meta: ResponseMeta
 
   protected constructor() {
   }
@@ -26,7 +27,7 @@ export default class ApiService {
     api.url = api.route.query?.url || undefined
     api.format = api.route.query?.format as Format || 'opengraph'
     api.apiKey = api.route.query?.api_key || undefined
-    api.apiKeyEnable = Boolean(api.dotenv.API_KEY_ENABLE === 'true')
+    api.apiKeyEnable = api.dotenv.API_KEY_ENABLED
 
     api.service = api.setService()
     api.meta = api.setMeta()
@@ -34,12 +35,65 @@ export default class ApiService {
     return api
   }
 
+  public static checkApiKey(api: ApiService): RouteResponse | void {
+    if (api.apiKeyEnable && api.apiKey !== process.env.API_KEY) {
+      const meta = api.meta
+
+      if (!meta.fetch)
+        meta.fetch = {}
+
+      meta.fetch.ok = false
+      meta.fetch.status = 401
+      meta.fetch.message = 'Invalid API key with query param `api_key`'
+
+      const response: RouteResponse = {
+        content: {
+          data: {},
+          meta,
+        },
+        status: 401,
+      }
+
+      return response
+    }
+  }
+
+  public static checkUrl(api: ApiService): RouteResponse | void {
+    if (!api.url) {
+      const meta = api.meta
+
+      if (!meta.fetch)
+        meta.fetch = {}
+
+      meta.fetch.ok = false
+      meta.fetch.status = 401
+      meta.fetch.message = 'Invalid query with query param `url`'
+
+      const response: RouteResponse = {
+        content: {
+          data: {},
+          meta,
+        },
+        status: 401,
+      }
+
+      return response
+    }
+  }
+
   private setDotenvConfig(): DotEnvConfig {
+    let enabled = false
+    if (typeof process.env.API_KEY_ENABLED === 'boolean')
+      enabled = process.env.API_KEY_ENABLED
+
+    const domains = Cors.dotEnvCors()
+
     return {
       PORT: process.env.PORT || '3000',
       BASE_URL: process.env.BASE_URL || 'http://localhost:3000',
       API_KEY: process.env.API_KEY || undefined,
-      API_KEY_ENABLE: process.env.API_KEY_ENABLE || 'false',
+      API_KEY_ENABLED: enabled || false,
+      API_DOMAINS: domains || undefined,
     }
   }
 
@@ -71,6 +125,12 @@ export default class ApiService {
       url: this.url ? this.url : 'query param `url` is required',
       format: this.format,
       docs: route('/docs'),
+      fetch: {
+        message: 'Fetching data',
+        ok: false,
+        status: 500,
+        type: 'unknown',
+      },
     }
   }
 }

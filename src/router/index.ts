@@ -25,6 +25,8 @@ export const route = (route: Endpoint | Route): string => {
   if (current.query) {
     Object.keys(current.query).forEach((key) => {
       if (current.query)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         url.searchParams.append(key, current.query[key])
     })
   }
@@ -52,8 +54,11 @@ export const routeBuilder = (req: Request): Route => {
   const params = new URLSearchParams(query)
   const queryObject = {}
   params.forEach((value, key) => {
-    if (queryObject)
+    if (queryObject) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       queryObject[key] = value
+    }
   })
   route.query = queryObject as RouteQuery
 

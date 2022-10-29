@@ -1,8 +1,8 @@
-import { OpenGraph } from '@/Models/OpenGraph'
+import { OpenGraphItem } from '@/Models/OpenGraph'
 
 export default class OpenGraphService {
   protected url: string
-  protected openGraph?: OpenGraph
+  protected openGraph?: OpenGraphItem
   protected meta: any
   protected is_twitter = false
 
@@ -10,7 +10,7 @@ export default class OpenGraphService {
     this.url = url
   }
 
-  public static async make(url: string): Promise<OpenGraph> {
+  public static async make(url: string): Promise<OpenGraphItem> {
     const service = new OpenGraphService(url)
 
     if (url.includes('twitter')) {
@@ -20,7 +20,7 @@ export default class OpenGraphService {
     }
 
     // TODO twitter webpage into website settings, media lozad
-    service.openGraph = await OpenGraph.make(service.url)
+    service.openGraph = await OpenGraphItem.make(service.url)
 
     return service.openGraph
   }

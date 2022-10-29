@@ -1,9 +1,10 @@
 import * as cheerio from 'cheerio'
 import { Module } from './Module'
-import type { FetchMeta, FetchResponse, MetaNode, MetaValues, OpenGraphResponse } from '@/types'
+import type { FetchMeta, MetaNode, MetaValues, OpenGraphResponse } from '@/types'
 import { metaNodes } from '@/constants'
+import Http from '@/Utils/Http'
 
-export class OpenGraph extends Module {
+export class OpenGraphItem extends Module {
   public ok = false
   public originalUrl: string
   public error?: string
@@ -21,20 +22,27 @@ export class OpenGraph extends Module {
     this.originalUrl = originalUrl
   }
 
-  public static async make(originalUrl: string): Promise<OpenGraph> {
-    const og = new OpenGraph(originalUrl)
+  public static async make(originalUrl: string): Promise<OpenGraphItem> {
+    const og = new OpenGraphItem(originalUrl)
 
-    const fetch = await og.fetchUrl()
+    const http = Http.client(originalUrl)
+    const res = await http.get()
+    // console.log(res)
 
-    if (fetch.ok) {
-      const metaValues = og.parseHtml(fetch.text ?? '')
+    if (res.ok && res.type === 'text') {
+      const metaValues = og.parseHtml(res.body)
       og.setOpenGraph(metaValues)
     }
 
     og.setMeta({
-      message: fetch.statusText,
-      ok: fetch.ok,
-      status: fetch.status,
+      message: res.type !== 'text'
+        ? 'Error: endpoint has `application/json` content-type'
+        : res.statusText,
+      ok: res.type !== 'text'
+        ? false
+        : res.ok,
+      status: res.status,
+      type: res.type,
     })
 
     return og
@@ -71,8 +79,8 @@ export class OpenGraph extends Module {
     this.image = this.checkImage()
   }
 
-  private parseHtml(html: string): MetaValues {
-    const $ = cheerio.load(html)
+  private parseHtml(html?: string): MetaValues {
+    const $ = cheerio.load(html ?? '')
 
     const metaValues: MetaValues = {}
     Object.entries(metaNodes).forEach((el) => {
@@ -82,55 +90,21 @@ export class OpenGraph extends Module {
       nodes.forEach((node) => {
         const current = $(node.query) // e.g. [property="og:title"]
         const type = node.type as string // e.g. attr
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         const value = current[type](node.value) // e.g. content
 
         // add into metaValues only if empty
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         if (!metaValues[entry])
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
           metaValues[entry] = value
       })
     })
 
     return metaValues
-  }
-
-  private isResponse = (object: unknown): object is Response => {
-    return Object.prototype.hasOwnProperty.call(object, 'status')
-  }
-
-  /**
-   * Fetch URL with `fetch` API, handle errors.
-   */
-  private async fetchUrl(): Promise<FetchResponse> {
-    const response: FetchResponse = await fetch(this.originalUrl)
-      .then(async (res) => {
-        const json = await res.json()
-        const text = await res.text()
-        return {
-          body: res.body,
-          bodyUsed: res.bodyUsed,
-          json,
-          text,
-          ok: res.ok,
-          headers: res.headers,
-          status: res.status,
-          statusText: res.statusText,
-          url: res.url,
-          response: res,
-        }
-      })
-      .catch((error) => {
-        return {
-          body: undefined,
-          bodyUsed: false,
-          ok: false,
-          headers: new Headers(),
-          status: 500,
-          statusText: error,
-          url: this.originalUrl,
-        }
-      })
-
-    return response
   }
 
   private checkUrl(): string {
@@ -155,7 +129,7 @@ export class OpenGraph extends Module {
   private checkImage(): string | undefined {
     const image = this.image
 
-    if (!image || image.startsWith('/'))
+    if (image && image.startsWith('/'))
       return `${this.siteUrl}${image}`
 
     return this.image

@@ -4,48 +4,33 @@ import type { RouteResponse } from '@/types'
 
 const api = async (req: Request): Promise<RouteResponse> => {
   const api = ApiService.make(req)
-  let response = {}
-
-  if (api.apiKeyEnable && api.apiKey !== process.env.API_KEY) {
-    response = {
-      response: {
-        ok: false,
-        error: 'Invalid API key with query param `api_key`',
-      },
-      meta: api.meta,
-    }
-
-    return {
-      content: response,
-      status: 401,
-    }
-  }
-
-  let data: object = {}
-  // let meta = {}
-
-  if (api.url && api.format === 'opengraph') {
-    const og = await OpenGraphSevice.make(api.url)
-    // data.ok = og.getOk()
-    // data.message = og.getError()
-    data = og.getOpenGraph()
-    if (api.meta)
-      api.meta.fetch = og.getFetchMeta()
-  }
-
-  // if (api.url && api.format === 'oembed') {
-  //   data = {
-  //     ok: true,
-  //     message: 'oEmbed format is not implemented yet',
-  //   }
-  // }
-
-  return {
+  const response: RouteResponse = {
     content: {
-      data,
+      data: {},
       meta: api.meta,
     },
   }
+
+  const rejectApiKey = ApiService.checkApiKey(api)
+  if (rejectApiKey)
+    return rejectApiKey
+
+  const rejectUrl = ApiService.checkUrl(api)
+  if (rejectUrl)
+    return rejectUrl
+
+  if (api.url && api.format === 'opengraph') {
+    const og = await OpenGraphSevice.make(api.url)
+    response.content.data = og.getOpenGraph()
+    response.content.meta.fetch = og.getFetchMeta()
+  }
+
+  if (api.url && api.format === 'oembed') {
+    response.content.meta.fetch.message = 'oEmbed format is not implemented yet'
+    response.content.meta.fetch.ok = false
+  }
+
+  return response
 }
 
 export default api

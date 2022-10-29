@@ -1,3 +1,5 @@
+import type { FetchType } from "./http"
+
 export interface MetaValue {
   property: string
   content: string
@@ -35,26 +37,15 @@ export interface FetchMeta {
   ok?: boolean
   status?: number
   message?: string
-}
-
-export interface FetchResponse {
-  ok?: boolean
-  headers?: Headers
-  body?: ReadableStream | null
-  bodyUsed?: boolean
-  json?: unknown
-  text?: string
-  status?: number
-  statusText?: string
-  url?: string
-  response?: Response
+  type?: FetchType
 }
 
 export interface DotEnvConfig {
   PORT: string | undefined
   BASE_URL: string | undefined
   API_KEY: string | undefined
-  API_KEY_ENABLE: string | undefined
+  API_KEY_ENABLED: boolean
+  API_DOMAINS: string[] | undefined
 }
 
 export interface Service {
@@ -78,7 +69,7 @@ export interface ResponseMeta {
   url: string
   format: Format
   docs: string
-  fetch?: FetchMeta
+  fetch: FetchMeta
 }
 
 export interface RouterItem {
@@ -94,8 +85,8 @@ export interface Route {
 }
 
 interface ResponseContent{
-  data?: any
-  meta?: object
+  data: any
+  meta: ResponseMeta
 }
 
 export interface RouteResponse {

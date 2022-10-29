@@ -1,3 +1,3 @@
-class OpenGraphTwitter {
+export class OpenGraphTwitter {
 
 }

@@ -1,2 +1,2 @@
-class SocialServiceTwitter {
+export class SocialServiceTwitter {
 }
