@@ -27,6 +27,7 @@ export default class Cors {
   private setCors(req: Request): HeadersInit {
     const headers: HeadersInit = {
       'content-type': 'application/json',
+      'Accept-Encoding': 'gzip',
       'Access-Control-Allow-Origin': 'null',
     }
 
