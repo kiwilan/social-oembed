@@ -11,8 +11,15 @@ export default class Http {
   }
 
   public static client(url: string, options?: FetchOptions): Http {
-    if (!options)
-      options = { method: 'GET' }
+    if (!options) {
+      options = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept-Encoding': 'gzip',
+        },
+      }
+    }
 
     const http = new Http(url, options)
 

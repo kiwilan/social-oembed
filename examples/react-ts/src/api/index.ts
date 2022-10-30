@@ -9,11 +9,11 @@ export interface OpenGraphData {
   themeColor?: string
 }
 
-// const apiLocal = 'http://localhost:3000'
-const apiProd = 'https://social-oembed.git-projects.xyz'
+const apiLocal = 'http://localhost:3000'
+// const apiProd = 'https://social-oembed.git-projects.xyz'
 
 export const fetchData = async (url: string) => {
-  const api = `${apiProd}/api`
+  const api = `${apiLocal}/api`
 
   const params = new URLSearchParams()
   params.append('url', url)
