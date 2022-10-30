@@ -42,6 +42,7 @@ Bun.serve({
     const response = new Response(JSON.stringify(res.content), {
       headers: cors.headers,
       status: res.status || 200,
+      statusText: res.status === 200 ? 'OK' : 'Not Found',
     })
 
     return response
