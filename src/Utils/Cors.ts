@@ -27,7 +27,12 @@ export default class Cors {
   private setCors(req: Request): HeadersInit {
     const headers: HeadersInit = {
       'content-type': 'application/json',
-      'Access-Control-Allow-Origin': 'http://127.0.0.1:5173',
+      'Access-Control-Allow-Origin': 'null',
+    }
+
+    if (this.allowOrigins.includes('*')) {
+      headers['Access-Control-Allow-Origin'] = '*'
+      return headers
     }
 
     const origin = req.headers.get('origin')
