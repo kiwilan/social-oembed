@@ -1,23 +1,10 @@
-# Getting Started with [Fastify-CLI](https://www.npmjs.com/package/fastify-cli)
-This project was bootstrapped with Fastify-CLI.
+# Social oEmbed
 
-## Available Scripts
+## Docs
 
-In the project directory, you can run:
-
-### `npm run dev`
-
-To start the app in dev mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-### `npm start`
-
-For production mode
-
-### `npm run test`
-
-Run the test cases.
-
-## Learn More
-
-To learn Fastify, check out the [Fastify documentation](https://www.fastify.io/docs/latest/).
+- <https://blog.logrocket.com/configuring-nodemon-with-typescript>
+- <https://www.digitalocean.com/community/tutorials/typescript-running-typescript-ts-node>
+- <https://www.fastify.io/docs/latest/Reference/TypeScript>
+- <https://blog.logrocket.com/how-to-set-up-node-typescript-express>
+- <https://stackoverflow.com/questions/37979489/how-to-watch-and-reload-ts-node-when-typescript-files-change>
+- <https://tsh.io/blog/fastify-practical-overview>

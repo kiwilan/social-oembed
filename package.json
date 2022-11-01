@@ -8,8 +8,14 @@
   },
   "scripts": {
     "test": "tap \"test/**/*.test.js\"",
-    "start": "fastify start -l info app.js -p 8080",
-    "dev": "fastify start -w -l info -P app.js -p 8080"
+    "start": "fastify start -l info src/app.js -p 8080",
+    "dev": "fastify start -w -l info -P src/app.js -p 8080",
+    "build-ts-docs": "tsc -p tsconfig.json",
+    "start-ts-docs": "node dist/index.js",
+    "build-ts": "npx tsc",
+    "start-ts": "node dist/index.js",
+    "dev-ts": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
+    "dev-tsnd": "npx tsnd --respawn -r tsconfig-paths/register src/index.ts"
   },
   "keywords": [
     "fastify",
@@ -24,14 +30,23 @@
   "license": "MIT",
   "dependencies": {
     "@fastify/autoload": "^5.4.1",
+    "@fastify/env": "^4.1.0",
     "@fastify/sensible": "^5.1.1",
     "fastify": "^4.9.2",
     "fastify-cli": "^5.5.1",
-    "fastify-plugin": "^4.3.0"
+    "fastify-plugin": "^4.3.0",
+    "module-alias": "^2.2.2",
+    "tsconfig-paths": "^4.1.0"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^0.29.2",
+    "@sinclair/typebox": "^0.25.2",
     "@types/node": "^18.11.8",
+    "concurrently": "^7.5.0",
+    "eslint": "^8.26.0",
+    "nodemon": "^2.0.20",
     "tap": "^16.3.0",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^4.8.4"
   }
 }
