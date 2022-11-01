@@ -20,17 +20,10 @@
   "scripts": {
     "clean": "rimraf dist",
     "test": "tap \"test/**/*.test.js\"",
-    "start-docs": "fastify start -l info dist/index.js -p 8080",
-    "dev": "fastify start -w -l info -P src/index.js -p 8080",
-    "build": "pnpm clean && tsc -p tsconfig.json",
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "dev": "npx tsnd --respawn -r tsconfig-paths/register src/index.ts",
     "start": "node dist/index.js",
-    "build-ts": "pnpm clean && npx tsc",
-    "start-ts": "node -r tsconfig-paths/register dist/index.js",
-    "dev-ts": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
-    "dev-tsnd": "npx tsnd --respawn -r tsconfig-paths/register src/index.ts",
-    "pm2": "pm2 stop 'social-oembed' && pm2 start --name 'social-oembed' './dist/index.js'",
-    "deploy-esbuild": "pnpm clean && node build.js",
-    "build-alias": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json"
+    "pm2": "pm2 stop 'social-oembed' && pm2 start --name 'social-oembed' './dist/index.js'"
   },
   "keywords": [
     "fastify",
