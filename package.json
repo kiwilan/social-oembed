@@ -13,17 +13,13 @@
     "type": "git",
     "url": "https://github.com/kiwilan/social-oembed"
   },
-  "main": "index.ts",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "clean": "rimraf dist",
     "test": "tap \"test/**/*.test.js\"",
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "dev": "npx tsnd --respawn -r tsconfig-paths/register src/index.ts",
     "start": "node dist/index.js",
-    "pm2": "pm2 stop 'social-oembed' && pm2 start --name 'social-oembed' './dist/index.js'"
+    "pm2": "pm2 start --name 'social-oembed' './dist/index.js'"
   },
   "keywords": [
     "fastify",
@@ -41,19 +37,13 @@
     "fastify": "^4.9.2",
     "fastify-cli": "^5.5.1",
     "fastify-plugin": "^4.3.0",
-    "module-alias": "^2.2.2",
     "rimraf": "^3.0.2",
-    "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.29.2",
-    "@esbuild-plugins/tsconfig-paths": "^0.0.4",
     "@sinclair/typebox": "^0.25.2",
     "@types/node": "^18.11.8",
-    "concurrently": "^7.5.0",
-    "esbuild": "^0.15.12",
-    "esbuild-ts-paths": "^1.1.3",
     "eslint": "^8.26.0",
     "nodemon": "^2.0.20",
     "tap": "^16.3.0",
