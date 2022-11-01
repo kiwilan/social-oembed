@@ -1,6 +1,6 @@
 import { join } from 'path'
 import fastify from 'fastify'
-import { fastifyEnv } from '@fastify/env'
+import fastifyEnv from '@fastify/env'
 import { fastifyAutoload } from '@fastify/autoload'
 import { options } from '~/plugins/config'
 
@@ -22,7 +22,8 @@ const start = async () => {
 
     const address = (server.config.API_HOST).toString()
 
-    console.warn(`Server listening on http://${address}:${port}`)
+    // eslint-disable-next-line no-console
+    console.log(`Server listening on http://${address}:${port}`)
   }
   catch (error) {
     server.log.error(error)

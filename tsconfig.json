@@ -1,16 +1,15 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "commonjs",
     "moduleResolution": "Node",
     "lib": [
       "esnext"
     ],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
     "outDir": "dist",
-    "baseUrl": "src",
+    "baseUrl": "./",
     "skipLibCheck": true,
     "strict": true,
     "resolveJsonModule": true,
@@ -18,10 +17,10 @@
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "paths": {
-      "@/*": [
+      "~/*": [
         "./src/*"
       ],
-      "~/*": [
+      "@/*": [
         "./*"
       ]
     }
