@@ -1,98 +1,23 @@
-# **Social oEmbed** <!-- omit in toc -->
+# Getting Started with [Fastify-CLI](https://www.npmjs.com/package/fastify-cli)
+This project was bootstrapped with Fastify-CLI.
 
-[![bun](https://img.shields.io/static/v1?label=Bun&message=v0.2&color=000000&style=flat-square&logo=bun&logoColor=ffffff)](https://bun.sh)
-![pipeline](https://gitlab.com/ewilan-riviere/social-oembed/badges/main/pipeline.svg)
+## Available Scripts
 
-![logo](/public/logo.svg)
+In the project directory, you can run:
 
-> *VERY EXPERIMENTAL*  
-> Bun.sh is still in early development, and this application is not stable.  
+### `npm run dev`
 
-API to offer [OpenGraph](https://ogp.me/) meta or [oEmbed](https://oembed.com/) media.
+To start the app in dev mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-> OpenGraph example: <https://social-oembed.git-projects.xyz/api?url=https://github.com&format=opengraph>
+### `npm start`
 
-## Features
+For production mode
 
-- [x] OpenGraph meta
+### `npm run test`
 
-### Roadmap
+Run the test cases.
 
-- [x] OpenGraph
-- [ ] Twitter Cards
-- [ ] oEmbed
-  - [ ] Major social networks support
-- [ ] Host your own instance
-- [ ] Documentation
+## Learn More
 
-## **Setup**
-
-### Local
-
-Download dependencies
-
-```bash
-bun i
-```
-
-Create `.env`
-
-```bash
-cp .env.example .env
-```
-
-Execute `start`
-
-```bash
-bun start
-```
-
-Server is available on <http://localhost:3000>.
-
-#### Advanced
-
-You have some options to execute application.
-
-```bash
-bun start # Start application
-bun watch # Start application with --hot flag (not work for now)
-bun nodemon # Start application with nodemon (hot reload works)
-```
-
-### Production
-
-```bash
-bun build # Build application
-```
-
-You have to serve application with a manager like [pm2](https://pm2.keymetrics.io/). A command offer to start application with pm2.
-
-```bash
-bun deploy
-```
-
-But the best way is to use [Nginx](https://www.nginx.com/) with [pm2](https://pm2.keymetrics.io/).
-
-// TODO deploy docs
-
-## Tests
-
-### Linter
-
-Show errors with [ESLint](https://eslint.org/).
-
-```bash
-bun lint
-```
-
-Automatically fix errors.
-
-```bash
-bun lint:fix
-```
-
-## Docs
-
-- <https://github.com/oven-sh/bun>
-- <https://bun.sh>
-- <https://blog.logrocket.com/bun-javascript-runtime-taking-node-js-deno>
+To learn Fastify, check out the [Fastify documentation](https://www.fastify.io/docs/latest/).

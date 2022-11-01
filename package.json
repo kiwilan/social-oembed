@@ -1,36 +1,37 @@
 {
   "name": "social-oembed",
-  "description": "API to offer OpenGraph meta or oEmbed media.",
-  "author": {
-    "name": "Ewilan Rivière",
-    "email": "ewilan.riviere@gmail.com"
-  },
-  "homepage": "https://github.com/kiwilan/social-oembed",
-  "license": "MIT",
-  "packageManager": "bun@0.2",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kiwilan/social-oembed"
-  },
   "version": "0.0.1",
-  "scripts": {
-    "clean": "rm -rf dist out node_modules",
-    "start": "bun ./src/index.ts",
-    "watch": "bun --hot ./src/index.ts",
-    "nodemon": "nodemon bun ./src/index.ts",
-    "build": "bun bun ./src/index.ts && ./node_modules.bun > node_modules.js",
-    "deploy": "pm2 start bun --name \"social-oembed\" -- start",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+  "description": "Social oEmbed API.",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
   },
+  "scripts": {
+    "test": "tap \"test/**/*.test.js\"",
+    "start": "fastify start -l info app.js -p 8080",
+    "dev": "fastify start -w -l info -P app.js -p 8080"
+  },
+  "keywords": [
+    "fastify",
+    "oembed",
+    "social",
+    "api",
+    "embed",
+    "media",
+    "social network"
+  ],
+  "author": "Ewilan Rivière",
+  "license": "MIT",
   "dependencies": {
-    "bun-types": "^0.2.1",
-    "cheerio": "^1.0.0-rc.12",
-    "typescript": "^4.8.4"
+    "@fastify/autoload": "^5.4.1",
+    "@fastify/sensible": "^5.1.1",
+    "fastify": "^4.9.2",
+    "fastify-cli": "^5.5.1",
+    "fastify-plugin": "^4.3.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.27.0",
-    "eslint": "^8.26.0",
-    "nodemon": "^2.0.20"
+    "@types/node": "^18.11.8",
+    "tap": "^16.3.0",
+    "typescript": "^4.8.4"
   }
 }

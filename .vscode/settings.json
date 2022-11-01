@@ -12,5 +12,6 @@
     "js",
     "html",
     "typescript"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

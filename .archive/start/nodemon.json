@@ -1,0 +1,16 @@
+{
+  "watch": [
+    "src"
+  ],
+  "ignore": [
+    ".archive",
+    "node_modules",
+    "dist"
+  ],
+  "ext": ".ts,.js",
+  "exec": "pnpm build && pnpm start",
+  "env": {
+    "NODE_DEBUG": 9229,
+    "NODE_ENV": "development"
+  }
+}
