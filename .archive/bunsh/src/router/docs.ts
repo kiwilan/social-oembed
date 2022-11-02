@@ -1,5 +1,5 @@
 // import type { OpenGraph } from '@/Models/OpenGraph'
-import ApiService from '@/Services/ApiService'
+import ApiService from '~/services/ApiService'
 import type { RouteResponse } from '~/types'
 // import OpenGraphSevice from '@/Services/OpenGraphService'
 

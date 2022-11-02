@@ -13,11 +13,8 @@ const root = async (fastify: FastifyInstance) => {
     }
   }
 
-  fastify.get('/', opts, async () => {
-    return {
-      hello: 'world',
-      data: {}
-    }
+  fastify.get('/', opts, async (req, res) => {
+    res.redirect(301, '/api') // TODO route()
   })
 }
 

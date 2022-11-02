@@ -6,19 +6,23 @@
     "name": "Ewilan Rivière",
     "email": "ewilan.riviere@gmail.com"
   },
-  "homepage": "https://github.com/kiwilan/social-oembed",
+  "homepage": "https://github.com/kiwilan/social-oembed#readme",
   "license": "MIT",
   "packageManager": "pnpm@7.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/kiwilan/social-oembed"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "clean": "rimraf dist",
     "test": "tap \"test/**/*.test.js\"",
-    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "check:types": "tsc --noEmit",
+    "build": "pnpm clean && npx tsc --project tsconfig.json && npx tsc-alias -p tsconfig.json",
     "dev": "npx tsnd --respawn -r tsconfig-paths/register src/index.ts",
-    "start": "node dist/index.js",
+    "start": "node dist/src/index.js",
     "pm2": "pm2 start --name 'social-oembed' './dist/index.js'"
   },
   "keywords": [
@@ -28,15 +32,20 @@
     "api",
     "embed",
     "media",
-    "social network"
+    "social network",
+    "nodejs",
+    "bun",
+    "typescript"
   ],
   "dependencies": {
     "@fastify/autoload": "^5.4.1",
     "@fastify/env": "^4.1.0",
     "@fastify/sensible": "^5.1.1",
+    "cheerio": "1.0.0-rc.12",
     "fastify": "^4.9.2",
     "fastify-cli": "^5.5.1",
     "fastify-plugin": "^4.3.0",
+    "node-fetch": "^2.x",
     "rimraf": "^3.0.2",
     "tsconfig-paths": "^4.1.0"
   },
@@ -44,8 +53,8 @@
     "@antfu/eslint-config": "^0.29.2",
     "@sinclair/typebox": "^0.25.2",
     "@types/node": "^18.11.8",
+    "@types/node-fetch": "2.x",
     "eslint": "^8.26.0",
-    "nodemon": "^2.0.20",
     "tap": "^16.3.0",
     "ts-node-dev": "^2.0.0",
     "tsc-alias": "^1.7.0",

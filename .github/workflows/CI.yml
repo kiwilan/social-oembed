@@ -17,15 +17,17 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 16.x
+          node-version: 18.x
       - name: Install dependencies
-        run: npm install
+        run: npm i -g pnpm
+      - name: Install dependencies
+        run: pnpm i
       - name: Lint
-        run: npm run lint
+        run: pnpm lint
       - name: Check types
-        run: npm run check:types
+        run: pnpm check:types
       - name: Build
-        run: npm run build
+        run: pnpm build
       - name: Test
-        run: npm test
+        run: pnpm test
 
