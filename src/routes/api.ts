@@ -27,13 +27,13 @@ const docs = async (fastify: FastifyInstance) => {
         },
       }
 
-      const rejectApiKey = ApiService.checkApiKey(api)
-      if (rejectApiKey)
-        return rejectApiKey.content
+      // const rejectApiKey = ApiService.checkApiKey(api)
+      // if (rejectApiKey)
+      //   return rejectApiKey.content
 
-      const rejectUrl = ApiService.checkUrl(api)
-      if (rejectUrl)
-        return rejectUrl.content
+      // const rejectUrl = ApiService.checkUrl(api)
+      // if (rejectUrl)
+      //   return rejectUrl.content
 
       if (api.url && api.format === 'opengraph') {
         const og = await OpenGraphService.make(api.url)

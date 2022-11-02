@@ -1,12 +1,13 @@
 import type { FastifyRequest } from 'fastify'
 import { route, routeBuilder } from '~/utils/Route'
 import packageJson from '@/package.json'
-import Cors from '~/utils/Cors'
-import type { DotEnvConfig, Format, Instance, ResponseMeta, Route, RouteResponse } from '~/types'
+import type { Format, Instance, ResponseMeta, Route } from '~/types'
+import type { DotEnvConfig, } from '~/types/dotenv'
+import DotEnv from '~/utils/DotEnv'
 
 export default class ApiService {
   private route?: Route
-  private dotenv?: DotEnvConfig
+  private dotenv: DotEnvConfig
   public url?: string
   public format: Format = 'opengraph'
   public apiKey?: string
@@ -14,11 +15,13 @@ export default class ApiService {
   public instance?: Instance
   public meta: ResponseMeta
 
-  protected constructor(meta: ResponseMeta) {
+  protected constructor(meta: ResponseMeta, dotenv: DotEnvConfig) {
     this.meta = meta
+    this.dotenv = dotenv
   }
 
   public static make(req: FastifyRequest): ApiService {
+    const dotenv = DotEnv.make()
     const api = new ApiService({
       docs: 'init',
       fetch: {
@@ -29,9 +32,7 @@ export default class ApiService {
       },
       format: 'oembed',
       url: 'init',
-    })
-
-    api.dotenv = api.setDotenvConfig()
+    }, dotenv.config)
 
     const route = routeBuilder(req)
     api.route = route
@@ -47,74 +48,12 @@ export default class ApiService {
     return api
   }
 
-  public static checkApiKey(api: ApiService): RouteResponse | void {
-    if (api.apiKeyEnable && api.apiKey !== process.env.API_KEY) {
-      const meta = api.meta
-
-      if (!meta.fetch)
-        meta.fetch = {}
-
-      meta.fetch.ok = false
-      meta.fetch.status = 401
-      meta.fetch.message = 'Invalid API key with query param `api_key`'
-
-      const response: RouteResponse = {
-        content: {
-          data: {},
-          meta,
-        },
-        status: 401,
-      }
-
-      return response
-    }
-  }
-
-  public static checkUrl(api: ApiService): RouteResponse | void {
-    if (!api.url) {
-      const meta = api.meta
-
-      if (!meta.fetch)
-        meta.fetch = {}
-
-      meta.fetch.ok = false
-      meta.fetch.status = 401
-      meta.fetch.message = 'Invalid query with query param `url`'
-
-      const response: RouteResponse = {
-        content: {
-          data: {},
-          meta,
-        },
-        status: 401,
-      }
-
-      return response
-    }
-  }
-
-  private setDotenvConfig(): DotEnvConfig {
-    let enabled = false
-    if (typeof process.env.API_KEY_ENABLED === 'boolean')
-      enabled = process.env.API_KEY_ENABLED
-
-    const domains = Cors.dotEnvCors()
-
-    return {
-      PORT: process.env.PORT || '3000',
-      BASE_URL: process.env.BASE_URL || 'http://localhost:3000',
-      API_KEY: process.env.API_KEY || undefined,
-      API_KEY_ENABLED: enabled || false,
-      API_DOMAINS: domains || undefined,
-    }
-  }
-
   private setInstance(): Instance {
     return {
       name: packageJson.name,
       version: packageJson.version,
       apiKeyEnable: this.apiKeyEnable,
-      instance: this.dotenv?.BASE_URL ?? 'http://localhost:3000',
+      instance: this.dotenv?.API_URL,
       options: {
         query: {
           api_key: this.apiKeyEnable ? 'required, type string' : 'disable on this instance',
@@ -124,10 +63,10 @@ export default class ApiService {
       },
       examples: {
         // TODO: add examples, add query params with `route()` helper
-        // opengraph: route({
-        //   endpoint: '/api',
-        //   query: { url: 'https://github.com', format: 'opengraph', api_key: this.apiKey },
-        // }),
+        opengraph: route({
+          endpoint: '/api',
+          query: { url: 'https://github.com', format: 'opengraph', api_key: this.apiKey },
+        }),
       },
     }
   }

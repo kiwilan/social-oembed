@@ -22,18 +22,25 @@ export const route = (route: Endpoint | Route): string => {
   else
     current = route
 
-  const url = new URL(current.endpoint, process.env.BASE_URL)
+  try {
+    const url = new URL(current.endpoint, process.env.BASE_URL)
 
-  if (current.query) {
-    Object.keys(current.query).forEach((key) => {
-      if (current.query)
+    if (current.query) {
+      Object.keys(current.query).forEach((key) => {
+        if (current.query)
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
-        url.searchParams.append(key, current.query[key])
-    })
-  }
+          url.searchParams.append(key, current.query[key])
+      })
+    }
 
-  return url.toString()
+    return url.toString()
+  }
+  catch (error) {
+    console.error(error)
+
+    return ''
+  }
 }
 
 /**
