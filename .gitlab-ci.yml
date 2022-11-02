@@ -40,8 +40,8 @@ deploy-job:
       export PATH="$BUN_INSTALL/bin:$PATH" &&
       cd /home/ewilan/www/$CI_PROJECT_NAME &&
       git pull &&
-      /home/ewilan/.bun/bin/bun i &&
-      /home/ewilan/.bun/bin/bun build &&
+      /home/ewilan/.nvm/versions/node/v$NODE_VERSION/bin/pnpm i &&
+      /home/ewilan/.nvm/versions/node/v$NODE_VERSION/bin/pnpm build &&
       /home/ewilan/.nvm/versions/node/v$NODE_VERSION/bin/pm2 restart $PM2 &&
       discord-queerotronic.sh '$CI_PROJECT_TITLE'"
   only:

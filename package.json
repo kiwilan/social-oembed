@@ -14,7 +14,7 @@
     "url": "https://github.com/kiwilan/social-oembed"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=16.0.0"
   },
   "scripts": {
     "clean": "rimraf dist",
