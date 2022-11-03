@@ -6,11 +6,11 @@ import fastifyEnv from '@fastify/env'
 import { fastifyAutoload } from '@fastify/autoload'
 import cors from '@fastify/cors'
 import { Type } from '@sinclair/typebox'
-import DotEnv from './utils/DotEnv'
-import config from './plugins/config'
-import type { LogLevel, NodeEnv } from './types/dotenv'
-import InstanceConfig from './utils/InstanceConfig'
-import type { Instance, ResponseContent } from './types'
+import DotEnv from '~/utils/DotEnv'
+import config from '~/plugins/config'
+import type { LogLevel, NodeEnv } from '~/types/dotenv'
+import InstanceConfig from '~/utils/InstanceConfig'
+import type { Instance, ResponseContent } from '~/types'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -21,10 +21,10 @@ const fastify = Fastify({
 
 const start = async () => {
   try {
-    // await fastify.register(fastifyAutoload, {
-    //   dir: join(__dirname, 'plugins'),
-    //   forceESM: true
-    // })
+    await fastify.register(fastifyAutoload, {
+      dir: join(__dirname, 'plugins'),
+      forceESM: true
+    })
     await fastify.register(fastifyAutoload, {
       dir: join(__dirname, 'routes'),
       forceESM: true

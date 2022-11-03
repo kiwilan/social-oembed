@@ -1,7 +1,13 @@
 {
-  "watch": [
-    "./src/**/*.ts"
+  "ignore": [
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    ".git",
+    "node_modules"
   ],
-  "exec": "ts-node ./src/index.ts",
-  "ext": "js, json, ts, proto"
+  "watch": [
+    "src"
+  ],
+  "exec": "node --experimental-modules --experimental-specifier-resolution=node --loader ts-node/esm dist/index.mjs",
+  "ext": "ts, js"
 }
