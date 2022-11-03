@@ -97,6 +97,7 @@ pnpm lint:fix
 - <https://blog.logrocket.com/how-to-set-up-node-typescript-express>
 - <https://stackoverflow.com/questions/37979489/how-to-watch-and-reload-ts-node-when-typescript-files-change>
 - <https://tsh.io/blog/fastify-practical-overview>
+- <https://davipon.hashnode.dev/better-backend-dx-fastify-esbuild>
 
 ### ES6
 
@@ -113,6 +114,8 @@ pnpm lint:fix
 - <https://github.com/yonathan06/fastify-typescript-starter>
 - <https://github.com/hmake98/fastify-typescript>
 - <https://github.com/matschik/fastify-typescript-starter>
+- <https://github.com/ManUtopiK/vite-fastify-boilerplate>
+- <https://github.com/axe-me/vite-plugin-node>
 
 #### Notes
 

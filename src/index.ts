@@ -4,13 +4,14 @@ import Fastify from 'fastify'
 import fastifyEnv from '@fastify/env'
 import { fastifyAutoload } from '@fastify/autoload'
 import cors from '@fastify/cors'
-import DotEnv from '~/utils/DotEnv'
-import config from '~/config'
+import DotEnv from './utils/DotEnv'
+import config from './config'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const fastify = Fastify({
+  logger: true,
   ignoreTrailingSlash: true
 })
 
