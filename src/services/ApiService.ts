@@ -1,7 +1,6 @@
 import type { FastifyRequest } from 'fastify'
 import { route, routeBuilder } from '~/utils/Route'
-import packageJson from '@/package.json'
-import type { Format, Instance, ResponseMeta, Route } from '~/types'
+import type { Format, ResponseMeta, Route } from '~/types'
 import type { DotEnvConfig, } from '~/types/dotenv'
 import DotEnv from '~/utils/DotEnv'
 
@@ -12,7 +11,6 @@ export default class ApiService {
   public format: Format = 'opengraph'
   public apiKey?: string
   public apiKeyEnable = false
-  public instance?: Instance
   public meta: ResponseMeta
 
   protected constructor(meta: ResponseMeta, dotenv: DotEnvConfig) {
@@ -42,40 +40,16 @@ export default class ApiService {
     api.apiKey = api.route.query?.api_key || undefined
     api.apiKeyEnable = api.dotenv.API_KEY_ENABLED
 
-    api.instance = api.setInstance()
     api.meta = api.setMeta()
 
     return api
-  }
-
-  private setInstance(): Instance {
-    return {
-      name: packageJson.name,
-      version: packageJson.version,
-      apiKeyEnable: this.apiKeyEnable,
-      instance: this.dotenv?.API_URL,
-      options: {
-        query: {
-          api_key: this.apiKeyEnable ? 'required, type string' : 'disable on this instance',
-          url: 'required, type string',
-          format: 'optional, type `oembed` | `opengraph`, default `oembed`',
-        },
-      },
-      examples: {
-        // TODO: add examples, add query params with `route()` helper
-        opengraph: route({
-          endpoint: '/api',
-          query: { url: 'https://github.com', format: 'opengraph', api_key: this.apiKey },
-        }),
-      },
-    }
   }
 
   private setMeta(): ResponseMeta {
     return {
       url: this.url ? this.url : 'query param `url` is required',
       format: this.format,
-      docs: '/docs', // TODO route()
+      docs: route('/docs'), // TODO route()
       fetch: {
         message: 'Fetching data',
         ok: false,

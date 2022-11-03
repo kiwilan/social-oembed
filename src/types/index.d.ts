@@ -81,7 +81,7 @@ export interface Route {
 
 interface ResponseContent {
   data: object
-  meta: ResponseMeta
+  meta?: ResponseMeta
 }
 
 export interface RouteResponse {

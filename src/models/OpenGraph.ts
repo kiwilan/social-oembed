@@ -1,8 +1,8 @@
 import * as cheerio from 'cheerio'
 import Http from '~/utils/Http'
 import { Module } from '~/models/Module'
-import { metaNodes } from '~/constants'
 import type { FetchMeta, MetaNode, MetaValues, OpenGraphResponse } from '~/types'
+import OpenGraphService from '~/services/OpenGraphService'
 
 export class OpenGraphItem extends Module {
   public ok = false
@@ -90,7 +90,7 @@ export class OpenGraphItem extends Module {
     const $ = cheerio.load(html ?? '')
 
     const metaValues: MetaValues = {}
-    Object.entries(metaNodes).forEach((el) => {
+    Object.entries(OpenGraphService.metaNodes()).forEach((el) => {
       const entry = el[0] // e.g. title
       const nodes: MetaNode[] = el[1]
 

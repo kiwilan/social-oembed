@@ -1,9 +1,6 @@
 import type { FastifyRequest } from 'fastify'
+import DotEnv from './DotEnv'
 import type { Endpoint, Route, RouteQuery } from '~/types'
-
-interface Request {
-  url: string
-}
 
 /**
  * Check if current `object` is `Route`
@@ -22,8 +19,9 @@ export const route = (route: Endpoint | Route): string => {
   else
     current = route
 
+  const dotenv = DotEnv.make()
   try {
-    const url = new URL(current.endpoint, process.env.BASE_URL)
+    const url = new URL(current.endpoint, dotenv.config.API_URL)
 
     if (current.query) {
       Object.keys(current.query).forEach((key) => {
@@ -39,7 +37,7 @@ export const route = (route: Endpoint | Route): string => {
   catch (error) {
     console.error(error)
 
-    return ''
+    return 'error'
   }
 }
 

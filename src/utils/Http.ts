@@ -1,4 +1,4 @@
-import type { RequestInfo, RequestInit, Response } from 'node-fetch'
+import type { Response } from 'node-fetch'
 import type { FetchInit, FetchOptions, FetchParams, FetchResponse, FetchType, ResponseMethod } from '~/types/http'
 
 export default class Http {
