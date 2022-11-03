@@ -1,8 +1,8 @@
 import type { FastifyRequest } from 'fastify'
-import { route, routeBuilder } from '~/utils/Route'
+import { route, routeBuilder } from '../utils/Route'
+import DotEnv from '../utils/DotEnv'
 import type { Format, ResponseMeta, Route } from '~/types'
 import type { DotEnvConfig, } from '~/types/dotenv'
-import DotEnv from '~/utils/DotEnv'
 
 export default class ApiService {
   private route?: Route

@@ -6,6 +6,7 @@
     "name": "Ewilan Rivière",
     "email": "ewilan.riviere@gmail.com"
   },
+  "type": "module",
   "homepage": "https://github.com/kiwilan/social-oembed#readme",
   "license": "MIT",
   "packageManager": "pnpm@7.0.0",
@@ -20,9 +21,14 @@
     "clean": "rimraf dist",
     "test": "tap \"test/**/*.test.js\"",
     "check:types": "tsc --noEmit",
-    "build": "npm run clean && npx tsc --project tsconfig.json && npx tsc-alias -p tsconfig.json",
+    "build": "npm run clean && npx tsc --project tsconfig.json && npx tsc-alias -p tsconfig.json && mv dist/index.js dist/index.mjs",
     "dev": "npx tsnd --respawn -r tsconfig-paths/register src/index.ts",
-    "start": "node dist/src/index.js",
+    "dev-experimental": "nodemon",
+    "dev:node": "tsc-watch --onSuccess \"npm run watch:node\"",
+    "watch:node": "nodemon --watch './**/*.{ts,graphql}' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' src/index.ts",
+    "serve": "cross-env TS_NODE_PROJECT=\"tsconfig.json\" node --experimental-specifier-resolution=node --loader ./loader.js src/index.ts",
+    "watch": "nodemon --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"ts-node src/index.ts\"",
+    "start": "node --experimental-modules --experimental-specifier-resolution=node dist/index.mjs",
     "pm2": "pm2 start --name 'social-oembed' './dist/index.js'"
   },
   "keywords": [
@@ -43,11 +49,16 @@
     "@fastify/env": "^4.1.0",
     "@fastify/sensible": "^5.1.1",
     "cheerio": "1.0.0-rc.12",
+    "cross-env": "^7.0.3",
+    "esm": "^3.2.25",
     "fastify": "^4.9.2",
     "fastify-cli": "^5.5.1",
     "fastify-plugin": "^4.3.0",
     "node-fetch": "^2.x",
+    "nodemon": "^2.0.20",
     "rimraf": "^3.0.2",
+    "ts-node": "^10.9.1",
+    "tsc-watch": "^5.0.3",
     "tsconfig-paths": "^4.1.0"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
+// import packageJson from '../../package.json'
 import DotEnv from './DotEnv'
 import { route } from './Route'
 import type { Instance } from '~/types'
-import packageJson from '@/package.json'
 
 export default class InstanceConfig {
   public config: Instance
@@ -14,8 +14,10 @@ export default class InstanceConfig {
     const dotenv = DotEnv.make()
 
     const instance = new InstanceConfig({
-      name: packageJson.name,
-      version: packageJson.version,
+      // name: packageJson.name,
+      // version: packageJson.version,
+      name: 'package',
+      version: '0.0.1',
       apiKeyEnable: dotenv.config.API_KEY_ENABLED,
       instance: dotenv.config.API_URL,
       options: {

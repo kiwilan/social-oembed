@@ -1,4 +1,3 @@
-import { Type } from '@sinclair/typebox'
 import type { LogLevel, NodeEnv } from '~/types/dotenv'
 
 const schema = {
@@ -48,24 +47,11 @@ const schema = {
   }
 }
 
-export const options = {
+const options = {
   confKey: 'config',
   schema,
   data: process.env,
   dotenv: true
 }
 
-declare module 'fastify' {
-  interface FastifyInstance {
-    config: {
-      NODE_ENV: NodeEnv
-      LOG_LEVEL: LogLevel
-      API_PORT: number
-      API_HOST: string
-      API_HTTPS_ENABLED: boolean
-      API_KEY: string
-      API_KEY_ENABLED: boolean
-      API_DOMAINS: string
-    }
-  }
-}
+export default options

@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "commonjs",
+    "module": "ESNext", // "CommonJS" or "ESNext"
     "moduleResolution": "Node",
     "lib": [
-      "esnext"
+      "ESNext"
     ],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -16,6 +16,7 @@
     "strictNullChecks": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
+    "allowJs": true,
     "paths": {
       "~/*": [
         "./src/*"
@@ -26,8 +27,18 @@
     }
   },
   "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node",
     "compilerOptions": {
-      "module": "commonjs"
+      "module": "ESNext", // "CommonJS" or "ESNext"
+      "paths": {
+        "~/*": [
+          "./src/*"
+        ],
+        "@/*": [
+          "./*"
+        ]
+      }
     }
   },
   "include": [

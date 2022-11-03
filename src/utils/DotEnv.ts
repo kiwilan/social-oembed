@@ -1,5 +1,5 @@
 import type { FastifyRequest } from 'fastify'
-import type { DotEnvConfig, LogLevel, NodeEnv } from '~/types/dotenv'
+import type { DotEnvConfig, LogLevel, NodeEnv } from '../types/dotenv'
 
 export default class DotEnv {
   public config: DotEnvConfig

@@ -1,4 +1,4 @@
-import { OpenGraphItem } from '~/models/OpenGraph'
+import OpenGraphItem from '../models/OpenGraph'
 import type { Meta } from '~/types'
 
 export default class OpenGraphService {

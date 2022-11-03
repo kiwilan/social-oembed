@@ -1,11 +1,19 @@
-import { join } from 'path'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+import type { FastifySchema } from 'fastify'
 import Fastify from 'fastify'
 import fastifyEnv from '@fastify/env'
 import { fastifyAutoload } from '@fastify/autoload'
 import cors from '@fastify/cors'
+import { Type } from '@sinclair/typebox'
 import DotEnv from './utils/DotEnv'
-import { options } from '~/plugins/config'
-import Cors from '~/utils/Cors'
+import config from './plugins/config'
+import type { LogLevel, NodeEnv } from './types/dotenv'
+import InstanceConfig from './utils/InstanceConfig'
+import type { Instance, ResponseContent } from './types'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const fastify = Fastify({
   ignoreTrailingSlash: true
@@ -13,13 +21,35 @@ const fastify = Fastify({
 
 const start = async () => {
   try {
+    // await fastify.register(fastifyAutoload, {
+    //   dir: join(__dirname, 'plugins'),
+    //   forceESM: true
+    // })
     await fastify.register(fastifyAutoload, {
-      dir: join(__dirname, 'plugins')
+      dir: join(__dirname, 'routes'),
+      forceESM: true
     })
-    await fastify.register(fastifyAutoload, {
-      dir: join(__dirname, 'routes')
-    })
-    await fastify.register(fastifyEnv, options)
+    // const schema: FastifySchema = {
+    //   response: {
+    //     200: {
+    //       data: Type.Unsafe<Instance>(),
+    //     }
+    //   }
+    // }
+
+    // const instance = InstanceConfig.make()
+
+    // fastify.route({
+    //   method: 'GET',
+    //   url: '/api', // TODO Route helper method with Endpoint type
+    //   schema,
+    //   async handler() {
+    //     return {
+    //       data: instance.config,
+    //     } as ResponseContent
+    //   },
+    // })
+    await fastify.register(fastifyEnv, config)
     await fastify.after()
 
     await fastify.register(cors, {
@@ -45,3 +75,18 @@ const start = async () => {
   }
 }
 start()
+
+declare module 'fastify' {
+  interface FastifyInstance {
+    config: {
+      NODE_ENV: NodeEnv
+      LOG_LEVEL: LogLevel
+      API_PORT: number
+      API_HOST: string
+      API_HTTPS_ENABLED: boolean
+      API_KEY: string
+      API_KEY_ENABLED: boolean
+      API_DOMAINS: string
+    }
+  }
+}

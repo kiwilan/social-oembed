@@ -1,8 +1,8 @@
 import type { FastifyInstance, FastifySchema } from 'fastify'
 import { Type } from '@sinclair/typebox'
+import ApiService from '../services/ApiService'
+import OpenGraphService from '../services/OpenGraphService'
 import type { ResponseMeta } from '~/types'
-import ApiService from '~/services/ApiService'
-import OpenGraphService from '~/services/OpenGraphService'
 
 const docs = async (fastify: FastifyInstance) => {
   const schema: FastifySchema = {
