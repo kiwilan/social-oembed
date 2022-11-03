@@ -130,3 +130,28 @@ ts-node --esm ./my-script.ts
 ```bash
 nodemon -e ts,js --exec ts-node -r tsconfig-paths/register ./src/server.ts
 ```
+
+#### Rust with SWC
+
+```bash
+pnpm add concurrently -D
+```
+
+```json
+{
+  "scripts": {
+    "dev:rust": "nodemon",
+    "build:rust": "rimraf dist && swc src -w --out-dir dist",
+    "start:rust": "pnpm build:go && npm run start",
+    "dev:go": "nodemon",
+    "build:go": "rimraf build && node esbuild.js",
+    "start:go": "pnpm build:go && npm run start",
+    "swc:dev": "concurrently \"npm run swc:watch-compile\" \"npm run swc:watch-dev\"",
+    "swc:watch-compile": "swc src -w --out-dir dist",
+    "swc:watch-dev": "nodemon --watch \"dist/**/*\" -e js ./dist/main.js",
+    "swc:build": "swc src -d dist",
+    "swc:start": "NODE_ENV=production node dist/main.js",
+    "swc:clean": "rm -rf dist"
+  }
+}
+```

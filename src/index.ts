@@ -6,27 +6,31 @@ import { fastifyAutoload } from '@fastify/autoload'
 import cors from '@fastify/cors'
 import DotEnv from './utils/DotEnv'
 import config from './config'
+import router from './router'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const fastify = Fastify({
-  logger: true,
+  logger: false,
   ignoreTrailingSlash: true
 })
 
 const start = async () => {
   try {
     // https://github.com/fastify/fastify-autoload
-    await fastify.register(fastifyAutoload, {
-      dir: join(__dirname, 'plugins'),
-      forceESM: true
-    })
-    await fastify.register(fastifyAutoload, {
-      dir: join(__dirname, 'routes'),
-      forceESM: true
-    })
+    // await fastify.register(fastifyAutoload, {
+    //   dir: join(__dirname, 'plugins'),
+    //   forceESM: true
+    // })
+    // await fastify.register(fastifyAutoload, {
+    //   dir: join(__dirname, 'routes'),
+    //   // forceESM: true
+    // })
     await fastify.register(fastifyEnv, config)
+    await fastify.register(router.root)
+    await fastify.register(router.docs)
+    await fastify.register(router.api)
     await fastify.after()
 
     await fastify.register(cors, {

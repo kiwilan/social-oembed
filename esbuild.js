@@ -34,5 +34,5 @@ esbuild.build({
   sourcemap: true,
   outExtension: { '.js': '.mjs' },
   tsconfig: 'tsconfig.json',
-  resolveExtensions: ['.ts', '.js'],
+  // resolveExtensions: ['.ts', '.js'],
 })
