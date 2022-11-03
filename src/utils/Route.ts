@@ -45,7 +45,8 @@ export const route = (route: Endpoint | Route): string => {
  * Create a `Route` from `Request`
  */
 export const routeBuilder = (req: FastifyRequest): Route => {
-  const baseURL = process.env.BASE_URL || 'http://localhost:3001'
+  const dotenv = DotEnv.make()
+  const baseURL = dotenv.config.API_URL
   const url = req.url.replace(baseURL, '').replace(/\/$/, '')
   let route: Route = { endpoint: '/' }
 
