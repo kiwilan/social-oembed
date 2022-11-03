@@ -30,7 +30,7 @@
     "watch:node": "npm run rename && nodemon",
     "serve": "cross-env TS_NODE_PROJECT=\"tsconfig.json\" node --experimental-specifier-resolution=node --loader ./loader.js src/index.ts",
     "watch": "nodemon --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"ts-node src/index.ts\"",
-    "start": "node --experimental-modules --experimental-specifier-resolution=node --loader ts-node/esm dist/index.mjs",
+    "start": "node --experimental-specifier-resolution=node --loader ./loader.js dist/index.mjs",
     "pm2": "pm2 start --name 'social-oembed' './dist/index.mjs'"
   },
   "keywords": [

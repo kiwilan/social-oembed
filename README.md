@@ -101,3 +101,29 @@ pnpm lint:fix
 ### ES6
 
 - <https://blog.logrocket.com/es-modules-in-node-today>
+- <https://github.com/TypeStrong/ts-node/pull/1585>: ts-node support esm
+- <https://github.com/TypeStrong/ts-node/discussions/1450#discussioncomment-1806115>: ts-node use loader
+- <https://github.com/felipeplets/esm-examples>
+- <https://stackoverflow.com/a/39436580/11008206>: --experimental-modules, module, .mjs
+- <https://github.com/microsoft/TypeScript/issues/18442#issuecomment-1073060190>: swc rust compiler
+  - <https://github.com/swc-project/swc>
+
+#### Repositories
+
+- <https://github.com/yonathan06/fastify-typescript-starter>
+- <https://github.com/hmake98/fastify-typescript>
+- <https://github.com/matschik/fastify-typescript-starter>
+
+#### Notes
+
+```bash
+node --loader ts-node/esm ./my-script.ts
+```
+
+```bash
+ts-node --esm ./my-script.ts
+```
+
+```bash
+nodemon -e ts,js --exec ts-node -r tsconfig-paths/register ./src/server.ts
+```
