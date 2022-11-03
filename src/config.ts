@@ -54,4 +54,19 @@ const options = {
   dotenv: true
 }
 
+declare module 'fastify' {
+  interface FastifyInstance {
+    config: {
+      NODE_ENV: NodeEnv
+      LOG_LEVEL: LogLevel
+      API_PORT: number
+      API_HOST: string
+      API_HTTPS_ENABLED: boolean
+      API_KEY: string
+      API_KEY_ENABLED: boolean
+      API_DOMAINS: string
+    }
+  }
+}
+
 export default options

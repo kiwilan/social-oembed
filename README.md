@@ -97,3 +97,7 @@ pnpm lint:fix
 - <https://blog.logrocket.com/how-to-set-up-node-typescript-express>
 - <https://stackoverflow.com/questions/37979489/how-to-watch-and-reload-ts-node-when-typescript-files-change>
 - <https://tsh.io/blog/fastify-practical-overview>
+
+### ES6
+
+- <https://blog.logrocket.com/es-modules-in-node-today>
