@@ -13,6 +13,8 @@ export default class DotEnv {
     const host = process.env.API_HOST || 'localhost'
     const https = process.env.API_HTTPS === 'true' || false
     let key = process.env.API_KEY || undefined
+    if (key === 'false')
+      key = undefined
 
     const dotenv = new DotEnv({
       NODE_ENV: process.env.NODE_ENV as NodeEnv || 'development',

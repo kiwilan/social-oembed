@@ -1,18 +1,35 @@
 # **Social oEmbed** <!-- omit in toc -->
 
+<div align="center"> <a href="https://fastify.io/">
+    <img
+      src="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/logo.svg"
+      width="250"
+      height="auto"
+    />
+  </a>
+</div>
+
+<div align="center">
+
 [![nodejs](https://img.shields.io/static/v1?label=Node.js&message=v16.x&color=339933&style=flat-square&logo=node.js&logoColor=ffffff)](https://nodejs.org/en)
 [![fastify](https://img.shields.io/static/v1?label=Fastify&message=v4.x&color=000000&style=flat-square&logo=fastify&logoColor=ffffff)](https://www.fastify.io)
+[![typescript](https://img.shields.io/static/v1?label=TypeScript&message=v4.8.x&color=3178C6&style=flat-square&logo=typescript&logoColor=ffffff)](https://www.typescriptlang.org)
 
+</div>
+
+<div align="center">
+
+[![esbuild](https://img.shields.io/static/v1?label=esbuild&message=ESM&color=FFCF00&style=flat-square&logo=esbuild&logoColor=ffffff)](https://esbuild.github.io)
 ![pipeline](https://gitlab.com/ewilan-riviere/social-oembed/badges/main/pipeline.svg)
 
-![logo](/public/logo.svg)
+</div>
 
-> *VERY EXPERIMENTAL*  
-> In early development, not stable.  
+<br />
 
 API to offer [OpenGraph](https://ogp.me/) meta or [oEmbed](https://oembed.com/) media.
 
-> OpenGraph example: <https://social-oembed.git-projects.xyz/api?url=https://github.com&format=opengraph>
+> *VERY EXPERIMENTAL*  
+> In early development, not stable.  
 
 ## Why ?
 
@@ -20,12 +37,53 @@ API to offer [OpenGraph](https://ogp.me/) meta or [oEmbed](https://oembed.com/) 
 
 With OpenGraph, from JavaScript application, on client side, you can't parse a website, you have to call an API to get these data, some services offer this API, but mostly aren't open source. About these services, you can find [opengraph.io](https://www.opengraph.io/) (free with API limit requests) or [iframely](https://iframely.com/) (with own hosted solution).
 
-With oEmbed, it's really complicated, each social network have their own API, with some limitations (Instagram or Facebook for example), some services offer to get these data but you have to pay for it, and it's really expensive ([smashballoon](https://smashballoon.com/), [embedsocial](https://embedsocial.com/)...). Only [iframely](https://iframely.com/) offer a free plan with some limitations, with own hosted, but you can't access to Instagram or Facebook cause by [Meta limitations](https://www.nosto.com/blog/instagram-api-limit/).
+With oEmbed, it's really complicated, each social network have their own API, with some limitations (Instagram or Facebook for example), some services offer to get these data but you have to pay for it, and it's really expensive ([smashballoon](https://smashballoon.com/), [embedsocial](https://embedsocial.com/)...). Only [iframely](https://iframely.com/) offer a free plan with some limitations, with own hosted, but you can't access to Instagram or Facebook cause by [Meta limitations](https://www.nosto.com/blog/instagram-api-limit/)*.
 
 **This project is an attempt to offer a free (with own hosted solution) and open source API to get OpenGraph and oEmbed data.**
 
-## Roadmap
+**: to get Instagram or Facebook data, you have to register your application on Meta, and it's really complicated to get access to this API, Social oEmbed offer another solution without any key from Meta.*
 
+## Usage
+
+Demo instance: `https://social-oembed.git-projects.xyz`
+
+```http
+GET /api
+```
+
+| Parameter | Type                    | Required                            | Description                               |
+|-----------|-------------------------|-------------------------------------|-------------------------------------------|
+| `url`     | `string`                | `true`                              | URL of website like `https://github.com`. |
+| `format`  | `opengraph` or `oembed` | `false`                             | Format of data, default is `opengraph`.   |
+| `api_key` | `string`                | Depend of `.env` `API_KEY` variable | API key.                                  |
+
+```http
+GET /docs
+```
+
+Information about API.
+
+### OpenGraph
+
+Example: <https://social-oembed.git-projects.xyz/api?url=https://github.com&format=opengraph>
+
+```bash
+curl --request GET \
+    --data-urlencode "url=https://github.com"
+    --data-urlencode "format=opengraph"
+    --get "https://social-oembed.git-projects.xyz/api" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"
+```
+
+## Features
+
+- OpenGraph metadata
+
+### Roadmap
+
+- API key as query or header
+- Domains allow `*` or `*.domain.com`
 - [x] OpenGraph
   - [ ] All meta
   - [ ] Twitter Cards
@@ -34,6 +92,11 @@ With oEmbed, it's really complicated, each social network have their own API, wi
     - [ ] Providers system
 - [ ] Host your own instance
 - [ ] Documentation
+  - [ ] Usage from JS client side with fetch, from PHP with Guzzle
+  - [ ] Usage response example, typescript interfaces
+  - [ ] Usage oembed
+  - [ ] examples alpinejs/react/vuejs
+  - [ ] Deploy nginx and pm2 docs
 - [ ] Use Mongo to cache data
 - [ ] Use [Bun](https://bun.sh/) when it will be stable
 
@@ -63,13 +126,13 @@ Server is available on <http://localhost:3000>.
 
 ### `.env`
 
-| Variable | Description | Default |
-| --- | --- | --- |
-| `API_PORT` | Port used by your application | `3000` |
-| `API_HOST` | Host of your application | `localhost` |
-| `API_HTTPS` | Enable https for you application | `false` |
-| `API_KEY` | API key if you want to set it, if `undefined`, API key protection is disabled | `undefined` |
-| `API_DOMAINS` | Domains allowed to use the API, seperated by commans, use `*` to allow all domains | `localhost:3000,localhost:8000,127.0.0.1:3000,127.0.0.1:8000,127.0.0.1:5173` |
+| Variable      | Type                         | Default                                        | Description                                                                        |
+|---------------|------------------------------|------------------------------------------------|------------------------------------------------------------------------------------|
+| `API_PORT`    | `number`                     | `3000`                                         | Port used by your application                                                      |
+| `API_HOST`    | `string`                     | `localhost`                                    | Host of your application                                                           |
+| `API_HTTPS`   | `boolean`                    | `false`                                        | Enable https for you application                                                   |
+| `API_KEY`     | `string` `undefined` `false` | `false`                                        | API key if you want to set it, if `undefined`, API key protection is disabled      |
+| `API_DOMAINS` | `string`                     | `localhost:3000,127.0.0.1:3000,127.0.0.1:5173` | Domains allowed to use the API, seperated by commans, use `*` to allow all domains |
 
 ### Production
 
@@ -92,8 +155,6 @@ pnpm pm2
 ```
 
 But the best way is to use [Nginx](https://www.nginx.com/) with [pm2](https://pm2.keymetrics.io/).
-
-// TODO deploy docs
 
 ## Tests
 
