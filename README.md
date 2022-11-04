@@ -1,6 +1,6 @@
 # **Social oEmbed** <!-- omit in toc -->
 
-<div align="center"> <a href="https://fastify.io/">
+<div align="center"> <a href="https://github.com/kiwilan/social-oembed">
     <img
       src="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/logo.svg"
       width="250"
