@@ -5,7 +5,7 @@
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/logo.svg">
       <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/logo.svg">
-      <img alt="Tailwind CSS" src="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/logo.svg" width="350" height="150" style="max-width: 100%;">
+      <img alt="Social oEmbed" src="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/logo.svg" width="350" height="150" style="max-width: 100%;">
     </picture>
   </a>
 </p>
@@ -39,7 +39,7 @@ With oEmbed, it's really complicated, each social network have their own API, wi
 
 **This project is an attempt to offer a free (with own hosted solution) and open source API to get OpenGraph and oEmbed data.**
 
-**: to get Instagram or Facebook data, you have to register your application on Meta, and it's really complicated to get access to this API, Social oEmbed offer another solution without any key from Meta.*
+**: to get Instagram or Facebook data, with iframely or with Meta API, you have to register your application on Meta, with many validations. Social oEmbed offer another solution without any key from Meta.*
 
 ## Features
 
@@ -56,10 +56,12 @@ With oEmbed, it's really complicated, each social network have their own API, wi
   - [ ] Major social networks support
     - [ ] Providers system
 - [ ] Host your own instance
+- [ ] Auth middleware <https://github.com/fastify/middie>
 - [ ] Documentation
   - [ ] Usage from JS client side with fetch, from PHP with Guzzle
   - [ ] Usage response example, typescript interfaces
   - [ ] Usage oembed
+  - [ ] Social networks providers specs
   - [ ] examples alpinejs/react/vuejs
   - [ ] Deploy nginx and pm2 docs
 - [ ] Use Mongo to cache data
@@ -67,7 +69,11 @@ With oEmbed, it's really complicated, each social network have their own API, wi
 
 ## Usage
 
-Demo instance: `https://social-oembed.git-projects.xyz`
+### API documentation
+
+Demo instance: `https://social-oembed.git-projects.xyz`.
+
+> On this instance, `api_key` is disabled and HTTP header `Access-Control-Allow-Origin` use `localhost:3000,127.0.0.1:3000,localhost:5173,127.0.0.1:5173`, so you can test it from your browser or from any localhost application with port `3000` or `5173`.
 
 ```http
 GET /api
@@ -91,12 +97,16 @@ Example: <https://social-oembed.git-projects.xyz/api?url=https://github.com&form
 
 ```bash
 curl --request GET \
-    --data-urlencode "url=https://github.com"
-    --data-urlencode "format=opengraph"
+    --data-urlencode "url=https://github.com" \
+    --data-urlencode "format=opengraph" \
     --get "https://social-oembed.git-projects.xyz/api" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"
 ```
+
+### oEmbed
+
+Coming soon...
 
 ## **Setup**
 
@@ -170,9 +180,9 @@ Automatically fix errors.
 pnpm lint:fix
 ```
 
-## Docs
+## Technical environment
 
-Based on [Fastify](https://www.fastify.io/) and [TypeScript](https://www.typescriptlang.org/), with [ESBuild](https://esbuild.github.io/) for bundling.
+Based on [Fastify](https://www.fastify.io/) and [TypeScript](https://www.typescriptlang.org/), with [ESBuild](https://esbuild.github.io/) for bundling (ESM format).
 
 From template [fastify-esbuild](https://github.com/davipon/fastify-esbuild) by [davipon](https://davipon.hashnode.dev/better-backend-dx-fastify-esbuild).
 

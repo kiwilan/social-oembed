@@ -9,7 +9,7 @@
   },
   "homepage": "https://github.com/kiwilan/social-oembed#readme",
   "license": "MIT",
-  "packageManager": "pnpm@7.0.0",
+  "packageManager": ">= pnpm@7.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/kiwilan/social-oembed"
@@ -39,7 +39,6 @@
     "media",
     "social network",
     "nodejs",
-    "bun",
     "typescript"
   ],
   "dependencies": {
@@ -60,7 +59,7 @@
     "@commitlint/cli": "17.1.2",
     "@commitlint/config-conventional": "17.1.0",
     "@commitlint/cz-commitlint": "17.1.2",
-    "@types/node": "18.11.8",
+    "@types/node": "^18.11.9",
     "@types/node-fetch": "^2.6.2",
     "commitizen": "4.2.5",
     "esbuild": "0.15.12",
