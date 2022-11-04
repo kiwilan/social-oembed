@@ -1,5 +1,5 @@
 import type { FastifyRequest } from 'fastify'
-import DotEnv from './DotEnv'
+import DotEnv from '~/utils/DotEnv'
 import type { Endpoint, Route, RouteQuery } from '~/types'
 
 /**
@@ -20,6 +20,8 @@ export const route = (route: Endpoint | Route): string => {
     current = route
 
   const dotenv = DotEnv.make()
+  console.log(dotenv);
+
   try {
     const url = new URL(current.endpoint, dotenv.config.API_URL)
 

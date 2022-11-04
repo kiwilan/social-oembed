@@ -1,6 +1,6 @@
 // import packageJson from '../../package.json'
-import DotEnv from './DotEnv'
-import { route } from './Route'
+import DotEnv from '~/utils/DotEnv'
+import { route } from '~/utils/Route'
 import type { Instance } from '~/types'
 
 export default class InstanceConfig {

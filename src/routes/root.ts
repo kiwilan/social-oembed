@@ -1,20 +1,8 @@
-import type { FastifyInstance, RouteShorthandOptions } from 'fastify'
-import { Type } from '@sinclair/typebox'
+import type { FastifyPluginAsync } from 'fastify'
 
-const root = async (fastify: FastifyInstance) => {
-  const opts: RouteShorthandOptions = {
-    schema: {
-      response: {
-        200: Type.Object({
-          hello: Type.String(),
-          data: Type.Object({})
-        }),
-      }
-    }
-  }
-
-  fastify.get('/', opts, async (req, res) => {
-    res.redirect(301, '/api') // TODO route()
+const root: FastifyPluginAsync = async (fastify): Promise<void> => {
+  fastify.get('/', async () => {
+    return { root: true }
   })
 }
 

@@ -1,5 +1,5 @@
 import type { FastifyRequest } from 'fastify'
-import DotEnv from './DotEnv'
+import DotEnv from '~/utils/DotEnv'
 
 interface HeadersInit {
   [key: string]: string

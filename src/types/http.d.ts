@@ -1,18 +1,27 @@
-import { RequestInfo, RequestInit } from "node-fetch"
+import { RequestInfo, RequestInit, HeadersInit, BodyInit } from "node-fetch"
 
 export type ResponseMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE'
 export type FetchType = 'text' | 'json' | 'unknown'
 export type ResponseBody = BodyInit | null
 
+export interface NodeFetchOptions {
+  method: ResponseMethod
+  body?: ResponseBody
+  headers?: HeadersInit
+  // credentials?: RequestCredentials
+  // mode?: RequestMode
+  // timeout?: boolean
+}
+
 export interface FetchInit {
   url: RequestInfo
-  options?: FetchOptions
+  options?: NodeFetchOptions
   init?: RequestInit
 }
 
 export interface FetchOptions {
   method: ResponseMethod
-  body?: ResponseBody
+  body?: BodyInit
   headers?: HeadersInit
   credentials?: RequestCredentials
   mode?: RequestMode

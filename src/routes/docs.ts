@@ -1,6 +1,6 @@
 import type { FastifyInstance, FastifySchema } from 'fastify'
 import { Type } from '@sinclair/typebox'
-import InstanceConfig from '../utils/InstanceConfig'
+import InstanceConfig from '~/utils/InstanceConfig'
 import type { Instance, ResponseContent } from '~/types'
 
 const docs = async (fastify: FastifyInstance) => {
