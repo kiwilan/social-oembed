@@ -1,3 +1,5 @@
+import type { LogLevel, NodeEnv } from '~/types/dotenv'
+
 const schema = {
   type: 'object',
   required: [
@@ -5,6 +7,7 @@ const schema = {
     'LOG_LEVEL',
     'API_PORT',
     'API_HOST',
+    'API_HTTPS',
     'API_KEY_ENABLED',
     'API_DOMAINS',
   ],
@@ -25,6 +28,10 @@ const schema = {
       type: 'string',
       default: 'localhost',
     },
+    API_HTTPS: {
+      type: 'boolean',
+      default: false,
+    },
     API_KEY: {
       type: 'string',
       default: null,
@@ -35,20 +42,17 @@ const schema = {
     },
     API_DOMAINS: {
       type: 'string',
-      default: 'localhost',
+      default: 'localhost:3000',
     },
   }
 }
 
-export const options = {
+const options = {
   confKey: 'config',
   schema,
   data: process.env,
   dotenv: true
 }
-
-type NodeEnv = 'development' | 'test' | 'production'
-type LogLevel = 'debug' | 'info'
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -57,9 +61,11 @@ declare module 'fastify' {
       LOG_LEVEL: LogLevel
       API_PORT: number
       API_HOST: string
+      API_HTTPS: boolean
       API_KEY: string
-      API_KEY_ENABLED: boolean
       API_DOMAINS: string
     }
   }
 }
+
+export default options

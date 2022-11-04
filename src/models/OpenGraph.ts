@@ -1,10 +1,10 @@
 import * as cheerio from 'cheerio'
-import Http from '~/utils/Http'
-import { Module } from '~/models/Module'
-import { metaNodes } from '~/constants'
+import Http from '../utils/Http'
+import Module from '../models/Module'
+import OpenGraphService from '../services/OpenGraphService'
 import type { FetchMeta, MetaNode, MetaValues, OpenGraphResponse } from '~/types'
 
-export class OpenGraphItem extends Module {
+export default class OpenGraphItem extends Module {
   public ok = false
   public originalUrl: string
   public error?: string
@@ -16,6 +16,12 @@ export class OpenGraphItem extends Module {
   public siteName?: string
   public locale?: string
   public themeColor?: string
+
+  // docs: https://www.digitalocean.com/community/tutorials/how-to-use-classes-in-typescript
+  // protected constructor(
+  //   public name: string,
+  //   public age: number
+  // ) {}
 
   protected constructor(originalUrl: string, meta?: FetchMeta) {
     if (!meta) {
@@ -90,7 +96,7 @@ export class OpenGraphItem extends Module {
     const $ = cheerio.load(html ?? '')
 
     const metaValues: MetaValues = {}
-    Object.entries(metaNodes).forEach((el) => {
+    Object.entries(OpenGraphService.metaNodes()).forEach((el) => {
       const entry = el[0] // e.g. title
       const nodes: MetaNode[] = el[1]
 

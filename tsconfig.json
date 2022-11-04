@@ -1,40 +1,28 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "commonjs",
+    "module": "ESNext", // "CommonJS" or "ESNext"
     "moduleResolution": "Node",
     "lib": [
-      "esnext"
+      "ESNext"
     ],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "outDir": "dist",
-    "baseUrl": "./",
     "skipLibCheck": true,
     "strict": true,
     "resolveJsonModule": true,
     "strictNullChecks": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
+    "allowJs": true,
+    "outDir": "./dist",
     "paths": {
-      "~/*": [
-        "./src/*"
-      ],
       "@/*": [
         "./*"
+      ],
+      "~/*": [
+        "./src/*"
       ]
     }
-  },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "commonjs"
-    }
-  },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    ".archive",
-    "node_modules"
-  ]
+  }
 }

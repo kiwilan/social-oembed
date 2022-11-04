@@ -1,6 +1,6 @@
 import type { FetchMeta } from '~/types'
 
-export abstract class Module {
+export default abstract class Module {
   protected meta: FetchMeta
 
   protected constructor(meta: FetchMeta) {

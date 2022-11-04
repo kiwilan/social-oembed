@@ -1,4 +1,5 @@
-import type { RequestInfo, RequestInit, Response } from 'node-fetch'
+import type { Response } from 'node-fetch'
+import nodeFetch from 'node-fetch'
 import type { FetchInit, FetchOptions, FetchParams, FetchResponse, FetchType, ResponseMethod } from '~/types/http'
 
 export default class Http {
@@ -48,19 +49,19 @@ export default class Http {
   }
 
   /**
+   * @see https://github.com/node-fetch/node-fetch
    * @docs https://bobbyhadz.com/blog/javascript-error-err-require-esm-of-es-module-node-fetch
    */
-  public static async fetch(params: FetchInit) {
+  public static async fetch(params: FetchInit): Promise<Response> {
     if (!params.init) {
       params.init = {
         method: params.options?.method || 'GET',
-        body: params.options?.body || null,
+        body: params.options?.body || undefined,
         headers: params.options?.headers || {},
-        timeout: params.options?.timeout ? 120 : 0,
       }
     }
 
-    return import('node-fetch').then(({ default: fetch }) => fetch(params.url, params.init))
+    return await nodeFetch(params.url, params.init)
   }
 
   /**

@@ -1,0 +1,52 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext", // "CommonJS" or "ESNext"
+    "moduleResolution": "Node",
+    "lib": [
+      "ESNext"
+    ],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "dist",
+    "baseUrl": "./",
+    "skipLibCheck": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "allowJs": true,
+    "paths": {
+      "~/*": [
+        "./src/*"
+      ],
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node",
+    "compilerOptions": {
+      "module": "ESNext", // "CommonJS" or "ESNext"
+      "paths": {
+        "~/*": [
+          "./src/*"
+        ],
+        "@/*": [
+          "./*"
+        ]
+      }
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/plugins/sensible.js"
+  ],
+  "exclude": [
+    ".archive",
+    "node_modules"
+  ]
+}

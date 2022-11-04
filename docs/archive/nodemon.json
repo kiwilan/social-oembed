@@ -1,0 +1,11 @@
+{
+  "watch": [
+    "src"
+  ],
+  "ignore": [
+    "src/**/*.test.ts"
+  ],
+  "ext": "ts,mjs,js,json,graphql",
+  "exec": "node esbuild.js dev && node --experimental-specifier-resolution=node --loader ./loader.js dist/index.mjs",
+  "legacyWatch": true
+}

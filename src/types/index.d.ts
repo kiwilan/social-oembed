@@ -1,3 +1,4 @@
+import { LogLevel, NodeEnv } from './dotenv'
 import type { FetchType } from './http'
 
 export interface MetaValue {
@@ -40,13 +41,7 @@ export interface FetchMeta {
   type?: FetchType
 }
 
-export interface DotEnvConfig {
-  PORT: string | undefined
-  BASE_URL: string | undefined
-  API_KEY: string | undefined
-  API_KEY_ENABLED: boolean
-  API_DOMAINS: string[] | undefined
-}
+
 
 export interface Instance {
   name: string
@@ -86,7 +81,7 @@ export interface Route {
 
 interface ResponseContent {
   data: object
-  meta: ResponseMeta
+  meta?: ResponseMeta
 }
 
 export interface RouteResponse {

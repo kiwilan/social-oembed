@@ -1,5 +1,6 @@
 {
   "name": "social-oembed",
+  "type": "module",
   "version": "0.0.1",
   "description": "API to offer OpenGraph meta or oEmbed media.",
   "author": {
@@ -8,7 +9,7 @@
   },
   "homepage": "https://github.com/kiwilan/social-oembed#readme",
   "license": "MIT",
-  "packageManager": "pnpm@7.0.0",
+  "packageManager": ">= pnpm@7.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/kiwilan/social-oembed"
@@ -17,13 +18,17 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "clean": "rimraf dist",
-    "test": "tap \"test/**/*.test.js\"",
+    "prepare": "husky install",
     "check:types": "tsc --noEmit",
-    "build": "npm run clean && npx tsc --project tsconfig.json && npx tsc-alias -p tsconfig.json",
-    "dev": "npx tsnd --respawn -r tsconfig-paths/register src/index.ts",
-    "start": "node dist/src/index.js",
-    "pm2": "pm2 start --name 'social-oembed' './dist/index.js'"
+    "dev": "tsx watch src",
+    "build": "rimraf build && tsx esbuild.ts",
+    "start": "npm run build && node build/index.mjs",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "cz": "cz",
+    "release": "standard-version --no-verify",
+    "release:patch": "standard-version --no-verify --release-as patch",
+    "pm2": "pm2 start --name 'social-oembed' './dist/index.mjs'"
   },
   "keywords": [
     "fastify",
@@ -34,30 +39,42 @@
     "media",
     "social network",
     "nodejs",
-    "bun",
     "typescript"
   ],
   "dependencies": {
-    "@fastify/autoload": "^5.4.1",
+    "@fastify/autoload": "5.4.1",
+    "@fastify/cors": "^8.1.1",
     "@fastify/env": "^4.1.0",
-    "@fastify/sensible": "^5.1.1",
+    "@fastify/sensible": "5.1.1",
+    "@fastify/swagger": "8.1.0",
+    "@sinclair/typebox": "^0.25.2",
     "cheerio": "1.0.0-rc.12",
-    "fastify": "^4.9.2",
-    "fastify-cli": "^5.5.1",
-    "fastify-plugin": "^4.3.0",
-    "node-fetch": "^2.x",
-    "rimraf": "^3.0.2",
-    "tsconfig-paths": "^4.1.0"
+    "fastify": "4.9.2",
+    "fastify-plugin": "4.3.0",
+    "node-fetch": "^3.2.10",
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.29.2",
-    "@sinclair/typebox": "^0.25.2",
-    "@types/node": "^18.11.8",
-    "@types/node-fetch": "2.x",
+    "@antfu/eslint-config": "^0.29.3",
+    "@commitlint/cli": "17.1.2",
+    "@commitlint/config-conventional": "17.1.0",
+    "@commitlint/cz-commitlint": "17.1.2",
+    "@types/node": "^18.11.9",
+    "@types/node-fetch": "^2.6.2",
+    "commitizen": "4.2.5",
+    "esbuild": "0.15.12",
+    "esbuild-plugin-pino": "1.2.5",
     "eslint": "^8.26.0",
-    "tap": "^16.3.0",
-    "ts-node-dev": "^2.0.0",
-    "tsc-alias": "^1.7.0",
-    "typescript": "^4.8.4"
+    "husky": "8.0.1",
+    "inquirer": "^8.0.0",
+    "json-schema-to-ts": "2.5.5",
+    "lint-staged": "13.0.3",
+    "pino": "8.7.0",
+    "pino-pretty": "9.1.1",
+    "standard-version": "9.5.0",
+    "thread-stream": "2.2.0",
+    "tiny-glob": "0.2.9",
+    "tsx": "3.11.0",
+    "typescript": "4.8.4"
   }
 }

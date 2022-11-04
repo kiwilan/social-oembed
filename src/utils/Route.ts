@@ -1,9 +1,6 @@
 import type { FastifyRequest } from 'fastify'
+import DotEnv from '~/utils/DotEnv'
 import type { Endpoint, Route, RouteQuery } from '~/types'
-
-interface Request {
-  url: string
-}
 
 /**
  * Check if current `object` is `Route`
@@ -22,25 +19,36 @@ export const route = (route: Endpoint | Route): string => {
   else
     current = route
 
-  const url = new URL(current.endpoint, process.env.BASE_URL)
+  const dotenv = DotEnv.make()
+  console.log(dotenv)
 
-  if (current.query) {
-    Object.keys(current.query).forEach((key) => {
-      if (current.query)
+  try {
+    const url = new URL(current.endpoint, dotenv.config.API_URL)
+
+    if (current.query) {
+      Object.keys(current.query).forEach((key) => {
+        if (current.query)
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
-        url.searchParams.append(key, current.query[key])
-    })
-  }
+          url.searchParams.append(key, current.query[key])
+      })
+    }
 
-  return url.toString()
+    return url.toString()
+  }
+  catch (error) {
+    console.error(error)
+
+    return 'error'
+  }
 }
 
 /**
  * Create a `Route` from `Request`
  */
 export const routeBuilder = (req: FastifyRequest): Route => {
-  const baseURL = process.env.BASE_URL || 'http://localhost:3001'
+  const dotenv = DotEnv.make()
+  const baseURL = dotenv.config.API_URL
   const url = req.url.replace(baseURL, '').replace(/\/$/, '')
   let route: Route = { endpoint: '/' }
 

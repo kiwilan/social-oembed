@@ -1,4 +1,5 @@
 import type { FastifyRequest } from 'fastify'
+import DotEnv from '~/utils/DotEnv'
 
 interface HeadersInit {
   [key: string]: string
@@ -13,19 +14,12 @@ export default class Cors {
   }
 
   public static make(req: FastifyRequest): Cors {
-    const allowOrigins = Cors.dotEnvCors()
+    const domains = DotEnv.make().config
+    const allowOrigins = domains.API_DOMAINS
     const cors = new Cors(allowOrigins)
     cors.headers = cors.setCors(req)
 
     return cors
-  }
-
-  public static dotEnvCors(): string[] {
-    let domains: string[] = []
-    if (process.env.API_DOMAINS)
-      domains = process.env.API_DOMAINS?.split(',')
-
-    return domains
   }
 
   private setCors(req: FastifyRequest): HeadersInit {
