@@ -6,7 +6,7 @@ export interface DotEnvConfig {
   LOG_LEVEL: LogLevel
   API_PORT: number
   API_HOST: string
-  API_HTTPS_ENABLED: boolean
+  API_HTTPS: boolean
   API_URL: string
   API_KEY: string | undefined
   API_KEY_ENABLED: boolean

@@ -1,8 +1,9 @@
 import type { FastifyPluginAsync } from 'fastify'
 
 const root: FastifyPluginAsync = async (fastify): Promise<void> => {
-  fastify.get('/', async () => {
-    return { root: true }
+  fastify.get('/', async (req, res) => {
+    res.redirect(301, '/api') // TODO route()
+    // return { root: true }
   })
 }
 

@@ -7,7 +7,7 @@ const schema = {
     'LOG_LEVEL',
     'API_PORT',
     'API_HOST',
-    'API_HTTPS_ENABLED',
+    'API_HTTPS',
     'API_KEY_ENABLED',
     'API_DOMAINS',
   ],
@@ -28,7 +28,7 @@ const schema = {
       type: 'string',
       default: 'localhost',
     },
-    API_HTTPS_ENABLED: {
+    API_HTTPS: {
       type: 'boolean',
       default: false,
     },
@@ -61,9 +61,8 @@ declare module 'fastify' {
       LOG_LEVEL: LogLevel
       API_PORT: number
       API_HOST: string
-      API_HTTPS_ENABLED: boolean
+      API_HTTPS: boolean
       API_KEY: string
-      API_KEY_ENABLED: boolean
       API_DOMAINS: string
     }
   }

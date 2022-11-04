@@ -11,17 +11,18 @@ export default class DotEnv {
   public static make(): DotEnv {
     const port = parseInt(process.env.API_PORT ?? '3000') || 3000
     const host = process.env.API_HOST || 'localhost'
-    const https = process.env.API_HTTPS_ENABLED === 'true' || false
+    const https = process.env.API_HTTPS === 'true' || false
+    let key = process.env.API_KEY || undefined
 
     const dotenv = new DotEnv({
       NODE_ENV: process.env.NODE_ENV as NodeEnv || 'development',
       LOG_LEVEL: process.env.LOG_LEVEL as LogLevel || 'info',
       API_PORT: port,
       API_HOST: host,
-      API_HTTPS_ENABLED: https,
+      API_HTTPS: https,
       API_URL: `${https ? 'https' : 'http'}://${host}:${port}`,
-      API_KEY: process.env.API_KEY || undefined,
-      API_KEY_ENABLED: process.env.API_KEY_ENABLED === 'true' || false,
+      API_KEY: key,
+      API_KEY_ENABLED: typeof key === 'string',
       API_DOMAINS: [],
       API_DOMAINS_PARSED: [],
     })
