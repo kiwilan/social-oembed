@@ -43,6 +43,31 @@ With oEmbed, it's really complicated, each social network have their own API, wi
 
 **: to get Instagram or Facebook data, you have to register your application on Meta, and it's really complicated to get access to this API, Social oEmbed offer another solution without any key from Meta.*
 
+## Features
+
+- OpenGraph metadata
+
+### Roadmap
+
+- API key as query or header
+- Domains allow `*` or `*.domain.com`
+- [x] OpenGraph
+  - [ ] All meta
+  - [ ] Twitter Cards
+- [ ] oEmbed
+  - [ ] Major social networks support
+    - [ ] Providers system
+- [ ] Host your own instance
+- [ ] Documentation
+  - [ ] Usage from JS client side with fetch, from PHP with Guzzle
+  - [ ] Usage response example, typescript interfaces
+  - [ ] Usage oembed
+  - [ ] examples alpinejs/react/vuejs
+  - [ ] Deploy nginx and pm2 docs
+- [ ] Use Mongo to cache data
+- [ ] Use [Bun](https://bun.sh/) when it will be stable
+- [ ]
+
 ## Usage
 
 Demo instance: `https://social-oembed.git-projects.xyz`
@@ -75,30 +100,6 @@ curl --request GET \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"
 ```
-
-## Features
-
-- OpenGraph metadata
-
-### Roadmap
-
-- API key as query or header
-- Domains allow `*` or `*.domain.com`
-- [x] OpenGraph
-  - [ ] All meta
-  - [ ] Twitter Cards
-- [ ] oEmbed
-  - [ ] Major social networks support
-    - [ ] Providers system
-- [ ] Host your own instance
-- [ ] Documentation
-  - [ ] Usage from JS client side with fetch, from PHP with Guzzle
-  - [ ] Usage response example, typescript interfaces
-  - [ ] Usage oembed
-  - [ ] examples alpinejs/react/vuejs
-  - [ ] Deploy nginx and pm2 docs
-- [ ] Use Mongo to cache data
-- [ ] Use [Bun](https://bun.sh/) when it will be stable
 
 ## **Setup**
 
