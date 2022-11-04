@@ -1,32 +1,30 @@
 # **Social oEmbed** <!-- omit in toc -->
 
-<div align="center"> <a href="https://github.com/kiwilan/social-oembed">
-    <img
-      src="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/logo.svg"
-      width="250"
-      height="auto"
-    />
+<p align="center">
+  <a href="https://github.com/kiwilan/social-oembed" target="_blank">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/logo.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/logo.svg">
+      <img alt="Tailwind CSS" src="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/logo.svg" width="350" height="150" style="max-width: 100%;">
+    </picture>
   </a>
-</div>
+</p>
 
-<div align="center">
+<p align="center">
+  API to offer OpenGraph meta or oEmbed media.
+</p>
 
-[![nodejs](https://img.shields.io/static/v1?label=Node.js&message=v16.x&color=339933&style=flat-square&logo=node.js&logoColor=ffffff)](https://nodejs.org/en)
-[![fastify](https://img.shields.io/static/v1?label=Fastify&message=v4.x&color=000000&style=flat-square&logo=fastify&logoColor=ffffff)](https://www.fastify.io)
-[![typescript](https://img.shields.io/static/v1?label=TypeScript&message=v4.8.x&color=3178C6&style=flat-square&logo=typescript&logoColor=ffffff)](https://www.typescriptlang.org)
+<p align="center">
+  <a href="https://nodejs.org/en"><img src="https://img.shields.io/static/v1?label=Node.js&message=v16.x&color=339933&style=flat-square&logo=node.js&logoColor=ffffff" alt="Node.js"></a>
+  <a href="https://www.fastify.io"><img src="https://img.shields.io/static/v1?label=Fastify&message=v4.x&color=000000&style=flat-square&logo=fastify&logoColor=ffffff" alt="Fastify"></a>
+  <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/static/v1?label=TypeScript&message=v4.8.x&color=3178C6&style=flat-square&logo=typescript&logoColor=ffffff" alt="TypeScript"></a>
+</p>
+<p align="center">
+  <a href="https://esbuild.github.io"><img src="https://img.shields.io/static/v1?label=esbuild&message=ESM&color=FFCF00&style=flat-square&logo=esbuild&logoColor=ffffff" alt="esbuild"></a>
+  <a href="https://gitlab.com/ewilan-riviere/social-oembed/-/pipelines"><img src="https://gitlab.com/ewilan-riviere/social-oembed/badges/main/pipeline.svg" alt="Pipeline"></a>
+</p>
 
-</div>
-
-<div align="center">
-
-[![esbuild](https://img.shields.io/static/v1?label=esbuild&message=ESM&color=FFCF00&style=flat-square&logo=esbuild&logoColor=ffffff)](https://esbuild.github.io)
-![pipeline](https://gitlab.com/ewilan-riviere/social-oembed/badges/main/pipeline.svg)
-
-</div>
-
-<br />
-
-API to offer [OpenGraph](https://ogp.me/) meta or [oEmbed](https://oembed.com/) media.
+------
 
 > *VERY EXPERIMENTAL*  
 > In early development, not stable.  
