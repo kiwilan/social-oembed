@@ -25,7 +25,6 @@ const fastify = Fastify({
   logger: true,
 })
 
-
 const start = async () => {
   try {
     await fastify.register(fastifyEnv, config)
@@ -48,7 +47,7 @@ const start = async () => {
       maxAge: 86400
     })
 
-    console.log(dotenv);
+    console.log(dotenv)
 
     const port = dotenv.API_PORT
     await fastify.listen({ port })
