@@ -1,8 +1,8 @@
 import type { FastifyInstance, FastifySchema } from 'fastify'
 import { Type } from '@sinclair/typebox'
-import API from '@/src/utils/Api'
-import OpenGraphService from '~/services/OpenGraphService'
 import type { ResponseMeta } from '~/types'
+// import API from '~/utils/Api'
+// import OpenGraphService from '~/services/OpenGraphService'
 
 const docs = async (fastify: FastifyInstance) => {
   const schema: FastifySchema = {
@@ -19,11 +19,12 @@ const docs = async (fastify: FastifyInstance) => {
     url: '/api',
     schema,
     async handler(req) {
-      const api = API.make(req)
+      // const api = API.make(req)
       const response = {
         content: {
           data: {},
-          meta: api.meta,
+          // meta: api.meta,
+          meta: {}
         },
       }
 
@@ -35,20 +36,20 @@ const docs = async (fastify: FastifyInstance) => {
       // if (rejectUrl)
       //   return rejectUrl.content
 
-      if (api.url && api.format === 'opengraph') {
-        const og = await OpenGraphService.make(api)
-        if (response.content) {
-          response.content.data = og.getOpenGraph()
-          response.content.meta.fetch = og.getFetchMeta()
-        }
-      }
+      // if (api.url && api.format === 'opengraph') {
+      //   const og = await OpenGraphService.make(api)
+      //   if (response.content) {
+      //     response.content.data = og.getOpenGraph()
+      //     response.content.meta.fetch = og.getFetchMeta()
+      //   }
+      // }
 
-      if (api.url && api.format === 'oembed') {
-        if (response.content) {
-          response.content.meta.fetch.message = 'oEmbed format is not implemented yet'
-          response.content.meta.fetch.ok = false
-        }
-      }
+      // if (api.url && api.format === 'oembed') {
+      //   if (response.content) {
+      //     response.content.meta.fetch.message = 'oEmbed format is not implemented yet'
+      //     response.content.meta.fetch.ok = false
+      //   }
+      // }
 
       return response.content
     },

@@ -1,7 +1,7 @@
 import type { FastifyInstance, FastifySchema } from 'fastify'
 import { Type } from '@sinclair/typebox'
-import InstanceConfig from '~/utils/InstanceConfig'
 import type { Instance } from '~/types'
+// import InstanceConfig from '~/utils/InstanceConfig'
 
 const docs = async (fastify: FastifyInstance) => {
   const schema: FastifySchema = {
@@ -12,7 +12,7 @@ const docs = async (fastify: FastifyInstance) => {
     }
   }
 
-  const instance = InstanceConfig.make()
+  // const instance = InstanceConfig.make()
 
   fastify.route({
     method: 'GET',
@@ -20,7 +20,8 @@ const docs = async (fastify: FastifyInstance) => {
     schema,
     async handler() {
       return {
-        data: instance.config,
+        // data: instance.config,
+        data: undefined
       }
     },
   })

@@ -2,14 +2,13 @@ import fs from 'fs'
 import type { FastifyRequest } from 'fastify'
 import type { DotEnvConfig, DotEnvRawConfig, LogLevel, NodeEnv } from '~/types/dotenv'
 
-export default class DotEnv {
-  public config: DotEnvConfig
-
-  protected constructor(config: DotEnvConfig) {
-    this.config = config
+export default class Dotenv {
+  protected constructor(
+    public config: DotEnvConfig
+  ) {
   }
 
-  public static make(): DotEnv {
+  public static make(): Dotenv {
     const port = parseInt(process.env.API_PORT ?? '3000') || 3000
     const host = process.env.API_HOST || 'localhost'
     const https = process.env.API_HTTPS === 'true' || false
@@ -22,7 +21,7 @@ export default class DotEnv {
     if (nodeEnv === 'development')
       apiUrl = `${apiUrl}:${port}`
 
-    const dotenv = new DotEnv({
+    const dotenv = new Dotenv({
       NODE_ENV: nodeEnv,
       LOG_LEVEL: process.env.LOG_LEVEL as LogLevel || 'info',
       API_PORT: port,
@@ -62,7 +61,7 @@ export default class DotEnv {
   }
 
   public static checkApiKey(req: FastifyRequest) {
-    const config = DotEnv.make().config
+    const config = Dotenv.make().config
     const query = req.query as any
     const key = query?.api_key
     if (config.API_KEY_ENABLED && config.API_KEY !== key) {
