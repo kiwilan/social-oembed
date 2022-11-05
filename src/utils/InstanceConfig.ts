@@ -1,6 +1,6 @@
 // import packageJson from '../../package.json'
-import DotEnv from '~/utils/DotEnv'
-import { route } from '~/utils/Route'
+import DotEnv from '~/utils/dotenv'
+// import { route } from '~/utils/Route'
 import type { Instance } from '~/types'
 
 export default class InstanceConfig {
@@ -29,10 +29,10 @@ export default class InstanceConfig {
       },
       examples: {
         // TODO: add examples, add query params with `route()` helper
-        opengraph: route({
-          endpoint: '/api',
-          query: { url: 'https://github.com', format: 'opengraph', api_key: dotenv.config.API_KEY, dark: 'false' },
-        }),
+        // opengraph: route({
+        //   endpoint: '/api',
+        //   query: { url: 'https://github.com', format: 'opengraph', api_key: dotenv.config.API_KEY, dark: 'false' },
+        // }),
       },
     })
 

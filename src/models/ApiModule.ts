@@ -1,25 +1,25 @@
-import type { FetchMeta } from '~/types/route'
+import type { FetchResponse } from '~/types/http'
+import type { ApiRouteQueryFormat, FetchMeta } from '~/types/route'
 
 export default abstract class ApiModule {
-  protected constructor(
-    protected url: string,
-    protected fetchMeta: FetchMeta,
-    protected render?: string,
-    protected isValid?: boolean,
-  ) {
+  protected query: ApiRouteQueryFormat
+  protected fetchMeta: FetchMeta
+  protected render?: string
+  protected isValid?: boolean
+  public response?: FetchResponse
+
+  protected constructor(query?: ApiRouteQueryFormat, fetchMeta?: FetchMeta) {
+    this.query = query ?? { format: 'opengraph' }
+    this.fetchMeta = fetchMeta ?? this.initFetchMeta()
   }
 
-  public setMeta(fetchMeta?: FetchMeta): void {
-    if (!fetchMeta) {
-      fetchMeta = {
-        ok: false,
-        status: 404,
-        message: 'Not Found',
-        type: 'unknown'
-      }
+  public initFetchMeta(): FetchMeta {
+    return {
+      ok: false,
+      status: 500,
+      message: 'Error on init',
+      type: 'unknown'
     }
-
-    this.fetchMeta = fetchMeta
   }
 
   public getFetchMeta(): FetchMeta {

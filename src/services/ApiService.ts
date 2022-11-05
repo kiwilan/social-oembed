@@ -1,7 +1,8 @@
 import type { FastifyRequest } from 'fastify'
 import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, ApiRouteQueryFormat, FetchMeta, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
 import OpenGraph from '~/models/OpenGraph'
-import Render from '~/utils/Render'
+import Render from '~/services/ApiService/Render'
+import OEmbed from '~/models/OEmbed'
 
 export default class ApiService {
   protected constructor(
@@ -53,9 +54,12 @@ export default class ApiService {
     }
 
     if (this.query.format === 'oembed') {
-      // const oembed = await OEmbed.make(this.query)
-      // data = oembed.getModel()
-      // fetchMeta = oembed.getFetchMeta()
+      const oembed = await OEmbed.make(this.query)
+      data = {
+        ...oembed.model,
+        render: Render.oembed(oembed.model)
+      }
+      fetchMeta = oembed.getFetchMeta()
     }
 
     return {

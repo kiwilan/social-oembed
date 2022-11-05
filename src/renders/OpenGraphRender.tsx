@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import type { IOpenGraph } from '~/types/open-graph'
+import type { IOpenGraph } from '~/types/api'
 
 const OpenGraphRender: FC = (og: IOpenGraph, dark: boolean) => {
   const borderColor = dark ? '#374151' : '#E5E7EB'

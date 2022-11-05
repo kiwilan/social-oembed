@@ -1,5 +1,5 @@
 import SocialRegex from '~/services/ApiService/SocialRegex'
-import type { IOpenGraph } from '~/types/open-graph'
+import type { IOpenGraph } from '~/types/api'
 import type { ApiRouteQueryFormat, FetchMeta } from '~/types/route'
 import type { TwitterApi } from '~/types/social'
 import Http from '~/utils/Http'

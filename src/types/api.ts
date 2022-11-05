@@ -9,3 +9,10 @@ export interface IOpenGraph {
   themeColor?: string
   twitter?: boolean
 }
+
+export interface IOEmbed {
+  embedUrl?: string
+  isMobile?: boolean
+}
+
+export interface IApiData extends IOpenGraph, IOEmbed {}

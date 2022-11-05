@@ -2,38 +2,27 @@ import * as cheerio from 'cheerio'
 import TwitterOEmbed from './TwitterOEmbed'
 import Http from '~/utils/Http'
 import ApiModule from '~/models/ApiModule'
-import type { IOpenGraph } from '~/types/open-graph'
-import type { ApiRouteQueryFormat, FetchMeta } from '~/types/route'
+import type { IOpenGraph } from '~/types/api'
+import type { ApiRouteQueryFormat } from '~/types/route'
 import type { Meta, MetaNode, MetaValues } from '~/types'
 
 export default class OpenGraph extends ApiModule {
-  public model: IOpenGraph
-
-  protected constructor(url?: string, meta?: FetchMeta) {
-    if (!meta) {
-      meta = {
-        message: 'Constructor error',
-        ok: false,
-        status: 500,
-        type: 'unknown'
-      }
-    }
-
-    super(url ?? '', meta)
-    this.model = {}
-  }
+  public model: IOpenGraph = {}
 
   public static async make(query: ApiRouteQueryFormat): Promise<OpenGraph> {
-    const og = new OpenGraph(query.url)
+    const og = new OpenGraph(query)
+    if (!og.query.url)
+      return og
 
-    if (og.url.includes('twitter')) {
+    if (og.query.url.includes('twitter')) {
       const twitter = await TwitterOEmbed.make(query)
       og.model = twitter.getModel()
       og.fetchMeta = twitter.getFetchMeta()
     }
     else {
-      const http = Http.client(og.url)
+      const http = Http.client(og.query.url)
       const res = await http.get()
+      og.response = res
 
       if (res.type !== 'text')
         return og
@@ -47,15 +36,6 @@ export default class OpenGraph extends ApiModule {
         type: res.type
       }
     }
-
-    // message: res.type === 'text'
-    //   ? res.statusText
-    //   : 'Error: endpoint has `application/json` content-type',
-    // ok: res.type === 'text'
-    //   ? res.ok
-    //   : false,
-    // status: res.status,
-    // type: res.type,
 
     return og
   }
@@ -109,13 +89,13 @@ export default class OpenGraph extends ApiModule {
     let url: URL
 
     if (!this.model.siteUrl)
-      return this.url
+      return this.query.url ?? ''
 
     try {
       url = new URL(this.model.siteUrl)
     }
     catch (error) {
-      url = new URL(this.url)
+      url = new URL(this.query.url ?? '')
     }
 
     let current = url.href

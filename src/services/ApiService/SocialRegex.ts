@@ -1,5 +1,5 @@
-import type { Social } from '~/utils/Enums'
-import { SocialEnum } from '~/utils/Enums'
+import type { ISocial, ISocialRegex, Social } from '~/types/social'
+import { SocialEnum } from '~/types/social'
 
 export default class SocialRegex {
   private constructor(
@@ -7,8 +7,8 @@ export default class SocialRegex {
     public type: Social,
     public regexp?: RegExp | string,
     public matches: string[] = [],
-    public media?: object,
-    public isValid = false
+    public isValid = false,
+    public model?: ISocialRegex
   ) {}
 
   public static make(url: string): SocialRegex {
@@ -30,7 +30,7 @@ export default class SocialRegex {
 
     const social = new SocialRegex(url, type)
     social.regexp = social.setRegExp()
-    social.media = social.findMatches()
+    social.model = social.findMatches()
 
     return social
   }
@@ -45,8 +45,9 @@ export default class SocialRegex {
     const matchList = raw[0] ?? []
     this.matches = matchList
 
-    const methods = {
-      twitter: this.twitter()
+    const methods: ISocial = {
+      twitter: this.twitter(),
+      youtube: this.youtube()
     }
     const media = methods[this.type as keyof typeof methods] ?? undefined
 
@@ -54,14 +55,15 @@ export default class SocialRegex {
   }
 
   private setRegExp(): RegExp | undefined {
-    const regExps = {
+    const regExps: ISocial = {
       twitter: /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status?\/(\d+)/g,
+      youtube: /^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user|shorts)\/))([^\?&\"'>]+)/g
     }
 
     return regExps[this.type as keyof typeof regExps] ?? undefined
   }
 
-  private twitter(): object {
+  private twitter(): ISocialRegex {
     const url = this.matches[0] ?? undefined
     const user = this.matches[1] ?? undefined
     const id = this.matches[2] ?? undefined
@@ -73,6 +75,21 @@ export default class SocialRegex {
       url,
       user,
       id,
+    }
+  }
+
+  private youtube(): ISocialRegex {
+    const url = this.matches[0] ?? undefined
+    const id = this.matches[1] ?? undefined
+    const embedUrl = id ? `https://www.youtube.com/embed/${id}` : undefined
+
+    if (id)
+      this.isValid = true
+
+    return {
+      url,
+      id,
+      embedUrl
     }
   }
 }
