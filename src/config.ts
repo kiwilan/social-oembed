@@ -4,8 +4,8 @@ import { fastifyAutoload } from '@fastify/autoload'
 import fastifyEnv from '@fastify/env'
 import cors from '@fastify/cors'
 import type { FastifyInstance } from 'fastify'
-import type { DotEnvRawConfig } from '~/types/dotenv'
-import Dotenv from '~/Dotenv'
+import type { IDotEnvRaw } from '~/types/dotenv'
+import Dotenv from '~/utils/DotEnv'
 
 const schema = {
   type: 'object',
@@ -109,7 +109,7 @@ const start = async (fastify: FastifyInstance) => {
 
 declare module 'fastify' {
   interface FastifyInstance {
-    config: DotEnvRawConfig
+    config: IDotEnvRaw
   }
 }
 

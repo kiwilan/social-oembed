@@ -1,17 +1,17 @@
 export type NodeEnv = 'development' | 'test' | 'production'
 export type LogLevel = 'debug' | 'error' | 'fatal' | 'info' | 'trace' | 'warn' | 'silent'
 
-export interface DotEnvRawConfig {
-  NODE_ENV?: NodeEnv
-  LOG_LEVEL?: LogLevel
-  API_PORT?: number
+export interface IDotEnvRaw {
+  NODE_ENV?: string
+  LOG_LEVEL?: string
+  API_PORT?: string
   API_HOST?: string
-  API_HTTPS?: boolean
+  API_HTTPS?: string
   API_KEY?: string
   API_DOMAINS?: string
 }
 
-export interface DotEnvConfig {
+export interface IDotEnvFormat {
   NODE_ENV: NodeEnv
   LOG_LEVEL: LogLevel
   API_PORT: number

@@ -22,11 +22,11 @@
     "useDefineForClassFields": true,
     "outDir": "./dist",
     "paths": {
-      "@/*": [
-        "./*"
-      ],
       "~/*": [
         "./src/*"
+      ],
+      "@/*": [
+        "./*"
       ]
     }
   }

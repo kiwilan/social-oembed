@@ -1,10 +1,11 @@
 import fs from 'fs'
 import type { FastifyRequest } from 'fastify'
-import type { DotEnvConfig, DotEnvRawConfig, LogLevel, NodeEnv } from '~/types/dotenv'
+import type { IDotEnvFormat, IDotEnvRaw, LogLevel, NodeEnv } from '~/types/dotenv'
 
 export default class Dotenv {
   protected constructor(
-    public config: DotEnvConfig
+    public raw: IDotEnvRaw,
+    public config: IDotEnvFormat
   ) {
   }
 
@@ -21,7 +22,17 @@ export default class Dotenv {
     if (nodeEnv === 'development')
       apiUrl = `${apiUrl}:${port}`
 
-    const dotenv = new Dotenv({
+    const raw: IDotEnvRaw = {
+      NODE_ENV: process.env.NODE_ENV,
+      LOG_LEVEL: process.env.LOG_LEVEL,
+      API_PORT: process.env.API_PORT,
+      API_HOST: process.env.API_HOST,
+      API_HTTPS: process.env.API_HTTPS,
+      API_KEY: process.env.API_KEY,
+      API_DOMAINS: process.env.API_DOMAINS,
+    }
+
+    const config: IDotEnvFormat = {
       NODE_ENV: nodeEnv,
       LOG_LEVEL: process.env.LOG_LEVEL as LogLevel || 'info',
       API_PORT: port,
@@ -32,7 +43,9 @@ export default class Dotenv {
       API_KEY_ENABLED: typeof key === 'string',
       API_DOMAINS: [],
       API_DOMAINS_PARSED: [],
-    })
+    }
+
+    const dotenv = new Dotenv(raw, config)
 
     dotenv.config.API_DOMAINS = dotenv.domainsDotenv()
     dotenv.config.API_DOMAINS_PARSED = dotenv.domainsParsed()
@@ -40,9 +53,9 @@ export default class Dotenv {
     return dotenv
   }
 
-  public static dotEnvRaw(path: string): DotEnvRawConfig {
+  public static dotEnvRaw(path: string): IDotEnvRaw {
     const dotenvRaw = fs.readFileSync(path).toString().split('\n')
-    const dotenvConfig: DotEnvRawConfig = {}
+    const dotenvConfig: IDotEnvRaw = {}
     dotenvRaw.forEach(el => {
       if (el) {
         const config = el.split('=')
