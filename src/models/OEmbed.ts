@@ -1,5 +1,5 @@
 import ApiModule from '~/models/ApiModule'
-import SocialRegex from '~/services/ApiService/SocialRegex'
+import SocialService from '~/services/SocialService'
 import type { ApiRouteQueryFormat } from '~/types/route'
 import type { IApiData } from '~/types/api'
 
@@ -13,7 +13,7 @@ export default class OEmbed extends ApiModule {
 
     // const og = await OpenGraph.make(oembed.query)
 
-    const social = SocialRegex.make(oembed.query.url)
+    const social = SocialService.make(oembed.query.url)
 
     oembed.model = {
       // ...og.model,

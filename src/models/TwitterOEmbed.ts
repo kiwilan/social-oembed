@@ -1,4 +1,4 @@
-import SocialRegex from '~/services/ApiService/SocialRegex'
+import SocialService from '~/services/SocialService'
 import type { IOpenGraph } from '~/types/api'
 import type { ApiRouteQueryFormat, FetchMeta } from '~/types/route'
 import type { TwitterApi } from '~/types/social'
@@ -30,7 +30,7 @@ export default class TwitterOEmbed {
     if (!this.query?.url)
       return {}
 
-    const social = SocialRegex.make(this.query?.url)
+    const social = SocialService.make(this.query?.url)
 
     if (social.type !== 'twitter')
       return {}

@@ -1,3 +1,5 @@
+import type SocialModule from '~/services/SocialService/SocialModule'
+
 export interface TwitterApi {
   url?: string
   author_name?: string
@@ -47,24 +49,24 @@ export enum SocialEnum {
 }
 
 export interface ISocial {
-  dailymotion?: any
-  instagram?: any
-  facebook?: any
-  flickr?: any
-  giphy?: any
-  imgur?: any
-  kickstarter?: any
-  linkedin?: any
-  pinterest?: any
-  reddit?: any
-  snapchat?: any
-  soundcloud?: any
-  spotify?: any
-  ted?: any
-  tumblr?: any
-  tiktok?: any
-  twitch?: any
-  twitter?: any
-  vimeo?: any
-  youtube?: any
+  // dailymotion?: any
+  // instagram?: any
+  // facebook?: any
+  // flickr?: any
+  // giphy?: any
+  // imgur?: any
+  // kickstarter?: any
+  // linkedin?: any
+  // pinterest?: any
+  // reddit?: any
+  // snapchat?: any
+  // soundcloud?: any
+  // spotify?: any
+  // ted?: any
+  // tumblr?: any
+  // tiktok?: any
+  // twitch?: any
+  twitter?: SocialModule
+  // vimeo?: any
+  // youtube?: any
 }
