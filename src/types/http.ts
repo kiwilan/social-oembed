@@ -1,4 +1,4 @@
-import { RequestInfo, RequestInit, HeadersInit, BodyInit } from "node-fetch"
+import type { BodyInit, HeadersInit, RequestInfo, RequestInit } from 'node-fetch'
 
 export type ResponseMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE'
 export type FetchType = 'text' | 'json' | 'unknown'

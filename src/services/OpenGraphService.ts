@@ -6,16 +6,17 @@ import OpenGraphTwitter from '~/models/OpenGraphTwitter'
 export default class OpenGraphService {
   public api: API
   public url: string
-  public openGraph?: OpenGraphItem
+  public openGraph: OpenGraphItem
   public meta: any
   public is_twitter = false
 
   protected constructor(api: API) {
     this.api = api
     this.url = api.url ?? ''
+    this.openGraph = new OpenGraphItem(this.url)
   }
 
-  public static async make(api: API): Promise<OpenGraphItem | undefined> {
+  public static async make(api: API): Promise<OpenGraphItem> {
     const service = new OpenGraphService(api)
 
     if (service.url.includes('twitter')) {

@@ -31,7 +31,7 @@ export default class InstanceConfig {
         // TODO: add examples, add query params with `route()` helper
         opengraph: route({
           endpoint: '/api',
-          query: { url: 'https://github.com', format: 'opengraph', api_key: dotenv.config.API_KEY },
+          query: { url: 'https://github.com', format: 'opengraph', api_key: dotenv.config.API_KEY, dark: 'false' },
         }),
       },
     })

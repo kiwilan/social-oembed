@@ -1,5 +1,5 @@
 export type NodeEnv = 'development' | 'test' | 'production'
-export type LogLevel = 'debug' | 'error' | 'fatal'  | 'info' | 'trace' | 'warn' | 'silent'
+export type LogLevel = 'debug' | 'error' | 'fatal' | 'info' | 'trace' | 'warn' | 'silent'
 
 export interface DotEnvRawConfig {
   NODE_ENV?: NodeEnv

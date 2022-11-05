@@ -6,7 +6,7 @@ export default class OpenGraphTwitter {
   protected constructor(
     protected originUrl: string,
     protected social: SocialServiceTwitter,
-    protected openGraph?: OpenGraphItem,
+    protected openGraph: OpenGraphItem,
   ) {}
 
   /**
@@ -17,7 +17,7 @@ export default class OpenGraphTwitter {
   public static async make(url: string): Promise<OpenGraphTwitter> {
     const social = await SocialServiceTwitter.make(url)
 
-    const twitter = new OpenGraphTwitter(url, social)
+    const twitter = new OpenGraphTwitter(url, social, new OpenGraphItem(url))
     twitter.openGraph = twitter.setOpenGraph()
 
     return twitter
@@ -27,7 +27,7 @@ export default class OpenGraphTwitter {
 
   public getSocial = (): SocialServiceTwitter => this.social
 
-  public getOpenGraph = (): OpenGraphItem | undefined => this.openGraph
+  public getOpenGraph = (): OpenGraphItem => this.openGraph
 
   public setOpenGraph(): OpenGraphItem {
     const og = new OpenGraphItem(this.originUrl)

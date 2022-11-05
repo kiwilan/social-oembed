@@ -41,8 +41,6 @@ export interface FetchMeta {
   type?: FetchType
 }
 
-
-
 export interface Instance {
   name: string
   version?: string
