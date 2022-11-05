@@ -72,7 +72,7 @@ export interface RouterItem {
 }
 
 export type Endpoint = '/' | '/docs' | '/api'
-export type RouteQueryKey = 'url' | 'format' | 'api_key'
+export type RouteQueryKey = 'url' | 'format' | 'api_key' | 'dark'
 export type RouteQuery = Record<RouteQueryKey, string | undefined> | undefined
 export interface Route {
   endpoint: Endpoint
@@ -106,4 +106,9 @@ export interface OpenGraphResponse {
   siteName?: string
   locale?: string
   themeColor?: string
+  dark?: boolean
+}
+
+export interface Renderer {
+  render?: any
 }

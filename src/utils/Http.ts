@@ -52,7 +52,10 @@ export default class Http {
    * @see https://github.com/node-fetch/node-fetch
    * @docs https://bobbyhadz.com/blog/javascript-error-err-require-esm-of-es-module-node-fetch
    */
-  public static async fetch(params: FetchInit): Promise<Response> {
+  public static async fetch(params: string | FetchInit): Promise<Response> {
+    if (typeof params === 'string')
+      params = { url: params }
+
     if (!params.init) {
       params.init = {
         method: params.options?.method || 'GET',

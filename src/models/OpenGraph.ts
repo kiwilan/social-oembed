@@ -1,8 +1,9 @@
 import * as cheerio from 'cheerio'
-import Http from '../utils/Http'
-import Module from '../models/Module'
-import OpenGraphService from '../services/OpenGraphService'
-import type { FetchMeta, MetaNode, MetaValues, OpenGraphResponse } from '~/types'
+import Render from '~/utils/Render'
+import Http from '~/utils/Http'
+import Module from '~/models/Module'
+import OpenGraphService from '~/services/OpenGraphService'
+import type { FetchMeta, MetaNode, MetaValues, OpenGraphResponse, Renderer } from '~/types'
 
 export default class OpenGraphItem extends Module {
   public ok = false
@@ -16,14 +17,10 @@ export default class OpenGraphItem extends Module {
   public siteName?: string
   public locale?: string
   public themeColor?: string
+  public dark?: boolean
+  public render?: any
 
-  // docs: https://www.digitalocean.com/community/tutorials/how-to-use-classes-in-typescript
-  // protected constructor(
-  //   public name: string,
-  //   public age: number
-  // ) {}
-
-  protected constructor(originalUrl: string, meta?: FetchMeta) {
+  public constructor(originalUrl: string, meta?: FetchMeta) {
     if (!meta) {
       meta = {
         message: 'Constructor error',
@@ -36,10 +33,11 @@ export default class OpenGraphItem extends Module {
     this.originalUrl = originalUrl
   }
 
-  public static async make(originalUrl: string): Promise<OpenGraphItem> {
-    const og = new OpenGraphItem(originalUrl)
+  public static async make(service: OpenGraphService): Promise<OpenGraphItem> {
+    const og = new OpenGraphItem(service.url)
+    og.dark = service.api.dark
 
-    const http = Http.client(originalUrl)
+    const http = Http.client(og.originalUrl)
     const res = await http.get()
 
     if (res.ok && res.type === 'text') {
@@ -61,8 +59,8 @@ export default class OpenGraphItem extends Module {
     return og
   }
 
-  public getOpenGraph(): OpenGraphResponse {
-    return {
+  public getOpenGraph(): OpenGraphResponse & Renderer {
+    const og: OpenGraphResponse = {
       title: this.title,
       description: this.description,
       image: this.image,
@@ -71,6 +69,12 @@ export default class OpenGraphItem extends Module {
       siteName: this.siteName,
       locale: this.locale,
       themeColor: this.themeColor,
+      dark: this.dark,
+    }
+
+    return {
+      ...og,
+      render: Render.openGraph(og)
     }
   }
 

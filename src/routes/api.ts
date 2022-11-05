@@ -1,6 +1,6 @@
 import type { FastifyInstance, FastifySchema } from 'fastify'
 import { Type } from '@sinclair/typebox'
-import ApiService from '~/services/ApiService'
+import API from '@/src/utils/Api'
 import OpenGraphService from '~/services/OpenGraphService'
 import type { ResponseMeta } from '~/types'
 
@@ -19,7 +19,7 @@ const docs = async (fastify: FastifyInstance) => {
     url: '/api',
     schema,
     async handler(req) {
-      const api = ApiService.make(req)
+      const api = API.make(req)
       const response = {
         content: {
           data: {},
@@ -27,16 +27,16 @@ const docs = async (fastify: FastifyInstance) => {
         },
       }
 
-      // const rejectApiKey = ApiService.checkApiKey(api)
+      // const rejectApiKey = API.checkApiKey(api)
       // if (rejectApiKey)
       //   return rejectApiKey.content
 
-      // const rejectUrl = ApiService.checkUrl(api)
+      // const rejectUrl = API.checkUrl(api)
       // if (rejectUrl)
       //   return rejectUrl.content
 
       if (api.url && api.format === 'opengraph') {
-        const og = await OpenGraphService.make(api.url)
+        const og = await OpenGraphService.make(api)
         if (response.content) {
           response.content.data = og.getOpenGraph()
           response.content.meta.fetch = og.getFetchMeta()

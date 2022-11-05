@@ -1,10 +1,10 @@
 // // import type { OpenGraph } from '@/Models/OpenGraph'
 // import type { FastifyRequest } from 'fastify'
-// import ApiService from '../services/ApiService.js'
+// import API from '../services/API.js'
 // // import OpenGraphSevice from '@/Services/OpenGraphService'
 
 // const docs = async (req: FastifyRequest): Promise<RouteResponse> => {
-//   const api = ApiService.make(req)
+//   const api = API.make(req)
 
 //   return {
 //     content: {

@@ -1,27 +1,32 @@
 import OpenGraphItem from '../models/OpenGraph'
+import type API from '../utils/Api'
 import type { Meta } from '~/types'
+import OpenGraphTwitter from '~/models/OpenGraphTwitter'
 
 export default class OpenGraphService {
-  protected url: string
-  protected openGraph?: OpenGraphItem
-  protected meta: any
-  protected is_twitter = false
+  public api: API
+  public url: string
+  public openGraph?: OpenGraphItem
+  public meta: any
+  public is_twitter = false
 
-  protected constructor(url: string) {
-    this.url = url
+  protected constructor(api: API) {
+    this.api = api
+    this.url = api.url ?? ''
   }
 
-  public static async make(url: string): Promise<OpenGraphItem> {
-    const service = new OpenGraphService(url)
+  public static async make(api: API): Promise<OpenGraphItem | undefined> {
+    const service = new OpenGraphService(api)
 
-    if (url.includes('twitter')) {
-      // let twitter = await OpenGraphTwitter.make(service.url)
-      // service.openGraph = twitter.getOpenGraph()
+    if (service.url.includes('twitter')) {
+      const twitter = await OpenGraphTwitter.make(service.url)
+      service.openGraph = twitter.getOpenGraph()
       service.is_twitter = true
     }
-
-    // TODO twitter webpage into website settings, media lozad
-    service.openGraph = await OpenGraphItem.make(service.url)
+    else {
+      // TODO twitter webpage into website settings, media lozad
+      service.openGraph = await OpenGraphItem.make(service)
+    }
 
     return service.openGraph
   }

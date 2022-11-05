@@ -1,14 +1,15 @@
 import type { FastifyRequest } from 'fastify'
-import { route, routeBuilder } from '../utils/Route'
-import DotEnv from '../utils/DotEnv'
+import { route, routeBuilder } from '~/utils/Route'
+import DotEnv from '~/utils/DotEnv'
 import type { Format, ResponseMeta, Route } from '~/types'
 import type { DotEnvConfig, } from '~/types/dotenv'
 
-export default class ApiService {
+export default class API {
   private route?: Route
   private dotenv: DotEnvConfig
   public url?: string
   public format: Format = 'opengraph'
+  public dark?: boolean
   public apiKey?: string
   public apiKeyEnable = false
   public meta: ResponseMeta
@@ -18,9 +19,9 @@ export default class ApiService {
     this.dotenv = dotenv
   }
 
-  public static make(req: FastifyRequest): ApiService {
+  public static make(req: FastifyRequest): API {
     const dotenv = DotEnv.make()
-    const api = new ApiService({
+    const api = new API({
       docs: 'init',
       fetch: {
         message: 'init',
@@ -37,6 +38,7 @@ export default class ApiService {
 
     api.url = api.route.query?.url || undefined
     api.format = api.route.query?.format as Format || 'opengraph'
+    api.dark = api.route.query?.dark === 'true' || false
     api.apiKey = api.route.query?.api_key || undefined
     api.apiKeyEnable = api.dotenv.API_KEY_ENABLED
 

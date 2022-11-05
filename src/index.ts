@@ -1,5 +1,5 @@
 import { join } from 'path'
-import * as url from 'url'
+import { fileURLToPath } from 'url'
 import Fastify from 'fastify'
 import { fastifyAutoload } from '@fastify/autoload'
 import fastifyEnv from '@fastify/env'
@@ -7,22 +7,25 @@ import cors from '@fastify/cors'
 import DotEnv from '~/utils/DotEnv'
 import config from '~/config'
 
-const __filename = url.fileURLToPath(import.meta.url)
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
+// const __filename = url.fileURLToPath(import.meta.url)
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
+const dotenvConfig = DotEnv.dotEnvRaw(join(__dirname, '../.env'))
+
+const logger = process.env.NODE_ENV_LOG === 'production' ? { level: dotenvConfig.LOG_LEVEL } : {
+  level: dotenvConfig.LOG_LEVEL,
+  transport: {
+    target: 'pino-pretty',
+    options: {
+      destination: 1,
+      colorize: true,
+      translateTime: 'HH:MM:ss.l',
+      ignore: 'pid,hostname'
+    },
+  }
+}
 
 const fastify = Fastify({
-  // logger: {
-  //   transport: {
-  //     target: 'pino-pretty',
-  //     options: {
-  //       destination: 1,
-  //       colorize: true,
-  //       translateTime: 'HH:MM:ss.l',
-  //       ignore: 'pid,hostname'
-  //     }
-  //   }
-  // }
-  logger: true,
+  logger
 })
 
 const start = async () => {
@@ -47,13 +50,10 @@ const start = async () => {
       maxAge: 86400
     })
 
-    console.log(dotenv)
-
     const port = dotenv.API_PORT
     await fastify.listen({ port })
 
-    // eslint-disable-next-line no-console
-    console.log(`Server listening on ${dotenv.API_URL}`)
+    console.warn(`Server listening on ${dotenv.API_URL}`)
   }
   catch (err) {
     fastify.log.error(err)

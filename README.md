@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  API to offer OpenGraph meta or oEmbed media.
+  <strong>API to offer OpenGraph meta or oEmbed media.</strong>
 </p>
 
 <p align="center">
@@ -26,8 +26,8 @@
 
 ------
 
-> *VERY EXPERIMENTAL*  
-> In early development, not stable.  
+> *VERY EXPERIMENTAL*
+> In early development, not stable.
 
 ## Why ?
 
@@ -47,8 +47,8 @@ With oEmbed, it's really complicated, each social network have their own API, wi
 
 ### Roadmap
 
-- API key as query or header
-- Domains allow `*` or `*.domain.com`
+- [ ] API key as query or header
+- [ ]Domains allow `*` or `*.domain.com`
 - [x] OpenGraph
   - [ ] All meta
   - [ ] Twitter Cards
@@ -79,11 +79,11 @@ Demo instance: `https://social-oembed.git-projects.xyz`.
 GET /api
 ```
 
-| Parameter | Type                    | Required                            | Description                               |
-|-----------|-------------------------|-------------------------------------|-------------------------------------------|
-| `url`     | `string`                | `true`                              | URL of website like `https://github.com`. |
-| `format`  | `opengraph` or `oembed` | `false`                             | Format of data, default is `opengraph`.   |
-| `api_key` | `string`                | Depend of `.env` `API_KEY` variable | API key.                                  |
+| Parameter | Type                  | Required                            | Description                               |
+| --------- | --------------------- | ----------------------------------- | ----------------------------------------- |
+| `url`     | `string`              | `true`                              | URL of website like `https://github.com`. |
+| `format`  | `opengraph`, `oembed` | `false`                             | Format of data, default is `opengraph`.   |
+| `api_key` | `string`              | Depend of `.env` `API_KEY` variable | API key.                                  |
 
 ```http
 GET /docs
@@ -134,13 +134,15 @@ Server is available on <http://localhost:3000>.
 
 ### `.env`
 
-| Variable      | Type                         | Default                                        | Description                                                                        |
-|---------------|------------------------------|------------------------------------------------|------------------------------------------------------------------------------------|
-| `API_PORT`    | `number`                     | `3000`                                         | Port used by your application                                                      |
-| `API_HOST`    | `string`                     | `localhost`                                    | Host of your application                                                           |
-| `API_HTTPS`   | `boolean`                    | `false`                                        | Enable https for you application                                                   |
-| `API_KEY`     | `string` `undefined` `false` | `false`                                        | API key if you want to set it, if `undefined`, API key protection is disabled      |
-| `API_DOMAINS` | `string`                     | `localhost:3000,127.0.0.1:3000,127.0.0.1:5173` | Domains allowed to use the API, seperated by commans, use `*` to allow all domains |
+| Variable      | Type                                                   | Default                         | Description                                                                             |
+| ------------- | ------------------------------------------------------ | ------------------------------- | --------------------------------------------------------------------------------------- |
+| `NODE_ENV`    | `development`,`test`,`production`                      | `development`                   | Current environment.                                                                    |
+| `LOG_LEVEL`   | `debug`,`error`,`fatal`,`info`,`trace`,`warn`,`silent` | `debug`                         | Log level for debug.                                                                    |
+| `API_PORT`    | `number`                                               | `3000`                          | Port used by your application                                                           |
+| `API_HOST`    | `string`                                               | `localhost`                     | Host of your application                                                                |
+| `API_HTTPS`   | `boolean`                                              | `false`                         | Enable https for you application                                                        |
+| `API_KEY`     | `string`, `undefined`, `false`                         | `false`                         | API key if you want to set it, if `undefined` or `false` API key protection is disabled |
+| `API_DOMAINS` | `string`                                               | `localhost:3000,127.0.0.1:3000` | Domains allowed to use the API, seperated by commans, use `*` to allow all domains      |
 
 ### Production
 

@@ -1,5 +1,6 @@
+import fs from 'fs'
 import type { FastifyRequest } from 'fastify'
-import type { DotEnvConfig, LogLevel, NodeEnv } from '~/types/dotenv'
+import type { DotEnvConfig, DotEnvRawConfig, LogLevel, NodeEnv } from '~/types/dotenv'
 
 export default class DotEnv {
   public config: DotEnvConfig
@@ -16,13 +17,18 @@ export default class DotEnv {
     if (key === 'false')
       key = undefined
 
+    const nodeEnv = process.env.NODE_ENV as NodeEnv || 'development'
+    let apiUrl = `${https ? 'https' : 'http'}://${host}`
+    if (nodeEnv === 'development')
+      apiUrl = `${apiUrl}:${port}`
+
     const dotenv = new DotEnv({
-      NODE_ENV: process.env.NODE_ENV as NodeEnv || 'development',
+      NODE_ENV: nodeEnv,
       LOG_LEVEL: process.env.LOG_LEVEL as LogLevel || 'info',
       API_PORT: port,
       API_HOST: host,
       API_HTTPS: https,
-      API_URL: `${https ? 'https' : 'http'}://${host}:${port}`,
+      API_URL: apiUrl,
       API_KEY: key,
       API_KEY_ENABLED: typeof key === 'string',
       API_DOMAINS: [],
@@ -33,6 +39,26 @@ export default class DotEnv {
     dotenv.config.API_DOMAINS_PARSED = dotenv.domainsParsed()
 
     return dotenv
+  }
+
+  public static dotEnvRaw(path: string): DotEnvRawConfig {
+    const dotenvRaw = fs.readFileSync(path).toString().split('\n')
+    const dotenvConfig: DotEnvRawConfig = {}
+    dotenvRaw.forEach(el => {
+      if (el) {
+        const config = el.split('=')
+        const key = config[0]
+        let value = config[1]
+        if (value.includes('#'))
+          value = value.split('#')[0].trim()
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        dotenvConfig[key] = value
+      }
+    })
+
+    return dotenvConfig
   }
 
   public static checkApiKey(req: FastifyRequest) {

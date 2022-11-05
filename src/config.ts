@@ -1,4 +1,4 @@
-import type { LogLevel, NodeEnv } from '~/types/dotenv'
+import type { DotEnvRawConfig } from '~/types/dotenv'
 
 const schema = {
   type: 'object',
@@ -56,15 +56,7 @@ const options = {
 
 declare module 'fastify' {
   interface FastifyInstance {
-    config: {
-      NODE_ENV: NodeEnv
-      LOG_LEVEL: LogLevel
-      API_PORT: number
-      API_HOST: string
-      API_HTTPS: boolean
-      API_KEY: string
-      API_DOMAINS: string
-    }
+    config: DotEnvRawConfig
   }
 }
 

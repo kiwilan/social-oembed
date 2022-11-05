@@ -20,7 +20,6 @@ export const route = (route: Endpoint | Route): string => {
     current = route
 
   const dotenv = DotEnv.make()
-  console.log(dotenv)
 
   try {
     const url = new URL(current.endpoint, dotenv.config.API_URL)

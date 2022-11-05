@@ -18,6 +18,10 @@ const OpenGraph = (props: { url: string }) => {
   return !openGraph ? (
     <div>Loading...</div>
   ) : (
+    <div dangerouslySetInnerHTML={{ __html: openGraph.render ?? '' }}></div>
+  )
+
+  return (
     <div>
       <div className="mx-auto max-w-md">
         <a
