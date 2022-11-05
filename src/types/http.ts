@@ -8,9 +8,6 @@ export interface NodeFetchOptions {
   method: ResponseMethod
   body?: ResponseBody
   headers?: HeadersInit
-  // credentials?: RequestCredentials
-  // mode?: RequestMode
-  // timeout?: boolean
 }
 
 export interface FetchInit {

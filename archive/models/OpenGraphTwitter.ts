@@ -2,7 +2,6 @@ import SocialServiceTwitter from '~/services/SocialServiceTwitter'
 import OpenGraphItem from '~/models/OpenGraph'
 
 export default class OpenGraphTwitter {
-  // https://twitter.com/freekmurze/status/1588610032203087876
   protected constructor(
     protected originUrl: string,
     protected social: SocialServiceTwitter,

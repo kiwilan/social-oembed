@@ -5,6 +5,7 @@ import type { OpenGraphResponse } from '~/types'
 export default class Render {
   protected constructor(
     protected component: any,
+    protected dark: boolean = false,
   ) {}
 
   public static make(component: any): Render {
@@ -13,12 +14,13 @@ export default class Render {
     return render
   }
 
-  public static openGraph(og: OpenGraphResponse): string {
+  public static openGraph(og: OpenGraphResponse, dark = false): string {
     const render = Render.make(OpenGraphRender)
-    return render.toHtml(og)
+    render.dark = dark
+    return render.toHtml(og, dark)
   }
 
-  public toHtml(props: any): string {
-    return renderToString(this.component(props))
+  public toHtml(...props: any): string {
+    return renderToString(this.component(...props))
   }
 }

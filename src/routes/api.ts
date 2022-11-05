@@ -1,15 +1,14 @@
 import type { FastifyInstance, FastifySchema } from 'fastify'
 import { Type } from '@sinclair/typebox'
-import type { ResponseMeta } from '~/types'
-// import API from '~/utils/Api'
-// import OpenGraphService from '~/services/OpenGraphService'
+import type { ApiResponseMeta } from '~/types/route'
+import ApiService from '~/services/ApiService'
 
 const docs = async (fastify: FastifyInstance) => {
   const schema: FastifySchema = {
     response: {
       200: {
         data: Type.Any(), // TODO type data
-        meta: Type.Unsafe<ResponseMeta>()
+        meta: Type.Unsafe<ApiResponseMeta>()
       }
     }
   }
@@ -19,14 +18,8 @@ const docs = async (fastify: FastifyInstance) => {
     url: '/api',
     schema,
     async handler(req) {
-      // const api = API.make(req)
-      const response = {
-        content: {
-          data: {},
-          // meta: api.meta,
-          meta: {}
-        },
-      }
+      const api = ApiService.make(req)
+      const response = api.get()
 
       // const rejectApiKey = API.checkApiKey(api)
       // if (rejectApiKey)
@@ -51,7 +44,7 @@ const docs = async (fastify: FastifyInstance) => {
       //   }
       // }
 
-      return response.content
+      return response
     },
   })
 }

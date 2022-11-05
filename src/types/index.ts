@@ -34,13 +34,6 @@ export interface MetaNode {
   value?: string
 }
 
-export interface FetchMeta {
-  ok?: boolean
-  status?: number
-  message?: string
-  type?: FetchType
-}
-
 export interface Instance {
   name: string
   version?: string
@@ -56,37 +49,15 @@ export interface Instance {
   }
 }
 
-export type Format = 'oembed' | 'opengraph'
-
-export interface ResponseMeta {
-  url: string
-  format: Format
-  docs: string
-  fetch: FetchMeta
-}
-
 export interface RouterItem {
   [key: string]: (req: Request) => Response
 }
 
-export type Endpoint = '/' | '/docs' | '/api'
-export type RouteQueryKey = 'url' | 'format' | 'api_key' | 'dark'
-export type RouteQuery = Record<RouteQueryKey, string | undefined> | undefined
-export interface Route {
-  endpoint: Endpoint
-  query?: RouteQuery
-}
-
-interface ResponseContent {
-  data: object
-  meta?: ResponseMeta
-}
-
-export interface RouteResponse {
-  content?: ResponseContent
-  status?: number
-  redirect?: Endpoint
-}
+// export interface RouteResponse {
+//   content?: ResponseContent
+//   status?: number
+//   redirect?: Endpoint
+// }
 
 export interface DataResponse {
   ok: boolean

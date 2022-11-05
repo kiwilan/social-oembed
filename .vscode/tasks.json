@@ -20,6 +20,6 @@
       "type": "shell",
       "command": "pnpm lint:fix",
       "problemMatcher": []
-    },
+    }
   ]
 }

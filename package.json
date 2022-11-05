@@ -2,18 +2,29 @@
   "name": "social-oembed",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": ">= pnpm@7.0.0",
   "description": "API to offer OpenGraph meta or oEmbed media.",
   "author": {
     "name": "Ewilan Rivière",
     "email": "ewilan.riviere@gmail.com"
   },
-  "homepage": "https://github.com/kiwilan/social-oembed#readme",
   "license": "MIT",
-  "packageManager": ">= pnpm@7.0.0",
+  "homepage": "https://github.com/kiwilan/social-oembed#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/kiwilan/social-oembed"
   },
+  "keywords": [
+    "fastify",
+    "oembed",
+    "social",
+    "api",
+    "embed",
+    "media",
+    "social network",
+    "nodejs",
+    "typescript"
+  ],
   "engines": {
     "node": ">=16.0.0"
   },
@@ -30,17 +41,6 @@
     "release:patch": "standard-version --no-verify --release-as patch",
     "pm2": "pm2 start --name 'social-oembed' './dist/index.mjs'"
   },
-  "keywords": [
-    "fastify",
-    "oembed",
-    "social",
-    "api",
-    "embed",
-    "media",
-    "social network",
-    "nodejs",
-    "typescript"
-  ],
   "dependencies": {
     "@fastify/autoload": "^5.4.1",
     "@fastify/cors": "^8.1.1",

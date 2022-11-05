@@ -1,13 +1,13 @@
 import * as cheerio from 'cheerio'
 import Render from '~/utils/Render'
 import Http from '~/utils/Http'
-import Module from '~/models/Module'
-import OpenGraphService from '~/services/OpenGraphService'
+import Module from '~/models/ApiModule'
+import OpenGraphService from '~/services/ApiService/OpenGraphService'
 import type { FetchMeta, MetaNode, MetaValues, OpenGraphResponse, Renderer } from '~/types'
 
 export default class OpenGraphItem extends Module {
   public ok = false
-  public originalUrl: string
+  public url: string
   public error?: string
   public title?: string
   public description?: string
@@ -20,7 +20,7 @@ export default class OpenGraphItem extends Module {
   public dark?: boolean
   public render?: any
 
-  public constructor(originalUrl: string, meta?: FetchMeta) {
+  public constructor(url: string, meta?: FetchMeta) {
     if (!meta) {
       meta = {
         message: 'Constructor error',
@@ -30,14 +30,14 @@ export default class OpenGraphItem extends Module {
       }
     }
     super(meta)
-    this.originalUrl = originalUrl
+    this.url = url
   }
 
   public static async make(service: OpenGraphService): Promise<OpenGraphItem> {
     const og = new OpenGraphItem(service.url)
     og.dark = service.api.dark
 
-    const http = Http.client(og.originalUrl)
+    const http = Http.client(og.url)
     const res = await http.get()
 
     if (res.ok && res.type === 'text') {
@@ -128,13 +128,13 @@ export default class OpenGraphItem extends Module {
     let url: URL
 
     if (!this.siteUrl)
-      return this.originalUrl
+      return this.url
 
     try {
       url = new URL(this.siteUrl)
     }
     catch (error) {
-      url = new URL(this.originalUrl)
+      url = new URL(this.url)
     }
 
     let current = url.href
