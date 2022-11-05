@@ -28,7 +28,7 @@ export default class ApiService {
 
     return {
       api_key: apiKey,
-      dark: query?.dark === 'true',
+      dark: query?.dark === 'true' || false,
       format: query?.format as ApiQueryFormat || 'opengraph',
       url: query?.url,
       align: query?.align as TwitterAlign ?? 'center',
@@ -37,6 +37,9 @@ export default class ApiService {
       lang: query?.lang ?? 'en',
       theme: query?.theme as TwitterTheme ?? 'light',
       omit_script: query?.omit_script === 'true' || false,
+      width: query?.width ?? '100%',
+      height: query?.height ?? '450',
+      is_mobile: query?.is_mobile === 'true' || false
     }
   }
 

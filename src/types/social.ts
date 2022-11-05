@@ -15,6 +15,7 @@ export interface TwitterApi {
 export interface ISocialRegex {
   url?: string
   user?: string
+  type?: string
   id?: string
   embedUrl?: string
 }

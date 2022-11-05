@@ -3,7 +3,7 @@ import type { FetchType } from './http'
 export type Endpoint = '/' | '/docs' | '/api'
 
 export type ApiQueryFormat = 'oembed' | 'opengraph'
-export type ApiRouteQueryKey = 'url' | 'format' | 'api_key' | 'dark' | 'align' | 'conversation' | 'hide_media' | 'lang' | 'theme' | 'omit_script'
+export type ApiRouteQueryKey = 'url' | 'format' | 'api_key' | 'dark' | 'align' | 'conversation' | 'hide_media' | 'lang' | 'theme' | 'omit_script' | 'width' | 'height' | 'is_mobile'
 export type ApiRouteQuery = Record<ApiRouteQueryKey, string | undefined> | undefined
 
 export type TwitterAlign = 'left' | 'center' | 'right'
@@ -22,6 +22,10 @@ export interface ApiRouteQueryFormat {
   lang?: string
   theme?: TwitterTheme
   omit_script?: boolean
+  // iframe
+  width?: string
+  height?: string
+  is_mobile?: boolean
 }
 
 export interface Route {
