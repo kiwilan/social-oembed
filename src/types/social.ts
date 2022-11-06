@@ -45,7 +45,8 @@ export enum SocialEnum {
 }
 
 // https://bobbyhadz.com/blog/typescript-convert-enum-to-union
-export type Social = `${SocialEnum}`
+export type Social = `${SocialEnum}` // or keyof typeof SocialEnum
+export type SocialOEmbed = `${SocialEnum.twitter}`
 
 type SocialExtends<T> = Partial<Record<SocialEnum, T>>
 export interface ISocial<T> extends SocialExtends<T> {}

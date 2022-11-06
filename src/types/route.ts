@@ -5,6 +5,7 @@ export type Endpoint = '/' | '/docs' | '/api'
 export type ApiQueryFormat = 'oembed' | 'opengraph'
 export type ApiRouteQueryKey = 'url' | 'format' | 'api_key' | 'dark' | 'align' | 'conversation' | 'hide_media' | 'lang' | 'theme' | 'omit_script' | 'width' | 'height' | 'is_mobile'
 export type ApiRouteQuery = Record<ApiRouteQueryKey, string | undefined> | undefined
+// export type ApiRouteQuery = Record<Partial<ApiRouteQueryKey>, string>
 
 export type TwitterAlign = 'left' | 'center' | 'right'
 export type TwitterConversation = 'none' | 'all'

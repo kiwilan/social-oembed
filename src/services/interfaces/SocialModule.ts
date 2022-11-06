@@ -10,7 +10,7 @@ export default abstract class SocialModule {
   }
 
   abstract type: Social
-  abstract regex: RegExp
+  abstract regex: RegExp | undefined
   abstract make(): ISocialRegex
 
   public setMatches(): SocialModule {

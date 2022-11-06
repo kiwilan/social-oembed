@@ -1,4 +1,4 @@
-import SocialModule from './SocialModule'
+import SocialModule from '~/services/interfaces/SocialModule'
 import type { ISocialRegex, Social } from '~/types/social'
 
 export default class SocialTiktok extends SocialModule {

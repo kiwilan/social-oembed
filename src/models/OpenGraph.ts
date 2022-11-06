@@ -1,10 +1,10 @@
 import * as cheerio from 'cheerio'
-import TwitterOEmbed from './TwitterOEmbed'
 import Http from '~/utils/Http'
 import ApiModule from '~/models/ApiModule'
 import type { IOpenGraph } from '~/types/api'
 import type { ApiRouteQueryFormat } from '~/types/route'
 import type { Meta, MetaNode, MetaValues } from '~/types'
+import OEmbedService from '~/services/OEmbedService'
 
 export default class OpenGraph extends ApiModule {
   public model: IOpenGraph = {}
@@ -15,9 +15,9 @@ export default class OpenGraph extends ApiModule {
       return og
 
     if (og.query.url.includes('twitter')) {
-      const twitter = await TwitterOEmbed.make(query)
-      og.model = twitter.getModel()
-      og.fetchMeta = twitter.getFetchMeta()
+      const oembed = await OEmbedService.make(og.query, 'twitter')
+      og.model = oembed.toOpenGraph()
+      og.fetchMeta = oembed.getFetchMeta()
     }
     else {
       const http = Http.client(og.query.url)

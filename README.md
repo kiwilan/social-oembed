@@ -75,6 +75,7 @@ With oEmbed, it's really complicated, each social network have their own API, wi
   - [x] Providers system
   - [ ] metadata query to get OpenGraph
   - [ ] smart queries for each social network
+  - [ ] queries for iframe
 - [ ] Host your own instance
 - [ ] Auth middleware <https://github.com/fastify/middie>
   - [ ]Domains allow `*` or `*.domain.com`
