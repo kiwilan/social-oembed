@@ -38,7 +38,7 @@ export default class OEmbedTwitter extends OEmbedModule<TwitterApi> {
       siteUrl: body?.url,
       description: body?.html ? body.html.replace(/<[^>]*>?/gm, '') : undefined,
       themeColor: '#1DA1F2',
-      twitter: true
+      social: this.type,
     }
 
     return this

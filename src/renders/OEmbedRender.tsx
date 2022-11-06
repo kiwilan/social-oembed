@@ -1,7 +1,6 @@
-import type { FC } from 'react'
 import type { IApiData } from '~/types/api'
 
-const OEmbedRender: FC = (model: IApiData) => {
+const OEmbedRender = (model: IApiData) => {
   const url = model.embedUrl
   const width = '100%'
   const height = model.embedUrl ? 450 : 0

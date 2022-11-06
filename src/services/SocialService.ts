@@ -34,18 +34,7 @@ export default class SocialService {
   ) {}
 
   public static make(url: string): SocialService {
-    let type: Social = 'unknown'
-
-    for (const social in SocialEnum) {
-      if (url.includes(social))
-        type = social as Social
-    }
-    if (url.includes('youtu'))
-      type = 'youtube'
-
-    if (url.includes('flic.kr'))
-      type = 'flickr'
-
+    const type = SocialService.find(url)
     const social = new SocialService(url, type)
     const providers: ISocial<SocialModule> = {
       dailymotion: new SocialDailymotion(url),
@@ -83,5 +72,21 @@ export default class SocialService {
       social.isValid = true
 
     return social
+  }
+
+  public static find(url: string): Social {
+    let type: Social = 'unknown'
+
+    for (const social in SocialEnum) {
+      if (url.includes(social))
+        type = social as Social
+    }
+    if (url.includes('youtu'))
+      type = 'youtube'
+
+    if (url.includes('flic.kr'))
+      type = 'flickr'
+
+    return type
   }
 }

@@ -12,13 +12,13 @@ export default class SocialTiktok extends SocialModule {
       type = type.replace('\\', '')
     }
     const id = this.matches[3] ?? undefined
-    // const embedUrl = id ? `https://www.tiktok.com/embed/${id}` : undefined
+    const embedUrl = id ? `https://www.tiktok.com/embed/${id}` : undefined
 
     return {
       url: this.matches[0] ?? undefined,
       type,
       id,
-      embedUrl: 'https://www.tiktok.com/embed/7072819797184171310'
+      embedUrl
     }
   }
 }

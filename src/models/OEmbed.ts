@@ -2,6 +2,7 @@ import ApiModule from '~/models/ApiModule'
 import SocialService from '~/services/SocialService'
 import type { ApiRouteQueryFormat } from '~/types/route'
 import type { IApiData } from '~/types/api'
+import OEmbedService from '~/services/OEmbedService'
 
 export default class OEmbed extends ApiModule {
   public model: IApiData = {}
@@ -14,7 +15,14 @@ export default class OEmbed extends ApiModule {
     // const og = await OpenGraph.make(oembed.query)
 
     const social = SocialService.make(oembed.query.url)
-    // console.log(social)
+    const service = await OEmbedService.make(oembed.query, social.type)
+
+    if (service)
+      console.log('OEmbed: Using OEmbed service')
+    else
+      console.log('OEmbed: Using OpenGraph service')
+
+    oembed.social = social.type
 
     oembed.model = {
       // ...og.model,

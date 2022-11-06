@@ -3,41 +3,73 @@ import Http from '~/utils/Http'
 import ApiModule from '~/models/ApiModule'
 import type { IOpenGraph } from '~/types/api'
 import type { ApiRouteQueryFormat } from '~/types/route'
-import type { Meta, MetaNode, MetaValues } from '~/types'
+import type { MetaNode, MetaValues, OpenGraphMeta } from '~/types/html'
 import OEmbedService from '~/services/OEmbedService'
+import SocialService from '~/services/SocialService'
+import type OEmbedModule from '~/services/interfaces/OEmbedModule'
+import type { Social } from '~/types/social'
 
 export default class OpenGraph extends ApiModule {
   public model: IOpenGraph = {}
 
   public static async make(query: ApiRouteQueryFormat): Promise<OpenGraph> {
     const og = new OpenGraph(query)
-    if (!og.query.url)
+
+    if (!og.query.url) {
+      console.error('OpenGraph: No URL provided')
       return og
-
-    if (og.query.url.includes('twitter')) {
-      const oembed = await OEmbedService.make(og.query, 'twitter')
-      og.model = oembed.toOpenGraph()
-      og.fetchMeta = oembed.getFetchMeta()
     }
-    else {
-      const http = Http.client(og.query.url)
-      const res = await http.get<string>()
-      og.response = res
 
-      if (res.type !== 'text')
-        return og
+    const social = SocialService.find(og.query.url)
 
-      const metaValues = og.parseHtml(res.body)
-      og.convertHtml(metaValues)
-      og.fetchMeta = {
-        message: res.statusText,
-        ok: res.ok,
-        status: res.status,
-        type: res.type
-      }
+    switch (social) {
+      case 'twitter':
+        await og.getOembed(social)
+        break
+
+      case 'tiktok':
+        await og.getOembed(social)
+        break
+
+      default:
+        await og.getOpenGraph(og.query.url)
+        break
     }
 
     return og
+  }
+
+  private async getOpenGraph(url: string): Promise<OpenGraph> {
+    const http = Http.client(url)
+    const res = await http.get<string>()
+
+    this.response = res
+
+    if (res.type !== 'text' || !res.ok) {
+      console.error('OpenGraph: Failed to fetch HTML')
+      return this
+    }
+
+    const metaValues = this.parseHtml(res.body)
+    this.convertHtml(metaValues)
+    this.fetchMeta = {
+      message: res.statusText,
+      ok: res.ok,
+      status: res.status,
+      type: res.type
+    }
+
+    return this
+  }
+
+  private async getOembed(social: Social): Promise<OEmbedModule | undefined> {
+    const oembed = await OEmbedService.make(this.query, social)
+    if (oembed) {
+      this.model = oembed.toOpenGraph()
+      this.fetchMeta = oembed.getFetchMeta()
+    }
+
+    return oembed
   }
 
   private convertHtml(metaValues: MetaValues) {
@@ -50,7 +82,7 @@ export default class OpenGraph extends ApiModule {
       siteName: metaValues.siteName,
       locale: metaValues.locale,
       themeColor: metaValues.themeColor,
-      twitter: false,
+      social: this.social,
     }
 
     this.model.siteUrl = this.checkUrl()
@@ -113,9 +145,9 @@ export default class OpenGraph extends ApiModule {
     return this.model.image
   }
 
-  private metaNodes(): Meta {
+  private metaNodes(): OpenGraphMeta {
     return {
-      title: [
+      'title': [
         {
           query: '[property="og:title"]',
           type: 'attr',
@@ -131,7 +163,7 @@ export default class OpenGraph extends ApiModule {
           type: 'text',
         },
       ],
-      description: [
+      'description': [
         {
           query: '[property="og:description"]',
           type: 'attr',
@@ -147,7 +179,7 @@ export default class OpenGraph extends ApiModule {
           type: 'text',
         },
       ],
-      image: [
+      'image': [
         {
           query: '[property="og:image"]',
           type: 'attr',
@@ -159,7 +191,7 @@ export default class OpenGraph extends ApiModule {
           value: 'content',
         },
       ],
-      siteUrl: [
+      'siteUrl': [
         {
           query: '[property="og:url"]',
           type: 'attr',
@@ -171,7 +203,7 @@ export default class OpenGraph extends ApiModule {
           value: 'content',
         },
       ],
-      type: [
+      'type': [
         {
           query: '[property="og:type"]',
           type: 'attr',
@@ -183,7 +215,7 @@ export default class OpenGraph extends ApiModule {
           value: 'content',
         },
       ],
-      siteName: [
+      'siteName': [
         {
           query: '[property="og:site_name"]',
           type: 'attr',
@@ -200,7 +232,7 @@ export default class OpenGraph extends ApiModule {
           value: 'content',
         },
       ],
-      locale: [
+      'locale': [
         {
           query: '[property="og:locale"]',
           type: 'attr',
@@ -208,7 +240,35 @@ export default class OpenGraph extends ApiModule {
         },
       // TODO meta locale
       ],
-      themeColor: [
+      'audio': [
+        {
+          query: '[property="og:audio"]',
+          type: 'attr',
+          value: 'content',
+        }
+      ],
+      'video': [
+        {
+          query: '[property="og:video"]',
+          type: 'attr',
+          value: 'content',
+        }
+      ],
+      'determiner': [
+        {
+          query: '[property="og:determiner"]',
+          type: 'attr',
+          value: 'content',
+        }
+      ],
+      'article:author': [
+        {
+          query: '[property="og:article:author"]',
+          type: 'attr',
+          value: 'content',
+        }
+      ],
+      'themeColor': [
         {
           query: '[name="theme-color"]',
           type: 'attr',

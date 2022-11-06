@@ -19,7 +19,7 @@ export default abstract class OEmbedModule<T = {}> {
   abstract endpoint: string
   public abstract make(): Promise<OEmbedModule<T>>
 
-  protected async fetch(): Promise<T | undefined> {
+  protected async fetch(): Promise<T> {
     const params = new URLSearchParams()
     for (const param of Object.entries(this.params))
       params.append(param[0], param[1])
@@ -36,7 +36,7 @@ export default abstract class OEmbedModule<T = {}> {
       type: res.type,
     }
 
-    return res.body
+    return res.body as T
   }
 
   public toIframeSrc = (): string | undefined => {

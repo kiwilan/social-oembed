@@ -8,7 +8,8 @@ const openGraphs: string[] = [
   'https://github.com',
   // 'https://www.nexusmods.com',
   // 'https://ewilan-riviere.com',
-  // 'https://twitter.com/BalletOParis/status/1580947790250721283',
+  'https://twitter.com/BalletOParis/status/1580947790250721283',
+  'https://www.tiktok.com/@mrnatasmr/video/7155146642000219398?is_copy_url=1&is_from_webapp=v1',
 ]
 const oembeds: string[] = [
   // 'https://twitter.com/BalletOParis/status/1580947790250721283',

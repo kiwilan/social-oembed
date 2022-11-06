@@ -1,13 +1,24 @@
-export interface IOpenGraph {
-  title?: string
-  description?: string
-  image?: string
-  siteUrl?: string
-  type?: string
-  siteName?: string
-  locale?: string
-  themeColor?: string
-  twitter?: boolean
+import type { Social } from './social'
+
+enum OpenGraphEnum {
+  title = 'title',
+  description = 'description',
+  image = 'image',
+  siteUrl = 'siteUrl',
+  type = 'type',
+  siteName = 'siteName',
+  locale = 'locale',
+  audio = 'audio',
+  video = 'video',
+  determiner = 'determiner',
+  'article:author' = 'article:author',
+  themeColor = 'themeColor',
+}
+
+export type OpenGraphType = keyof typeof OpenGraphEnum
+export type IOpenGraphExtends<T> = Partial<Record<OpenGraphEnum, T>>
+export interface IOpenGraph<T = string> extends IOpenGraphExtends<T> {
+  social?: Social
 }
 
 export interface IOEmbed {

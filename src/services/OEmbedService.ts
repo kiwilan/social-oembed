@@ -2,27 +2,32 @@ import OEmbedTwitter from './OEmbedService/OEmbedTwitter'
 import OEmbedTiktok from './OEmbedService/OEmbedTiktok'
 import type OEmbedModule from '~/services/interfaces/OEmbedModule'
 import type { ApiRouteQueryFormat } from '~/types/route'
-import type { ISocial, SocialOEmbed } from '~/types/social'
+import type { ISocial, Social } from '~/types/social'
 
 export default class OEmbedService {
   protected query: ApiRouteQueryFormat
-  protected social: SocialOEmbed
+  protected social: Social
 
-  constructor(query: ApiRouteQueryFormat, social: SocialOEmbed) {
+  constructor(query: ApiRouteQueryFormat, social: Social) {
     this.query = query
     this.social = social
   }
 
-  public static async make(query: ApiRouteQueryFormat, social: SocialOEmbed): Promise<OEmbedModule | undefined> {
+  public static async make(query: ApiRouteQueryFormat, social?: Social): Promise<OEmbedModule | undefined> {
+    if (!social)
+      console.error('OEmbedService: No social provided')
+
     const modules: ISocial<OEmbedModule> = {
       twitter: new OEmbedTwitter(query),
       tiktok: new OEmbedTiktok(query),
     }
 
-    const current = modules[social]
-    if (current)
-      current.make()
+    const current = modules[social ?? 'unknown']
+    if (!current) {
+      console.error('OEmbedService: No module found')
+      return undefined
+    }
 
-    return current
+    return current.make()
   }
 }

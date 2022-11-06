@@ -1,5 +1,5 @@
 import type { FastifyRequest } from 'fastify'
-import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, ApiRouteQueryFormat, FetchMeta, IApiQueryFormat, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
+import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, ApiRouteQueryFormat, FetchMeta, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
 import OpenGraph from '~/models/OpenGraph'
 import Render from '~/services/ApiService/Render'
 import OEmbed from '~/models/OEmbed'
@@ -68,6 +68,7 @@ export default class ApiService {
 
   private async getOEmbed(): Promise<FormatResponse> {
     const oembed = await OEmbed.make(this.query)
+
     this.formatResponse = {
       response: {
         ...oembed.model,
@@ -80,13 +81,19 @@ export default class ApiService {
   }
 
   public async get(): Promise<ApiResponse> {
-    const formats: IApiQueryFormat<Promise<FormatResponse>> = {
-      opengraph: this.getOpenGraph(),
-      oembed: this.getOEmbed(),
+    switch (this.query.format) {
+      case 'opengraph':
+        await this.getOpenGraph()
+        break
+
+      case 'oembed':
+        await this.getOEmbed()
+        break
+
+      default:
+        await this.getOpenGraph()
+        break
     }
-    const format = formats[this.query.format]
-    if (format)
-      await format
 
     return {
       data: this.formatResponse?.response,
