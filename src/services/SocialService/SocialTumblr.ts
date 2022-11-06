@@ -1,11 +1,11 @@
 import SocialModule from '~/services/interfaces/SocialModule'
-import type { ISocialRegex, Social } from '~/types/social'
+import type { ISocialIdentifier, Social } from '~/types/social'
 
 export default class SocialTumblr extends SocialModule {
   type: Social = 'tumblr'
   regex = /(?:https?:\/\/)?(?:www\.)?tumblr\.com\/post\/([a-zA-Z0-9]+)/ig
 
-  public get(): ISocialRegex {
+  public get(): ISocialIdentifier {
     const id = this.matches[2] ?? undefined
 
     return {

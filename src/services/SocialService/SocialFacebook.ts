@@ -1,11 +1,12 @@
 import SocialModule from '~/services/interfaces/SocialModule'
-import type { ISocialRegex, Social } from '~/types/social'
+import type { ISocialIdentifier, Social } from '~/types/social'
 
 export default class SocialFacebook extends SocialModule {
   type: Social = 'facebook'
   regex = /(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/ig
+  protected endpoint: string | undefined
 
-  public get(): ISocialRegex {
+  protected parseMatches(): ISocialIdentifier {
     const id = this.matches[2] ?? undefined
 
     return {
@@ -13,5 +14,9 @@ export default class SocialFacebook extends SocialModule {
       user: this.matches[1] ?? undefined,
       id,
     }
+  }
+
+  protected fetchApi(): Promise<this> {
+    throw new Error('Method not implemented.')
   }
 }

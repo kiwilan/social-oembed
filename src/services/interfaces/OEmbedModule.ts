@@ -1,6 +1,6 @@
 import type { IOpenGraph } from '~/types/api'
 import type { OEmbedApi } from '~/types/oembed'
-import type { ApiRouteQueryFormat, FetchMeta } from '~/types/route'
+import type { FetchMeta, IApiRouteQuery } from '~/types/route'
 import type { Social } from '~/types/social'
 import Http from '~/utils/Http'
 
@@ -11,14 +11,14 @@ interface OEmbedApiParams {
 }
 
 export default abstract class OEmbedModule<T = {}> {
-  protected query: ApiRouteQueryFormat
+  protected query: IApiRouteQuery
   protected response?: T
   protected openGraph?: IOpenGraph
   protected fetchMeta?: FetchMeta
   protected params: Record<string, string> = {}
   protected html?: string
 
-  public constructor(query: ApiRouteQueryFormat) {
+  public constructor(query: IApiRouteQuery) {
     this.query = query
   }
 

@@ -18,9 +18,7 @@ export default class OEmbedSpotify extends OEmbedModule<OEmbedApi> {
     }
 
     const body = await this.fetch()
-    this.convertOEmbedApi(body, {
-      color: '#1DB954'
-    })
+    this.convertOEmbedApi(body)
 
     return this
   }

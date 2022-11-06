@@ -59,27 +59,34 @@ export default class ParserService {
     return { response, fetchMeta, metaValues }
   }
 
+  /**
+   * @see https://github.com/puppeteer/puppeteer/issues/4752
+   */
   private async parsePuppeteer(): Promise<IParser> {
     console.log(this)
 
-    const options: puppeteer.PuppeteerLaunchOptions = {
-      // args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      // headless: true,
-      // timeout: 3000,
-      // dumpio: true,
+    try {
+      const options: puppeteer.PuppeteerLaunchOptions = {
+        // args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        // headless: true,
+        // timeout: 3000,
+        // dumpio: true,
+      }
+      const browser = await puppeteer.launch(options)
+      const page = await browser.newPage()
+      await page.goto(this.url, { waitUntil: 'networkidle2' })
+
+      // await page.evaluate(() => {
+      //   console.log(document)
+      //   // const metaNodes = document.querySelectorAll('meta')
+      //   // console.log(metaNodes)
+      // })
     }
-    const browser = await puppeteer.launch(options)
-    console.log(browser)
+    catch (error) {
+      console.error(`OpenGraph: Failed to fetch HTML: ${error}`)
+    }
 
-    const page = await browser.newPage()
-    await page.goto(this.url, { waitUntil: 'networkidle2' })
-
-    await page.evaluate(() => {
-      const metaNodes = document.querySelectorAll('meta')
-      console.log(metaNodes)
-    })
-
-    await browser.close()
+    // await browser.close()
 
     // const browser = await puppeteer.launch()
     // const page = await browser.newPage()

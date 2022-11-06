@@ -1,16 +1,16 @@
 import type { FetchResponse } from '~/types/http'
-import type { ApiRouteQueryFormat, FetchMeta } from '~/types/route'
+import type { FetchMeta, IApiRouteQuery } from '~/types/route'
 import type { Social } from '~/types/social'
 
 export default abstract class ApiModule {
-  protected query: ApiRouteQueryFormat
-  protected fetchMeta: FetchMeta
+  protected query: IApiRouteQuery
+  protected fetchMeta?: FetchMeta
   protected render?: string
   protected isValid?: boolean
   public response?: FetchResponse
   public social: Social = 'unknown'
 
-  protected constructor(query?: ApiRouteQueryFormat, fetchMeta?: FetchMeta) {
+  protected constructor(query: IApiRouteQuery, fetchMeta?: FetchMeta) {
     this.query = query ?? { format: 'opengraph' }
     this.fetchMeta = fetchMeta ?? this.initFetchMeta()
   }
@@ -24,7 +24,7 @@ export default abstract class ApiModule {
     }
   }
 
-  public getFetchMeta(): FetchMeta {
+  public getFetchMeta(): FetchMeta | undefined {
     return this.fetchMeta
   }
 }

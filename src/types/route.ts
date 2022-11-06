@@ -19,8 +19,8 @@ export type TwitterAlign = 'left' | 'center' | 'right'
 export type TwitterConversation = 'none' | 'all'
 export type TwitterTheme = 'light' | 'dark'
 
-export interface ApiRouteQueryFormat {
-  url?: string
+export interface IApiRouteQuery {
+  url: string
   format: ApiQueryFormat
   api_key?: string | boolean
   dark?: boolean

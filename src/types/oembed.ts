@@ -13,3 +13,9 @@ export interface OEmbedApi {
   provider_url?: string
   provider_name?: string
 }
+
+export interface OEmbedApiParams {
+  height?: number
+  width?: number
+  color?: string
+}

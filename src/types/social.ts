@@ -1,4 +1,4 @@
-export interface ISocialRegex {
+export interface ISocialIdentifier {
   url?: string
   user?: string
   type?: string

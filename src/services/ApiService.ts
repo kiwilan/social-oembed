@@ -1,5 +1,5 @@
 import type { FastifyRequest } from 'fastify'
-import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, ApiRouteQueryFormat, FetchMeta, IApiQueryFormat, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
+import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, FetchMeta, IApiQueryFormat, IApiRouteQuery, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
 import OpenGraph from '~/models/OpenGraph'
 import Render from '~/services/ApiService/Render'
 import OEmbed from '~/models/OEmbed'
@@ -16,11 +16,12 @@ export default class ApiService {
 
   protected constructor(
     public req: FastifyRequest,
-    public query: ApiRouteQueryFormat,
+    public query: IApiRouteQuery,
   ) {}
 
   public static make(req: FastifyRequest): ApiService {
     const service = new ApiService(req, {
+      url: 'unknown URL',
       format: 'opengraph'
     })
     service.query = service.setQuery()
@@ -28,7 +29,7 @@ export default class ApiService {
     return service
   }
 
-  private setQuery(): ApiRouteQueryFormat {
+  private setQuery(): IApiRouteQuery {
     const query = this.req.query as ApiRouteQuery
     let apiKey: string | boolean | undefined = query?.api_key
 
@@ -39,7 +40,7 @@ export default class ApiService {
       api_key: apiKey,
       dark: query?.dark === 'true' || false,
       format: query?.format as ApiQueryFormat || 'opengraph',
-      url: query?.url,
+      url: query?.url || 'unkown',
       align: query?.align as TwitterAlign ?? 'center',
       conversation: query?.conversation as TwitterConversation ?? 'none',
       hide_media: query?.hide_media === 'true' || false,

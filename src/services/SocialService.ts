@@ -21,53 +21,47 @@ import SocialTwitch from './SocialService/SocialTwitch'
 import SocialVimeo from './SocialService/SocialVimeo'
 import SocialUnknown from './SocialService/SocialUnknown'
 import { SocialEnum } from '~/types/social'
-import type { ISocial, ISocialRegex, Social } from '~/types/social'
+import type { ISocial, Social } from '~/types/social'
+import type { IApiRouteQuery } from '~/types/route'
 
 export default class SocialService {
-  private constructor(
-    public url: string,
-    public type: Social,
-    public regexp?: RegExp | string,
-    public matches: string[] = [],
-    public isValid = false,
-    public model?: ISocialRegex
-  ) {}
+  public static async make(query: IApiRouteQuery): Promise<SocialModule | undefined> {
+    const type = SocialService.find(query.url)
 
-  public static make(url: string): SocialService {
-    const type = SocialService.find(url)
-    const social = new SocialService(url, type)
     const providers: ISocial<() => SocialModule> = {
-      dailymotion: () => new SocialDailymotion(url),
-      facebook: () => new SocialFacebook(url),
-      flickr: () => new SocialFlickr(url),
-      instagram: () => new SocialInstagram(url),
-      giphy: () => new SocialGiphy(url),
-      imgur: () => new SocialImgur(url),
-      kickstarter: () => new SocialKickstarter(url),
-      linkedin: () => new SocialLinkedin(url),
-      pinterest: () => new SocialPinterest(url),
-      reddit: () => new SocialReddit(url),
-      snapchat: () => new SocialSnapchat(url),
-      soundcloud: () => new SocialSoundcloud(url),
-      tiktok: () => new SocialTiktok(url),
-      spotify: () => new SocialSpotify(url),
-      ted: () => new SocialTed(url),
-      tumblr: () => new SocialTumblr(url),
-      twitch: () => new SocialTwitch(url),
-      twitter: () => new SocialTwitter(url),
-      vimeo: () => new SocialVimeo(url),
-      youtube: () => new SocialYoutube(url),
-      unknown: () => new SocialUnknown(url),
+      dailymotion: () => new SocialDailymotion(query),
+      facebook: () => new SocialFacebook(query),
+      flickr: () => new SocialFlickr(query),
+      instagram: () => new SocialInstagram(query),
+      giphy: () => new SocialGiphy(query),
+      imgur: () => new SocialImgur(query),
+      kickstarter: () => new SocialKickstarter(query),
+      linkedin: () => new SocialLinkedin(query),
+      pinterest: () => new SocialPinterest(query),
+      reddit: () => new SocialReddit(query),
+      snapchat: () => new SocialSnapchat(query),
+      soundcloud: () => new SocialSoundcloud(query),
+      tiktok: () => new SocialTiktok(query),
+      spotify: () => new SocialSpotify(query),
+      ted: () => new SocialTed(query),
+      tumblr: () => new SocialTumblr(query),
+      twitch: () => new SocialTwitch(query),
+      twitter: () => new SocialTwitter(query),
+      vimeo: () => new SocialVimeo(query),
+      youtube: () => new SocialYoutube(query),
+      unknown: () => new SocialUnknown(query),
     }
 
     const provider = providers[type as keyof typeof providers]
-    if (provider)
-      social.model = provider().make()
 
-    if (social.model?.id)
-      social.isValid = true
+    if (!provider) {
+      console.error(`No provider found for ${type}`)
+      return undefined
+    }
 
-    return social
+    // TODO if API reject request, create iframe from identifiers or openGraph
+    const instance = await provider().make()
+    return instance
   }
 
   public static find(url: string): Social {

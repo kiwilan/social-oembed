@@ -1,17 +1,18 @@
 import ApiModule from '~/models/ApiModule'
 import type { IOpenGraph } from '~/types/api'
-import type { ApiRouteQueryFormat } from '~/types/route'
+import type { IApiRouteQuery } from '~/types/route'
 import type { MetaValues } from '~/types/html'
 import OEmbedService from '~/services/OEmbedService'
 import SocialService from '~/services/SocialService'
 import type OEmbedModule from '~/services/interfaces/OEmbedModule'
 import type { ISocial, Social } from '~/types/social'
 import ParserService from '~/services/ParserService'
+import { colors } from '~/renders/SocialAssets'
 
 export default class OpenGraph extends ApiModule {
   public model: IOpenGraph = {}
 
-  public static async make(query: ApiRouteQueryFormat): Promise<OpenGraph> {
+  public static async make(query: IApiRouteQuery): Promise<OpenGraph> {
     const og = new OpenGraph(query)
 
     if (!og.query.url) {
@@ -36,6 +37,9 @@ export default class OpenGraph extends ApiModule {
     // fallback cause by API limit
     if (og.model.title === undefined)
       await og.getOpenGraph(og.query.url)
+
+    if (og.social !== 'unknown')
+      og.model.themeColor = colors[og.social]
 
     return og
   }

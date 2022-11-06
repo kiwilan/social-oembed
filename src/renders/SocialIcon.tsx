@@ -1,4 +1,4 @@
-import socialSvg from './SocialSvg'
+import { svg } from './SocialAssets'
 import type { Social } from '~/types/social'
 
 const SocialIcon = (props: { social?: Social; color?: string }) => {
@@ -9,7 +9,7 @@ const SocialIcon = (props: { social?: Social; color?: string }) => {
   }
 
   const getIcon = (social: Social): string => {
-    const icon = socialSvg[social] ?? socialSvg.unknown
+    const icon = svg[social] ?? svg.unknown
     const attributes = {
       width: 'inherit',
       height: 'inherit',

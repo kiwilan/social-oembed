@@ -83,12 +83,7 @@ const OpenGraphRender = (og: IOpenGraph, dark: boolean) => {
                 margin: 'auto 0.5rem auto 0',
               }}
             >
-              {og.icon ? (
-                // <img src={og.icon} alt="" loading="lazy" />
-                <div></div>
-              ) : (
-                <SocialIcon social={og.social} color={og.themeColor} />
-              )}
+              <SocialIcon social={og.social} color={og.themeColor} />
             </div>
           )}
           <div

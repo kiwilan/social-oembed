@@ -1,12 +1,13 @@
 import SocialModule from '~/services/interfaces/SocialModule'
-import type { ISocialRegex, Social } from '~/types/social'
+import type { ISocialIdentifier, Social } from '~/types/social'
 
 export default class SocialDailymotion extends SocialModule {
-  type: Social = 'dailymotion'
+  protected type: Social = 'dailymotion'
   // /(?:https?:\/\/)?(?:www\.)?(?:dai\.ly|dailymotion\.com)\/(?:video|hub)\/([a-zA-Z0-9]+)_?/i
-  regex = /(?:https?:\/\/)?(?:www\.)?dai\.?ly(motion)?(?:\.com)?\/?.*(?:video|embed)?(?:.*v=|v\/|\/)([a-z0-9]+)/ig
+  protected regex = /(?:https?:\/\/)?(?:www\.)?dai\.?ly(motion)?(?:\.com)?\/?.*(?:video|embed)?(?:.*v=|v\/|\/)([a-z0-9]+)/ig
+  protected endpoint: string | undefined
 
-  public get(): ISocialRegex {
+  protected parseMatches(): ISocialIdentifier {
     const id = this.matches[2] ?? undefined
     const embedUrl = id ? `https://www.dailymotion.com/embed/video/${id}` : undefined
 
@@ -14,5 +15,9 @@ export default class SocialDailymotion extends SocialModule {
       url: this.matches[0] ?? undefined,
       embedUrl
     }
+  }
+
+  protected fetchApi(): Promise<this> {
+    throw new Error('Method not implemented.')
   }
 }
