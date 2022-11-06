@@ -5,7 +5,7 @@ export default class SocialInstagram extends SocialModule {
   type: Social = 'instagram'
   regex = /(?:https?:\/\/)?(?:www\.)?instagram\.com\/p\/([a-zA-Z0-9]+)/ig
 
-  public make(): ISocialRegex {
+  public get(): ISocialRegex {
     const id = this.matches[2] ?? undefined
 
     return {

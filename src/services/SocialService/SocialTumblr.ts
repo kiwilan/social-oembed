@@ -5,7 +5,7 @@ export default class SocialTumblr extends SocialModule {
   type: Social = 'tumblr'
   regex = /(?:https?:\/\/)?(?:www\.)?tumblr\.com\/post\/([a-zA-Z0-9]+)/ig
 
-  public make(): ISocialRegex {
+  public get(): ISocialRegex {
     const id = this.matches[2] ?? undefined
 
     return {

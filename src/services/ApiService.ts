@@ -1,5 +1,5 @@
 import type { FastifyRequest } from 'fastify'
-import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, ApiRouteQueryFormat, FetchMeta, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
+import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, ApiRouteQueryFormat, FetchMeta, IApiQueryFormat, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
 import OpenGraph from '~/models/OpenGraph'
 import Render from '~/services/ApiService/Render'
 import OEmbed from '~/models/OEmbed'
@@ -81,19 +81,15 @@ export default class ApiService {
   }
 
   public async get(): Promise<ApiResponse> {
-    switch (this.query.format) {
-      case 'opengraph':
-        await this.getOpenGraph()
-        break
-
-      case 'oembed':
-        await this.getOEmbed()
-        break
-
-      default:
-        await this.getOpenGraph()
-        break
+    const formats: IApiQueryFormat<() => Promise<FormatResponse>> = {
+      opengraph: () => this.getOpenGraph(),
+      oembed: () => this.getOEmbed(),
     }
+
+    const format = formats[this.query.format] || formats.opengraph
+
+    if (format)
+      await format()
 
     return {
       data: this.formatResponse?.response,

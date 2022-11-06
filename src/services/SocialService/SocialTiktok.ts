@@ -5,7 +5,7 @@ export default class SocialTiktok extends SocialModule {
   type: Social = 'tiktok'
   regex = /(@[a-zA-z0-9]*|.*)(\/.*\/|trending.?shareId=)([\d]*)/gm
 
-  public make(): ISocialRegex {
+  public get(): ISocialRegex {
     let type = this.matches[2] ?? undefined
     if (type) {
       type = type.replace('/', '')

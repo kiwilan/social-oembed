@@ -6,7 +6,7 @@ export default class SocialTwitter extends SocialModule {
   // /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status?\/(\d+)/g
   regex = /(?:https?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9]+)\/status\/([a-zA-Z0-9]+)/ig
 
-  public make(): ISocialRegex {
+  public get(): ISocialRegex {
     const id = this.matches[2] ?? undefined
 
     return {

@@ -67,9 +67,9 @@ With oEmbed, it's really complicated, each social network have their own API, wi
     - [x] Spotify
     - [ ] TED
     - [ ] Tumblr
-    - [ ] TikTok
+    - [x] TikTok
     - [ ] Twitch
-    - [ ] Twitter
+    - [x] Twitter
     - [x] Vimeo
     - [x] YouTube
   - [x] Providers system

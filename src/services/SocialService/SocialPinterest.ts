@@ -5,7 +5,7 @@ export default class SocialPinterest extends SocialModule {
   type: Social = 'pinterest'
   regex = /(?:https?:\/\/)?(?:www\.)?pinterest\.com\/pin\/([a-zA-Z0-9]+)/ig
 
-  public make(): ISocialRegex {
+  public get(): ISocialRegex {
     const id = this.matches[2] ?? undefined
 
     return {

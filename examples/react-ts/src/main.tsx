@@ -10,6 +10,7 @@ const openGraphs: string[] = [
   'https://bookshelves.ink',
   'https://twitter.com/BalletOParis/status/1580947790250721283',
   'https://www.tiktok.com/@mrnatasmr/video/7155146642000219398?is_copy_url=1&is_from_webapp=v1',
+  'https://open.spotify.com/track/6xMpUNOfaSkyywPiFFXZFh',
 ]
 const oembeds: string[] = [
   // 'https://twitter.com/BalletOParis/status/1580947790250721283',
@@ -17,7 +18,7 @@ const oembeds: string[] = [
   'https://open.spotify.com/track/6xMpUNOfaSkyywPiFFXZFh',
   // 'https://www.dailymotion.com/video/x1t5li3',
   // 'https://vimeo.com/600970110',
-  // 'https://www.tiktok.com/@mrnatasmr/video/7155146642000219398?is_copy_url=1&is_from_webapp=v1',
+  'https://www.tiktok.com/@mrnatasmr/video/7155146642000219398?is_copy_url=1&is_from_webapp=v1',
 ]
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

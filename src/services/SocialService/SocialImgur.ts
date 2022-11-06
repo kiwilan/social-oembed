@@ -5,7 +5,7 @@ export default class SocialImgur extends SocialModule {
   type: Social = 'imgur'
   regex = /(?:https?:\/\/)?(?:www\.)?imgur\.com\/gallery\/([a-zA-Z0-9]+)/ig
 
-  public make(): ISocialRegex {
+  public get(): ISocialRegex {
     const id = this.matches[2] ?? undefined
 
     return {

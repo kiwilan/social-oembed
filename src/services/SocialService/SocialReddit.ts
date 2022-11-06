@@ -5,7 +5,7 @@ export default class SocialReddit extends SocialModule {
   type: Social = 'reddit'
   regex = /(?:https?:\/\/)?(?:www\.)?reddit\.com\/r\/([a-zA-Z0-9]+)/ig
 
-  public make(): ISocialRegex {
+  public get(): ISocialRegex {
     const id = this.matches[2] ?? undefined
 
     return {

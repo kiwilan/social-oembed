@@ -36,37 +36,33 @@ export default class SocialService {
   public static make(url: string): SocialService {
     const type = SocialService.find(url)
     const social = new SocialService(url, type)
-    const providers: ISocial<SocialModule> = {
-      dailymotion: new SocialDailymotion(url),
-      facebook: new SocialFacebook(url),
-      flickr: new SocialFlickr(url),
-      instagram: new SocialInstagram(url),
-      giphy: new SocialGiphy(url),
-      imgur: new SocialImgur(url),
-      kickstarter: new SocialKickstarter(url),
-      linkedin: new SocialLinkedin(url),
-      pinterest: new SocialPinterest(url),
-      reddit: new SocialReddit(url),
-      snapchat: new SocialSnapchat(url),
-      soundcloud: new SocialSoundcloud(url),
-      tiktok: new SocialTiktok(url),
-      spotify: new SocialSpotify(url),
-      ted: new SocialTed(url),
-      tumblr: new SocialTumblr(url),
-      twitch: new SocialTwitch(url),
-      twitter: new SocialTwitter(url),
-      vimeo: new SocialVimeo(url),
-      youtube: new SocialYoutube(url),
-      unknown: new SocialUnknown(url),
+    const providers: ISocial<() => SocialModule> = {
+      dailymotion: () => new SocialDailymotion(url),
+      facebook: () => new SocialFacebook(url),
+      flickr: () => new SocialFlickr(url),
+      instagram: () => new SocialInstagram(url),
+      giphy: () => new SocialGiphy(url),
+      imgur: () => new SocialImgur(url),
+      kickstarter: () => new SocialKickstarter(url),
+      linkedin: () => new SocialLinkedin(url),
+      pinterest: () => new SocialPinterest(url),
+      reddit: () => new SocialReddit(url),
+      snapchat: () => new SocialSnapchat(url),
+      soundcloud: () => new SocialSoundcloud(url),
+      tiktok: () => new SocialTiktok(url),
+      spotify: () => new SocialSpotify(url),
+      ted: () => new SocialTed(url),
+      tumblr: () => new SocialTumblr(url),
+      twitch: () => new SocialTwitch(url),
+      twitter: () => new SocialTwitter(url),
+      vimeo: () => new SocialVimeo(url),
+      youtube: () => new SocialYoutube(url),
+      unknown: () => new SocialUnknown(url),
     }
 
-    const provider = providers[type as keyof typeof providers] as SocialModule
-    // const current: SocialModule = new Provider(url)
-
-    social.model = provider
-      .setMatches()
-      .setSocial()
-      .make()
+    const provider = providers[type as keyof typeof providers]
+    if (provider)
+      social.model = provider().make()
 
     if (social.model?.id)
       social.isValid = true

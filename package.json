@@ -51,8 +51,8 @@
     "cheerio": "^1.0.0-rc.12",
     "fastify": "^4.9.2",
     "fastify-plugin": "^4.3.0",
-    "magic-regexp": "^0.6.0",
     "node-fetch": "^3.2.10",
+    "puppeteer": "^19.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rimraf": "^3.0.2"

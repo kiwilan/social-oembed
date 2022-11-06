@@ -12,20 +12,19 @@ export default class OEmbed extends ApiModule {
     if (!oembed.query.url)
       return oembed
 
-    // const og = await OpenGraph.make(oembed.query)
-
     const social = SocialService.make(oembed.query.url)
     const service = await OEmbedService.make(oembed.query, social.type)
+    let model: any = {}
 
     if (service)
-      console.log('OEmbed: Using OEmbed service')
+      model = service.toOpenGraph()
     else
-      console.log('OEmbed: Using OpenGraph service')
+      model = social.model
 
     oembed.social = social.type
 
     oembed.model = {
-      // ...og.model,
+      ...model,
       embedUrl: social.model?.embedUrl,
     }
 

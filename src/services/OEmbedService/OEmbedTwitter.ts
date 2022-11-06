@@ -15,6 +15,9 @@ interface TwitterApi {
   version?: string
 }
 
+/**
+ * @see https://developer.twitter.com/en/docs/twitter-for-websites/oembed-api
+ */
 export default class OEmbedTwitter extends OEmbedModule<TwitterApi> {
   type: Social = 'twitter'
   endpoint = 'https://publish.twitter.com/oembed'

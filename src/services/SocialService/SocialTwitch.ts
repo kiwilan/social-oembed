@@ -5,7 +5,7 @@ export default class SocialTwitch extends SocialModule {
   type: Social = 'twitch'
   regex = /(?:https?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9]+)/ig
 
-  public make(): ISocialRegex {
+  public get(): ISocialRegex {
     const id = this.matches[2] ?? undefined
 
     return {

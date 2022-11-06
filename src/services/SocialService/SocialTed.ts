@@ -5,7 +5,7 @@ export default class SocialTed extends SocialModule {
   type: Social = 'ted'
   regex = /(?:https?:\/\/)?(?:www\.)?ted\.com\/talks\/([a-zA-Z0-9]+)/ig
 
-  public make(): ISocialRegex {
+  public get(): ISocialRegex {
     const id = this.matches[2] ?? undefined
 
     return {

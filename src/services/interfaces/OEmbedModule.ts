@@ -1,7 +1,14 @@
 import type { IOpenGraph } from '~/types/api'
+import type { OEmbedApi } from '~/types/oembed'
 import type { ApiRouteQueryFormat, FetchMeta } from '~/types/route'
 import type { Social } from '~/types/social'
 import Http from '~/utils/Http'
+
+interface OEmbedApiParams {
+  height?: number
+  width?: number
+  color?: string
+}
 
 export default abstract class OEmbedModule<T = {}> {
   protected query: ApiRouteQueryFormat
@@ -51,5 +58,37 @@ export default abstract class OEmbedModule<T = {}> {
 
   public getFetchMeta(): FetchMeta {
     return this.fetchMeta ?? {}
+  }
+
+  protected convertOEmbedApi(body: OEmbedApi, params?: OEmbedApiParams) {
+    this.html = body?.html
+    const height = (body?.height)?.toString()
+    const thumbnailHeight = (body?.thumbnail_height)?.toString()
+
+    const width = (body?.width)?.toString()
+    // let thumbnailWidth = (body?.thumbnail_width)?.toString()
+
+    let iframeHeight = height === '100%' ? thumbnailHeight : height
+    let iframeWidth = width
+
+    if (params?.height)
+      iframeHeight = params.height.toString()
+
+    if (params?.width)
+      iframeWidth = params.width.toString()
+
+    this.openGraph = {
+      'siteName': body?.provider_name,
+      'title': `${body?.title} ${body?.author_name}`,
+      'siteUrl': this.query.url,
+      'description': body?.html ? body.html.replace(/<[^>]*>?/gm, '') : undefined,
+      'themeColor': params?.color ? params.color : '#000000',
+      'image': body?.thumbnail_url,
+      'type': body?.type,
+      'social': this.type,
+      'article:author': body?.author_name,
+      'width': iframeWidth,
+      'height': iframeHeight,
+    }
   }
 }

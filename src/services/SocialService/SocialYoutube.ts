@@ -6,7 +6,7 @@ export default class SocialYoutube extends SocialModule {
   // /(?:https?:\/\/)?(?:www\.)?youtu\.be\/([a-zA-Z0-9]+)/ig,
   regex = /^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user|shorts)\/))([^\?&\"'>]+)/g
 
-  public make(): ISocialRegex {
+  public get(): ISocialRegex {
     const id = this.matches[1] ?? undefined
 
     return {

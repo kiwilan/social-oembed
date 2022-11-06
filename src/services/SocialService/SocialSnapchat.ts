@@ -5,7 +5,7 @@ export default class SocialSnapchat extends SocialModule {
   type: Social = 'snapchat'
   regex = /(?:https?:\/\/)?(?:www\.)?snapchat\.com\/add\/([a-zA-Z0-9\.\-\_]+)/ig
 
-  public make(): ISocialRegex {
+  public get(): ISocialRegex {
     const id = this.matches[2] ?? undefined
 
     return {

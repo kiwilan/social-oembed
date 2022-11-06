@@ -11,7 +11,7 @@ export default abstract class SocialModule {
 
   abstract type: Social
   abstract regex: RegExp | undefined
-  abstract make(): ISocialRegex
+  abstract get(): ISocialRegex
 
   public setMatches(): SocialModule {
     if (!this.regex)
@@ -29,5 +29,12 @@ export default abstract class SocialModule {
     this.social = this.type
 
     return this
+  }
+
+  public make(): ISocialRegex {
+    this.setMatches()
+    this.setSocial()
+
+    return this.get()
   }
 }
