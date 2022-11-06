@@ -12,6 +12,7 @@ export default class OEmbed extends ApiModule {
       return oembed
 
     const social = await SocialService.make(oembed.query)
+    console.log(social)
 
     if (social) {
       oembed.model = {

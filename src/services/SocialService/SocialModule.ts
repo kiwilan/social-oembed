@@ -117,8 +117,9 @@ export default abstract class SocialModule {
   }
 
   public onlyIdentifiers(): ISocialIdentifier {
+    this.socialIdentifiers()
     this.identifiers = this.parseMatches()
-    return this.socialIdentifiers()
+    return this.identifiers
   }
 
   public async make(): Promise<SocialModule> {

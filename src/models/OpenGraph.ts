@@ -2,12 +2,11 @@ import ApiModule from '~/models/ApiModule'
 import type { IOpenGraph } from '~/types/api'
 import type { IApiRouteQuery } from '~/types/route'
 import type { MetaValues } from '~/types/html'
-import OEmbedService from '~/services/OEmbedService'
 import SocialService from '~/services/SocialService'
-import type OEmbedModule from '~/services/interfaces/OEmbedModule'
-import type { ISocial, Social } from '~/types/social'
+import type { ISocial } from '~/types/social'
 import ParserService from '~/services/ParserService'
 import { colors } from '~/renders/SocialAssets'
+import type SocialModule from '~/services/SocialService/SocialModule'
 
 export default class OpenGraph extends ApiModule {
   public model: IOpenGraph = {}
@@ -23,9 +22,9 @@ export default class OpenGraph extends ApiModule {
     og.social = SocialService.find(og.query.url)
 
     const formats: ISocial<() => Promise<any>> = {
-      // spotify: () => og.getOembed(og.social),
-      twitter: () => og.getOembed(og.social),
-      tiktok: () => og.getOembed(og.social),
+      // spotify: () => og.getOembed(),
+      twitter: () => og.getOembed(),
+      tiktok: () => og.getOembed(),
     }
 
     const current = formats[og.social]
@@ -44,10 +43,10 @@ export default class OpenGraph extends ApiModule {
     return og
   }
 
-  private async getOembed(social: Social): Promise<OEmbedModule | undefined> {
-    const oembed = await OEmbedService.make(this.query, social)
+  private async getOembed(): Promise<SocialModule | undefined> {
+    const oembed = await SocialService.make(this.query)
     if (oembed) {
-      this.model = oembed.toOpenGraph()
+      this.model = oembed.getOpenGraph()
       this.fetchMeta = oembed.getFetchMeta()
     }
 

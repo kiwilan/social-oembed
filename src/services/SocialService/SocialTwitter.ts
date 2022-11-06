@@ -22,7 +22,7 @@ export default class SocialTwitter extends SocialModule {
   protected type: Social = 'twitter'
   // /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status?\/(\d+)/g
   protected regex = /(?:https?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9]+)\/status\/([a-zA-Z0-9]+)/ig
-  protected endpoint: 'https://publish.twitter.com/oembed'
+  protected endpoint = 'https://publish.twitter.com/oembed'
 
   protected parseMatches(): ISocialIdentifier {
     const id = this.matches[2] ?? undefined
