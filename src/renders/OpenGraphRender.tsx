@@ -75,16 +75,22 @@ const OpenGraphRender = (og: IOpenGraph, dark: boolean) => {
             alignContent: 'center',
           }}
         >
-          <div
-            style={{
-              width: '1.25rem',
-              height: '1.25rem',
-              margin: 'auto 0.5rem auto 0',
-            }}
-          >
-            <SocialIcon social={og.social} color={og.themeColor} />
-            <img src={`${og.siteUrl}/favicon.ico`} alt="" loading="lazy" />
-          </div>
+          {og.social !== 'unknown' && (
+            <div
+              style={{
+                width: '1.25rem',
+                height: '1.25rem',
+                margin: 'auto 0.5rem auto 0',
+              }}
+            >
+              {og.icon ? (
+                // <img src={og.icon} alt="" loading="lazy" />
+                <div></div>
+              ) : (
+                <SocialIcon social={og.social} color={og.themeColor} />
+              )}
+            </div>
+          )}
           <div
             style={{
               overflow: 'hidden',

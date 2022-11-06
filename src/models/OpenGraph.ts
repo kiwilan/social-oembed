@@ -83,9 +83,11 @@ export default class OpenGraph extends ApiModule {
       locale: metaValues.locale,
       themeColor: metaValues.themeColor,
       social: this.social,
+      // icon: metaValues.icon,
     }
 
-    this.model.siteUrl = this.checkUrl()
+    this.model.siteUrl = this.checkUrl(this.model.siteUrl)
+    this.model.icon = this.checkUrl(this.model.icon)
     this.model.image = this.checkImage()
   }
 
@@ -117,32 +119,38 @@ export default class OpenGraph extends ApiModule {
     return metaValues
   }
 
-  private checkUrl(): string {
-    let url: URL
+  private checkUrl(url?: string): string | undefined {
+    let format: URL
 
-    if (!this.model.siteUrl)
-      return this.query.url ?? ''
+    if (!url)
+      return url
 
     try {
-      url = new URL(this.model.siteUrl)
+      format = new URL(url)
     }
     catch (error) {
-      url = new URL(this.query.url ?? '')
+      format = new URL(this.query.url ?? '')
     }
 
-    let current = url.href
+    let current = format.href
     current = current.replace(/\/$/, '')
 
     return current
   }
 
   private checkImage(): string | undefined {
-    const image = this.model.image
+    let image = this.model.image
 
     if (image && image.startsWith('/'))
-      return `${this.model.siteUrl}${image}`
+      image = `${this.model.siteUrl}${image}`
 
-    return this.model.image
+    image = this.cleanUrl(image)
+
+    return image
+  }
+
+  private cleanUrl(url?: string): string | undefined {
+    return url ? url.replace('//', '/') : undefined
   }
 
   private metaNodes(): OpenGraphMeta {
@@ -275,6 +283,13 @@ export default class OpenGraph extends ApiModule {
           value: 'content',
         },
       ],
+      'icon': [
+        {
+          query: 'link[rel="icon"]',
+          type: 'attr',
+          value: 'href',
+        },
+      ]
     }
   }
 }

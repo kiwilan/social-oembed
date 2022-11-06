@@ -13,6 +13,7 @@ enum OpenGraphEnum {
   determiner = 'determiner',
   'article:author' = 'article:author',
   themeColor = 'themeColor',
+  icon = 'icon',
 }
 
 export type OpenGraphType = keyof typeof OpenGraphEnum

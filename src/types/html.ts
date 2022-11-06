@@ -5,17 +5,6 @@ export interface MetaValue {
   content: string
 }
 
-export interface MetaValues {
-  title?: string
-  description?: string
-  image?: string
-  siteUrl?: string
-  type?: string
-  siteName?: string
-  locale?: string
-  themeColor?: string
-}
-
 export interface MetaNode {
   query: string
   type: 'attr' | 'text'
@@ -23,3 +12,5 @@ export interface MetaNode {
 }
 
 export interface OpenGraphMeta<T = MetaNode[]> extends IOpenGraphExtends<T> {}
+export interface MetaValues<T = string> extends IOpenGraphExtends<T> {}
+
