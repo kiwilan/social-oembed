@@ -70,7 +70,7 @@ export default class ApiService {
       meta: {
         url: this.query.url ?? '',
         format: this.query.format,
-        docs: '',
+        docs: '', // TODO docs route
         fetch: fetchMeta
       }
     }

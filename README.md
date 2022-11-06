@@ -41,22 +41,44 @@ With oEmbed, it's really complicated, each social network have their own API, wi
 
 **: to get Instagram or Facebook data, with iframely or with Meta API, you have to register your application on Meta, with many validations. Social oEmbed offer another solution without any key from Meta.*
 
-## Features
+### Features/Roadmap
 
-- OpenGraph metadata
-
-### Roadmap
-
-- [ ] API key as query or header
-- [ ]Domains allow `*` or `*.domain.com`
 - [x] OpenGraph
+  - [x] `og:title`, `og:description`, `og:image`, `og:url`, `og:type`, `og:site_name`, `og:locale`
+  - [x] Color `theme-color`
+  - [x] Fallback to `twitter:title`, `twitter:description`, `twitter:image`, `twitter:url`, `twitter:card`, `twitter:site`, `twitter:creator`
   - [ ] All meta
-  - [ ] Twitter Cards
-- [ ] oEmbed
+  - [ ] `twitter` query for card
+  - [x] Opiniated render
+- [x] oEmbed
   - [ ] Major social networks support
-    - [ ] Providers system
+    - [x] Dailymotion
+    - [ ] Instagram
+    - [ ] Facebook
+    - [ ] Flickr
+    - [ ] Giphy
+    - [ ] Imgur
+    - [ ] Kickstarter
+    - [ ] LinkedIn
+    - [ ] Pinterest
+    - [ ] Reddit
+    - [ ] Snapchat
+    - [ ] Soundcloud
+    - [x] Spotify
+    - [ ] TED
+    - [ ] Tumblr
+    - [ ] TikTok
+    - [ ] Twitch
+    - [ ] Twitter
+    - [x] Vimeo
+    - [x] YouTube
+  - [x] Providers system
+  - [ ] metadata query to get OpenGraph
+  - [ ] smart queries for each social network
 - [ ] Host your own instance
 - [ ] Auth middleware <https://github.com/fastify/middie>
+  - [ ]Domains allow `*` or `*.domain.com`
+  - [ ] API key as query or header
 - [ ] Documentation
   - [ ] Usage from JS client side with fetch, from PHP with Guzzle
   - [ ] Usage response example, typescript interfaces
@@ -97,8 +119,8 @@ Example: <https://social-oembed.git-projects.xyz/api?url=https://github.com&form
 
 ```bash
 curl --request GET \
-    --data-urlencode "url=https://github.com" \
     --data-urlencode "format=opengraph" \
+    --data-urlencode "url=https://github.com" \
     --get "https://social-oembed.git-projects.xyz/api" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"

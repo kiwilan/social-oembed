@@ -26,7 +26,7 @@ export default class TwitterOEmbed {
 
   public getFetchMeta = (): FetchMeta => this.fetchMeta ?? {}
 
-  private async fetchOembedApi(): Promise<TwitterApi> {
+  private async fetchOembedApi(): Promise<TwitterApi | undefined> {
     if (!this.query?.url)
       return {}
 
@@ -48,7 +48,7 @@ export default class TwitterOEmbed {
     const url = `${api}?${params.toString()}`
 
     const client = Http.client(url)
-    const res = await client.get()
+    const res = await client.get<TwitterApi>()
 
     this.fetchMeta = {
       message: res.statusText,
@@ -57,7 +57,7 @@ export default class TwitterOEmbed {
       type: res.type,
     }
 
-    return res.body as TwitterApi
+    return res.body
   }
 
   private toOpenGraph(): IOpenGraph {

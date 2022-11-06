@@ -1,10 +1,9 @@
 import SocialModule from './SocialModule'
 import type { ISocialRegex, Social } from '~/types/social'
 
-export default class SocialTwitter extends SocialModule {
-  type: Social = 'twitter'
-  // /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status?\/(\d+)/g
-  regex = /(?:https?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9]+)\/status\/([a-zA-Z0-9]+)/ig
+export default class SocialImgur extends SocialModule {
+  type: Social = 'imgur'
+  regex = /(?:https?:\/\/)?(?:www\.)?imgur\.com\/gallery\/([a-zA-Z0-9]+)/ig
 
   public make(): ISocialRegex {
     const id = this.matches[2] ?? undefined

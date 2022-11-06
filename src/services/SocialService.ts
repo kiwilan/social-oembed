@@ -1,7 +1,9 @@
 import SocialTwitter from './SocialService/SocialTwitter'
 import type SocialModule from './SocialService/SocialModule'
-import type { ISocial, ISocialRegex, Social } from '~/types/social'
+import SocialDailymotion from './SocialService/SocialDailymotion'
+import SocialYoutube from './SocialService/SocialYoutube'
 import { SocialEnum } from '~/types/social'
+import type { ISocial, ISocialRegex, Social } from '~/types/social'
 
 export default class SocialService {
   private constructor(
@@ -16,11 +18,7 @@ export default class SocialService {
   public static make(url: string): SocialService {
     let type: Social = 'unknown'
 
-    const socialList = Object.keys(SocialEnum).filter((item) => {
-      return isNaN(Number(item))
-    })
-
-    for (const social of socialList) {
+    for (const social in SocialEnum) {
       if (url.includes(social))
         type = social as Social
     }
@@ -31,18 +29,23 @@ export default class SocialService {
       type = 'flickr'
 
     const social = new SocialService(url, type)
-    // social.regexp = social.setRegExp()
-    // social.model = social.findMatches()
-    const providers: ISocial = {
+    const providers: ISocial<SocialModule> = {
+      dailymotion: new SocialDailymotion(url),
       twitter: new SocialTwitter(url),
+      youtube: new SocialYoutube(url),
     }
 
     const provider = providers[type as keyof typeof providers]
     // const current: SocialModule = new Provider(url)
-    if (!provider)
+    if (!provider) {
+      console.error(`No provider found for ${type}`)
       return social
+    }
 
-    social.model = provider.make()
+    social.model = provider
+      .setMatches()
+      .setSocial()
+      .make()
 
     if (social.model?.id)
       social.isValid = true

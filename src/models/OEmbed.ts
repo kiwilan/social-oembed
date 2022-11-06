@@ -14,6 +14,7 @@ export default class OEmbed extends ApiModule {
     // const og = await OpenGraph.make(oembed.query)
 
     const social = SocialService.make(oembed.query.url)
+    // console.log(social)
 
     oembed.model = {
       // ...og.model,

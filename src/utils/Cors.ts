@@ -5,6 +5,9 @@ interface HeadersInit {
   [key: string]: string
 }
 
+/**
+ * Cors for Bun
+ */
 export default class Cors {
   public allowOrigins: string[]
   public headers?: HeadersInit
@@ -25,7 +28,7 @@ export default class Cors {
   private setCors(req: FastifyRequest): HeadersInit {
     const headers: HeadersInit = {
       'content-type': 'application/json',
-      'Accept-Encoding': 'gzip',
+      // 'Accept-Encoding': 'gzip',
       'Access-Control-Allow-Origin': 'null',
     }
 

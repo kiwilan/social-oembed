@@ -1,26 +1,33 @@
-import type { ISocialRegex } from '~/types/social'
+import type { ISocialRegex, Social } from '~/types/social'
 
 export default abstract class SocialModule {
   protected url: string
-  protected regexp?: RegExp
+  protected social: Social = 'unknown'
   protected matches: string[] = []
 
   public constructor(url: string) {
     this.url = url
   }
 
-  public static regex: RegExp
+  abstract type: Social
+  abstract regex: RegExp
   abstract make(): ISocialRegex
 
-  protected setMatches(): string[] {
-    if (!this.regexp)
-      return []
+  public setMatches(): SocialModule {
+    if (!this.regex)
+      return this
 
-    const regExp = new RegExp(this.regexp)
+    const regExp = new RegExp(this.regex)
     const matches = this.url.matchAll(regExp)
     const raw = [...matches]
-    const matchList = raw[0] ?? []
+    this.matches = raw[0] ?? []
 
-    return matchList
+    return this
+  }
+
+  public setSocial() {
+    this.social = this.type
+
+    return this
   }
 }

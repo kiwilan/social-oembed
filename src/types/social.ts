@@ -1,5 +1,3 @@
-import type SocialModule from '~/services/SocialService/SocialModule'
-
 export interface TwitterApi {
   url?: string
   author_name?: string
@@ -22,8 +20,6 @@ export interface ISocialRegex {
   embedUrl?: string
 }
 
-export type Social = 'dailymotion' | 'facebook' | 'flickr' | 'instagram' | 'linkedin' | 'pinterest' | 'reddit' | 'soundcloud' | 'tiktok' | 'twitch' | 'twitter' | 'vimeo' | 'youtube' | 'unknown'
-
 export enum SocialEnum {
   dailymotion = 'dailymotion',
   instagram = 'instagram',
@@ -45,28 +41,11 @@ export enum SocialEnum {
   twitter = 'twitter',
   vimeo = 'vimeo',
   youtube = 'youtube',
-  unknown = 'unkown'
+  unknown = 'unknown',
 }
 
-export interface ISocial {
-  // dailymotion?: any
-  // instagram?: any
-  // facebook?: any
-  // flickr?: any
-  // giphy?: any
-  // imgur?: any
-  // kickstarter?: any
-  // linkedin?: any
-  // pinterest?: any
-  // reddit?: any
-  // snapchat?: any
-  // soundcloud?: any
-  // spotify?: any
-  // ted?: any
-  // tumblr?: any
-  // tiktok?: any
-  // twitch?: any
-  twitter?: SocialModule
-  // vimeo?: any
-  // youtube?: any
-}
+// https://bobbyhadz.com/blog/typescript-convert-enum-to-union
+export type Social = `${SocialEnum}`
+
+type SocialExtends<T> = Partial<Record<SocialEnum, T>>
+export interface ISocial<T> extends SocialExtends<T> {}

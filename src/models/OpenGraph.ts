@@ -21,7 +21,7 @@ export default class OpenGraph extends ApiModule {
     }
     else {
       const http = Http.client(og.query.url)
-      const res = await http.get()
+      const res = await http.get<string>()
       og.response = res
 
       if (res.type !== 'text')
