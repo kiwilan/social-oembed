@@ -117,6 +117,7 @@ export default abstract class SocialModule {
   }
 
   public onlyIdentifiers(): ISocialIdentifier {
+    this.identifiers = this.parseMatches()
     return this.socialIdentifiers()
   }
 

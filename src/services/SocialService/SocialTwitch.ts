@@ -1,9 +1,18 @@
-import SocialModule from '~/services/interfaces/SocialModule'
+import SocialModule from '~/services/SocialService/SocialModule'
 import type { ISocialIdentifier, Social } from '~/types/social'
 
 export default class SocialTwitch extends SocialModule {
-  type: Social = 'twitch'
-  regex = /(?:https?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9]+)/ig
+  protected endpoint: string | undefined
+  protected parseMatches(): ISocialIdentifier {
+    throw new Error('Method not implemented.')
+  }
+
+  protected fetchApi(): Promise<this> {
+    throw new Error('Method not implemented.')
+  }
+
+  protected type: Social = 'twitch'
+  protected regex = /(?:https?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9]+)/ig
 
   public get(): ISocialIdentifier {
     const id = this.matches[2] ?? undefined

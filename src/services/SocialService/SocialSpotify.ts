@@ -1,7 +1,11 @@
-import SocialModule from '~/services/interfaces/SocialModule'
+import SocialModule from '~/services/SocialService/SocialModule'
 import type { OEmbedApi } from '~/types/oembed'
 import type { ISocialIdentifier, Social } from '~/types/social'
 
+/**
+ * @see https://developer.twitter.com/en/docs/twitter-for-websites/oembed-api
+ * Limitations: requests
+ */
 export default class SocialSpotify extends SocialModule {
   protected type: Social = 'spotify'
   // /(?:https?:\/\/)?(?:www\.)?open\.spotify\.com\/(track|album|artist)\/([a-zA-Z0-9]+)/ig
@@ -12,14 +16,13 @@ export default class SocialSpotify extends SocialModule {
     const id = this.matches[3] ? this.matches[3].replace('/', '') : undefined
     const type = this.matches[2] ?? 'track'
     const embedUrl = id ? `https://open.spotify.com/embed/${type}/${id}?` : undefined
-    this.identifiers = {
+
+    return {
       url: this.matches[0] ?? undefined,
       type,
       id,
       embedUrl
     }
-
-    return this.identifiers
   }
 
   protected async fetchApi(): Promise<this> {

@@ -1,5 +1,5 @@
 import SocialTwitter from './SocialService/SocialTwitter'
-import type SocialModule from './Interfaces/SocialModule'
+import type SocialModule from './SocialService/SocialModule'
 import SocialDailymotion from './SocialService/SocialDailymotion'
 import SocialYoutube from './SocialService/SocialYoutube'
 import SocialFacebook from './SocialService/SocialFacebook'

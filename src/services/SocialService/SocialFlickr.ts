@@ -1,4 +1,4 @@
-import SocialModule from '~/services/interfaces/SocialModule'
+import SocialModule from '~/services/SocialService/SocialModule'
 import type { ISocialIdentifier, Social } from '~/types/social'
 
 export default class SocialTwitter extends SocialModule {
