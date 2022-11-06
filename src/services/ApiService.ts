@@ -1,10 +1,19 @@
 import type { FastifyRequest } from 'fastify'
-import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, ApiRouteQueryFormat, FetchMeta, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
+import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, ApiRouteQueryFormat, FetchMeta, IApiQueryFormat, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
 import OpenGraph from '~/models/OpenGraph'
 import Render from '~/services/ApiService/Render'
 import OEmbed from '~/models/OEmbed'
 
+interface FormatResponse {
+  response?: {
+    [key: string]: any
+    render: string
+  }
+  fetchMeta?: FetchMeta
+}
 export default class ApiService {
+  protected formatResponse?: FormatResponse
+
   protected constructor(
     public req: FastifyRequest,
     public query: ApiRouteQueryFormat,
@@ -43,35 +52,49 @@ export default class ApiService {
     }
   }
 
-  public async get(): Promise<ApiResponse> {
-    let data = {}
-    let fetchMeta: FetchMeta = {}
+  private async getOpenGraph(): Promise<FormatResponse> {
+    const og = await OpenGraph.make(this.query)
 
-    if (this.query.format === 'opengraph') {
-      const og = await OpenGraph.make(this.query)
-      data = {
+    this.formatResponse = {
+      response: {
         ...og.model,
         render: Render.openGraph(og.model, this.query.dark)
-      }
-      fetchMeta = og.getFetchMeta()
+      },
+      fetchMeta: og.getFetchMeta()
     }
 
-    if (this.query.format === 'oembed') {
-      const oembed = await OEmbed.make(this.query)
-      data = {
+    return this.formatResponse
+  }
+
+  private async getOEmbed(): Promise<FormatResponse> {
+    const oembed = await OEmbed.make(this.query)
+    this.formatResponse = {
+      response: {
         ...oembed.model,
         render: Render.oembed(oembed.model)
-      }
-      fetchMeta = oembed.getFetchMeta()
+      },
+      fetchMeta: oembed.getFetchMeta()
     }
 
+    return this.formatResponse
+  }
+
+  public async get(): Promise<ApiResponse> {
+    const formats: IApiQueryFormat<Promise<FormatResponse>> = {
+      opengraph: this.getOpenGraph(),
+      oembed: this.getOEmbed(),
+    }
+    const format = formats[this.query.format]
+    if (format)
+      await format
+
     return {
-      data,
+      data: this.formatResponse?.response,
       meta: {
         url: this.query.url ?? '',
         format: this.query.format,
         docs: '', // TODO docs route
-        fetch: fetchMeta
+        fetch: this.formatResponse?.fetchMeta ?? {}
       }
     }
   }

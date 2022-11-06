@@ -1,8 +1,22 @@
-import type { SocialOEmbed, TwitterApi } from '~/types/social'
+import type { Social } from '~/types/social'
 import OEmbedModule from '~/services/interfaces/OEmbedModule'
 
+interface TwitterApi {
+  url?: string
+  author_name?: string
+  author_url?: string
+  html?: string
+  width?: number
+  height?: number
+  type?: 'rich'
+  cache_age?: string
+  provider_name?: string
+  provider_url?: string
+  version?: string
+}
+
 export default class OEmbedTwitter extends OEmbedModule<TwitterApi> {
-  type: SocialOEmbed = 'twitter'
+  type: Social = 'twitter'
   endpoint = 'https://publish.twitter.com/oembed'
 
   public async make(): Promise<OEmbedTwitter> {

@@ -1,17 +1,3 @@
-export interface TwitterApi {
-  url?: string
-  author_name?: string
-  author_url?: string
-  html?: string
-  width?: number
-  height?: number
-  type?: 'rich'
-  cache_age?: string
-  provider_name?: string
-  provider_url?: string
-  version?: string
-}
-
 export interface ISocialRegex {
   url?: string
   user?: string
@@ -45,8 +31,8 @@ export enum SocialEnum {
 }
 
 // https://bobbyhadz.com/blog/typescript-convert-enum-to-union
-export type Social = `${SocialEnum}` // or keyof typeof SocialEnum
-export type SocialOEmbed = `${SocialEnum.twitter}`
+export type Social = keyof typeof SocialEnum
+export type SocialOEmbed = `${SocialEnum.twitter}` | `${SocialEnum.tiktok}`
 
 type SocialExtends<T> = Partial<Record<SocialEnum, T>>
 export interface ISocial<T> extends SocialExtends<T> {}

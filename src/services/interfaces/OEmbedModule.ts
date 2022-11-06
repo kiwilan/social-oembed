@@ -1,9 +1,9 @@
 import type { IOpenGraph } from '~/types/api'
 import type { ApiRouteQueryFormat, FetchMeta } from '~/types/route'
-import type { SocialOEmbed } from '~/types/social'
+import type { Social } from '~/types/social'
 import Http from '~/utils/Http'
 
-export default abstract class OEmbedModule<T> {
+export default abstract class OEmbedModule<T = {}> {
   protected query: ApiRouteQueryFormat
   protected response?: T
   protected openGraph?: IOpenGraph
@@ -15,7 +15,7 @@ export default abstract class OEmbedModule<T> {
     this.query = query
   }
 
-  abstract type: SocialOEmbed
+  abstract type: Social
   abstract endpoint: string
   public abstract make(): Promise<OEmbedModule<T>>
 

@@ -30,7 +30,7 @@ export interface FetchParams {
   body?: ResponseBody
 }
 
-export interface FetchResponse<T> {
+export interface FetchResponse<T = {}> {
   ok?: boolean
   headers?: Headers
   contentType?: string
