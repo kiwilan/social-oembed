@@ -1,7 +1,7 @@
 export interface Instance {
   name: string
   version?: string
-  apiKeyEnable?: boolean
+  apiKeyEnabled?: boolean
   instance?: string
   options?: {
     query?: {
@@ -16,12 +16,6 @@ export interface Instance {
 export interface RouterItem {
   [key: string]: (req: Request) => Response
 }
-
-// export interface RouteResponse {
-//   content?: ResponseContent
-//   status?: number
-//   redirect?: Endpoint
-// }
 
 export interface DataResponse {
   ok: boolean

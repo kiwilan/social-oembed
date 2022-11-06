@@ -31,9 +31,10 @@
   "scripts": {
     "prepare": "husky install",
     "check:types": "tsc --noEmit",
-    "dev": "tsx watch src .env",
-    "build": "rimraf build && tsx esbuild.ts",
-    "start": "npm run build && node build/index.mjs",
+    "config": "node build.js",
+    "dev": "npm run config && tsx watch src .env",
+    "build": "rimraf build && tsx esbuild.ts && npm run config",
+    "start": "npm run build && node build/index.mjs && npm run config",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "cz": "cz",

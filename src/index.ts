@@ -6,4 +6,4 @@ const fastify = Fastify({
   ignoreTrailingSlash: true,
 })
 
-await start(fastify)
+start(fastify)
