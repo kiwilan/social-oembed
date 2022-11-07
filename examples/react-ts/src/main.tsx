@@ -16,6 +16,7 @@ const oembeds: string[] = [
   // 'https://twitter.com/BalletOParis/status/1580947790250721283',
   // 'https://www.youtube.com/watch?v=C243DQBfjho',
   'https://open.spotify.com/track/6xMpUNOfaSkyywPiFFXZFh',
+  'https://open.spotify.com/track/7HS4gcV9uraDTvnjEaZ3Rv',
   // 'https://www.dailymotion.com/video/x1t5li3',
   // 'https://vimeo.com/600970110',
   'https://www.netflix.com',
@@ -30,6 +31,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     {oembeds.map((url, i) => (
       <SocialOEmbed url={url} key={i} oembed />
     ))}
-    <SocialTiktok />
+    {/* <SocialTiktok /> */}
   </div>
 )

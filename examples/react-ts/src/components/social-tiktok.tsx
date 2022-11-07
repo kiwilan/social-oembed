@@ -62,6 +62,33 @@ const SocialTiktok = () => {
         </section>{' '}
       </blockquote>{' '}
       {/* <script async src="https://www.tiktok.com/embed.js"></script> */}
+      <iframe
+        style={{
+          borderRadius: '12px',
+        }}
+        src="https://open.spotify.com/embed/track/7HS4gcV9uraDTvnjEaZ3Rv?utm_source=generator"
+        width="100%"
+        height="152"
+        frameBorder="0"
+        allowFullScreen={false}
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+      ></iframe>
+      <iframe
+        src="https://open.spotify.com/embed/track/6xMpUNOfaSkyywPiFFXZFh?"
+        width="456"
+        height="0"
+        title="Les quatre saisons, Le printemps: Allegro undefined"
+        style={{
+          border: 'none',
+          margin: '0 auto',
+        }}
+        scrolling="yes"
+        frameBorder="0"
+        allowFullScreen={false}
+        allow="fullscreen;encrypted-media;"
+        loading="lazy"
+      ></iframe>
     </div>
   )
 }

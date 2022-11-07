@@ -6,6 +6,11 @@ export interface ISocialIdentifier {
   embedUrl?: string
 }
 
+export interface IframeSize {
+  height?: number | string
+  width?: number | string
+}
+
 export enum SocialEnum {
   dailymotion = 'dailymotion',
   instagram = 'instagram',
@@ -40,3 +45,4 @@ export interface ISocial<T> extends SocialExtends<T> {}
 export interface ISocialPlus<T> extends SocialExtends<T> {
   netflix?: T
 }
+

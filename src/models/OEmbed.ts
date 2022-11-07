@@ -20,9 +20,13 @@ export default class OEmbed extends ApiModule {
 
     // TODO shared interface
     if (social.isValid()) {
+      const iframeSize = social.getiframeSize()
       openGraph = social.getOpenGraph()
       fetchMeta = social.getFetchMeta()
-      oembed.render = RenderService.oembed(openGraph, query)
+
+      const embedUrl = social.getIdentifiers().embedUrl
+      if (embedUrl)
+        oembed.render = RenderService.oembed(embedUrl, openGraph, query, iframeSize)
     }
     else {
       const og = await OpenGraph.make(query)

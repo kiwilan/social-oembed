@@ -1,6 +1,6 @@
 import ProviderModule from '~/providers/social/ProviderModule'
 import type { OEmbedApi } from '~/types/oembed'
-import type { ISocialIdentifier, Social } from '~/types/social'
+import type { ISocialIdentifier, IframeSize, Social } from '~/types/social'
 
 /**
  * @see https://developers.tiktok.com/doc/embed-videos/
@@ -9,6 +9,7 @@ export default class ProviderTiktok extends ProviderModule {
   protected type: Social = 'tiktok'
   protected regex = /(@[a-zA-z0-9]*|.*)(\/.*\/|trending.?shareId=)([\d]*)/gm
   protected endpoint = 'https://www.tiktok.com/oembed'
+  protected iframeSize: IframeSize = { height: 750, width: 300 }
 
   protected providerMatch(): ISocialIdentifier {
     let type = this.matches[2] ?? undefined

@@ -3,7 +3,7 @@ import { colors } from '~/renders/SocialAssets'
 import type { IOpenGraph } from '~/types/api'
 import type { OEmbedApi, OEmbedApiParams } from '~/types/oembed'
 import type { FetchMeta, IApiRouteQuery } from '~/types/route'
-import type { ISocialIdentifier, Social } from '~/types/social'
+import type { IframeSize, ISocialIdentifier, Social } from '~/types/social'
 import Http from '~/utils/Http'
 
 export default abstract class ProviderModule {
@@ -15,7 +15,7 @@ export default abstract class ProviderModule {
   protected fetchMeta?: FetchMeta
   protected openGraph?: IOpenGraph
   protected html?: string
-  protected ok?: boolean
+  protected ok = false
   protected identifiers: ISocialIdentifier = {}
 
   public constructor(query: IApiRouteQuery) {
@@ -26,6 +26,7 @@ export default abstract class ProviderModule {
   protected abstract type: Social
   protected abstract regex: RegExp | undefined
   protected abstract endpoint: string | undefined
+  protected abstract iframeSize: IframeSize
   protected abstract providerMatch(): ISocialIdentifier
   protected abstract providerApi(): Promise<this>
 
@@ -45,7 +46,7 @@ export default abstract class ProviderModule {
 
     const client = Http.client(url)
     const res = await client.get<T>()
-    this.ok = res.ok
+    this.ok = res.ok ?? false
 
     this.fetchMeta = {
       message: res.statusText,
@@ -63,6 +64,10 @@ export default abstract class ProviderModule {
     return this.html ? `data:text/html;charset=utf-8,${encoded}` : undefined
   }
 
+  public getiframeSize(): IframeSize {
+    return this.iframeSize
+  }
+
   public getOpenGraph(): IOpenGraph {
     return this.openGraph ?? {}
   }
@@ -73,6 +78,10 @@ export default abstract class ProviderModule {
 
   public isValid(): boolean {
     return this.type !== 'unknown'
+  }
+
+  public getIsOk(): boolean {
+    return this.ok
   }
 
   public getIdentifiers(): ISocialIdentifier {

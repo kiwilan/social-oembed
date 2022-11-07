@@ -76,9 +76,11 @@ With oEmbed, it's really complicated, each social network have their own API, wi
   - [ ] metadata query to get OpenGraph
   - [ ] smart queries for each social network
   - [ ] queries for iframe
+  - [x] fallback to OpenGraph if no oEmbed, no provider or oEmbed error
+  - [ ] oembed rebuilt with match
 - [ ] Host your own instance
 - [ ] Auth middleware <https://github.com/fastify/middie>
-  - [ ]Domains allow `*` or `*.domain.com`
+  - [ ] Domains allow `*` or `*.domain.com`
   - [ ] API key as query or header
 - [ ] Documentation
   - [ ] Usage from JS client side with fetch, from PHP with Guzzle

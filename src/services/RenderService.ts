@@ -3,6 +3,7 @@ import OpenGraphRender from '~/renders/OpenGraphRender'
 import OEmbedRender from '~/renders/OEmbedRender'
 import type { OpenGraphResponse } from '~/types'
 import type { IApiRouteQuery } from '~/types/route'
+import type { IframeSize } from '~/types/social'
 
 export default class RenderService {
   protected constructor(
@@ -23,9 +24,9 @@ export default class RenderService {
     return render.toHtml(model, render.dark)
   }
 
-  public static oembed(model: any, query: IApiRouteQuery): string {
+  public static oembed(embedUrl: string, model: any, query: IApiRouteQuery, iframeSize: IframeSize): string {
     const render = RenderService.make(OEmbedRender, query)
-    return render.toHtml(model)
+    return render.toHtml(embedUrl, model, iframeSize)
   }
 
   public toHtml(...props: any): string {

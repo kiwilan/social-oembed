@@ -1,6 +1,6 @@
 import ProviderModule from '~/providers/social/ProviderModule'
 import type { OEmbedApi } from '~/types/oembed'
-import type { ISocialIdentifier, Social } from '~/types/social'
+import type { IframeSize, ISocialIdentifier, Social } from '~/types/social'
 
 /**
  * @see https://developer.twitter.com/en/docs/twitter-for-websites/oembed-api
@@ -11,6 +11,7 @@ export default class ProviderSpotify extends ProviderModule {
   // /(?:https?:\/\/)?(?:www\.)?open\.spotify\.com\/(track|album|artist)\/([a-zA-Z0-9]+)/ig
   protected regex = /^(https:\/\/open.spotify.com\/|user:track:album:artist:playlist:)([a-zA-Z0-9]+)(.*)$/mg
   protected endpoint = 'https://open.spotify.com/oembed'
+  protected iframeSize: IframeSize = { height: 152, width: '100%' }
 
   protected providerMatch(): ISocialIdentifier {
     const id = this.matches[3] ? this.matches[3].replace('/', '') : undefined

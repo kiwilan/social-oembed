@@ -1,14 +1,41 @@
 import type { IApiData } from '~/types/api'
+import type { IframeSize } from '~/types/social'
 
-const OEmbedRender = (model: IApiData) => {
-  const url = model.embedUrl
-  const width = model.width ? model.width : '100%'
-  const height = model.embedUrl ? (model.height ? model.height : 450) : 0
-  const title = model.title
-  let allow = model.isMobile
-    ? 'accelerometer; autoplay; encrypted-media; gyroscope; clipboard-write; picture-in-picture;'
-    : ''
-  allow += 'fullscreen;encrypted-media;'
+const OEmbedRender = (
+  embedUrl?: string,
+  model?: IApiData,
+  iframeSize?: IframeSize
+) => {
+  let isValid = false
+  const url = embedUrl
+  let width = '0'
+  let height = '0'
+  let title = ''
+  let allow = 'fullscreen;encrypted-media; '
+
+  const setModel = () => {
+    if (!model) {
+      //
+      return
+    }
+    width = model.width ? model.width : '100%'
+    height = model.height ? model.height : '450'
+    title = model.title ? model.title : ''
+    allow += model.isMobile
+      ? 'accelerometer; autoplay; encrypted-media; gyroscope; clipboard-write; picture-in-picture;'
+      : ''
+  }
+
+  if (url) {
+    isValid = true
+    height = iframeSize?.height ? iframeSize.height.toString() : '450'
+    width = iframeSize?.width ? iframeSize.width.toString() : '100%'
+  }
+
+  if (model && Object.keys(model).length) {
+    //
+    setModel()
+  }
 
   return (
     <div
@@ -16,7 +43,7 @@ const OEmbedRender = (model: IApiData) => {
         display: 'flex',
       }}
     >
-      {model.embedUrl ? (
+      {isValid ? (
         <iframe
           src={url}
           width={width}
