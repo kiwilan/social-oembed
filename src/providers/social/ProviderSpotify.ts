@@ -1,6 +1,6 @@
 import ProviderModule from '~/providers/social/ProviderModule'
 import type { OEmbedApi } from '~/types/oembed'
-import type { IframeSize, ISocialIdentifier, Social } from '~/types/social'
+import type { ISocialIdentifier, IframeSize, Social } from '~/types/social'
 
 /**
  * @see https://developer.twitter.com/en/docs/twitter-for-websites/oembed-api
