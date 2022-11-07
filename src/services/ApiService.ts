@@ -1,7 +1,7 @@
 import type { FastifyRequest } from 'fastify'
 import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, FetchMeta, IApiQueryFormat, IApiRouteQuery, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
 import OpenGraph from '~/models/OpenGraph'
-import Render from '~/services/ApiService/Render'
+import RenderService from '~/services/RenderService'
 import OEmbed from '~/models/OEmbed'
 
 interface FormatResponse {
@@ -59,7 +59,7 @@ export default class ApiService {
     this.formatResponse = {
       response: {
         ...og.model,
-        render: Render.openGraph(og.model, this.query.dark)
+        render: RenderService.openGraph(og.model, this.query.dark)
       },
       fetchMeta: og.getFetchMeta()
     }
@@ -73,7 +73,7 @@ export default class ApiService {
     this.formatResponse = {
       response: {
         ...oembed.model,
-        render: Render.oembed(oembed.model)
+        render: RenderService.oembed(oembed.model)
       },
       fetchMeta: oembed.getFetchMeta()
     }

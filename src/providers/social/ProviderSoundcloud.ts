@@ -1,9 +1,9 @@
-import SocialModule from '~/services/SocialService/SocialModule'
+import ProviderModule from '~/providers/social/ProviderModule'
 import type { ISocialIdentifier, Social } from '~/types/social'
 
-export default class SocialReddit extends SocialModule {
-  type: Social = 'reddit'
-  regex = /(?:https?:\/\/)?(?:www\.)?reddit\.com\/r\/([a-zA-Z0-9]+)/ig
+export default class ProviderSoundcloud extends ProviderModule {
+  type: Social = 'soundcloud'
+  regex = /(?:https?:\/\/)?(?:www\.)?soundcloud\.com\/([a-zA-Z0-9]+)/ig
 
   public get(): ISocialIdentifier {
     const id = this.matches[2] ?? undefined

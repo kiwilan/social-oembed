@@ -1,12 +1,12 @@
-import SocialModule from '~/services/SocialService/SocialModule'
+import ProviderModule from '~/providers/social/ProviderModule'
 import type { ISocialIdentifier, Social } from '~/types/social'
 
-export default class SocialFacebook extends SocialModule {
+export default class ProviderFacebook extends ProviderModule {
   type: Social = 'facebook'
   regex = /(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/ig
   protected endpoint: string | undefined
 
-  protected parseMatches(): ISocialIdentifier {
+  protected providerMatch(): ISocialIdentifier {
     const id = this.matches[2] ?? undefined
 
     return {
@@ -16,7 +16,7 @@ export default class SocialFacebook extends SocialModule {
     }
   }
 
-  protected fetchApi(): Promise<this> {
+  protected providerApi(): Promise<this> {
     throw new Error('Method not implemented.')
   }
 }

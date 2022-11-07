@@ -1,6 +1,5 @@
 import * as cheerio from 'cheerio'
 import puppeteer from 'puppeteer'
-import type { IOpenGraph } from '~/types/api'
 import type { MetaNode, MetaValues, OpenGraphMeta } from '~/types/html'
 import type { FetchResponse } from '~/types/http'
 import type { FetchMeta } from '~/types/route'

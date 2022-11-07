@@ -1,13 +1,13 @@
-import SocialModule from '~/services/SocialService/SocialModule'
+import ProviderModule from '~/providers/social/ProviderModule'
 import type { ISocialIdentifier, Social } from '~/types/social'
 
-export default class SocialTwitch extends SocialModule {
+export default class ProviderTwitch extends ProviderModule {
   protected endpoint: string | undefined
-  protected parseMatches(): ISocialIdentifier {
+  protected providerMatch(): ISocialIdentifier {
     throw new Error('Method not implemented.')
   }
 
-  protected fetchApi(): Promise<this> {
+  protected providerApi(): Promise<this> {
     throw new Error('Method not implemented.')
   }
 

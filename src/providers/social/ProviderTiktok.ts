@@ -1,16 +1,16 @@
-import SocialModule from '~/services/SocialService/SocialModule'
+import ProviderModule from '~/providers/social/ProviderModule'
 import type { OEmbedApi } from '~/types/oembed'
 import type { ISocialIdentifier, Social } from '~/types/social'
 
 /**
  * @see https://developers.tiktok.com/doc/embed-videos/
  */
-export default class SocialTiktok extends SocialModule {
+export default class ProviderTiktok extends ProviderModule {
   protected type: Social = 'tiktok'
   protected regex = /(@[a-zA-z0-9]*|.*)(\/.*\/|trending.?shareId=)([\d]*)/gm
   protected endpoint = 'https://www.tiktok.com/oembed'
 
-  protected parseMatches(): ISocialIdentifier {
+  protected providerMatch(): ISocialIdentifier {
     let type = this.matches[2] ?? undefined
     if (type) {
       type = type.replace('/', '')
@@ -27,7 +27,7 @@ export default class SocialTiktok extends SocialModule {
     }
   }
 
-  protected async fetchApi(): Promise<this> {
+  protected async providerApi(): Promise<this> {
     this.params = {
       url: this.query.url ?? '',
     }

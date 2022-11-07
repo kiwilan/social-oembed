@@ -1,9 +1,9 @@
-import SocialModule from '~/services/SocialService/SocialModule'
+import ProviderModule from '~/providers/social/ProviderModule'
 import type { ISocialIdentifier, Social } from '~/types/social'
 
-export default class SocialPinterest extends SocialModule {
-  type: Social = 'pinterest'
-  regex = /(?:https?:\/\/)?(?:www\.)?pinterest\.com\/pin\/([a-zA-Z0-9]+)/ig
+export default class ProviderTumblr extends ProviderModule {
+  type: Social = 'tumblr'
+  regex = /(?:https?:\/\/)?(?:www\.)?tumblr\.com\/post\/([a-zA-Z0-9]+)/ig
 
   public get(): ISocialIdentifier {
     const id = this.matches[2] ?? undefined

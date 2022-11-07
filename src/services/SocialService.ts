@@ -1,55 +1,55 @@
-import SocialTwitter from './SocialService/SocialTwitter'
-import type SocialModule from './SocialService/SocialModule'
-import SocialDailymotion from './SocialService/SocialDailymotion'
-import SocialYoutube from './SocialService/SocialYoutube'
-import SocialFacebook from './SocialService/SocialFacebook'
-import SocialFlickr from './SocialService/SocialFlickr'
-import SocialInstagram from './SocialService/SocialInstagram'
-import SocialGiphy from './SocialService/SocialGiphy'
-import SocialImgur from './SocialService/SocialImgur'
-import SocialKickstarter from './SocialService/SocialKickstarter'
-import SocialLinkedin from './SocialService/SocialLinkedin'
-import SocialPinterest from './SocialService/SocialPinterest'
-import SocialReddit from './SocialService/SocialReddit'
-import SocialSnapchat from './SocialService/SocialSnapchat'
-import SocialSoundcloud from './SocialService/SocialSoundcloud'
-import SocialSpotify from './SocialService/SocialSpotify'
-import SocialTiktok from './SocialService/SocialTiktok'
-import SocialTed from './SocialService/SocialTed'
-import SocialTumblr from './SocialService/SocialTumblr'
-import SocialTwitch from './SocialService/SocialTwitch'
-import SocialVimeo from './SocialService/SocialVimeo'
-import SocialUnknown from './SocialService/SocialUnknown'
+import ProviderTwitter from '~/providers/social/ProviderTwitter'
+import type ProviderModule from '~/providers/social/ProviderModule'
+import ProviderDailymotion from '~/providers/social/ProviderDailymotion'
+import ProviderYoutube from '~/providers/social/ProviderYoutube'
+import ProviderFacebook from '~/providers/social/ProviderFacebook'
+import ProviderFlickr from '~/providers/social/ProviderFlickr'
+import ProviderInstagram from '~/providers/social/ProviderInstagram'
+import ProviderGiphy from '~/providers/social/ProviderGiphy'
+import ProviderImgur from '~/providers/social/ProviderImgur'
+import ProviderKickstarter from '~/providers/social/ProviderKickstarter'
+import ProviderLinkedin from '~/providers/social/ProviderLinkedin'
+import ProviderPinterest from '~/providers/social/ProviderPinterest'
+import ProviderReddit from '~/providers/social/ProviderReddit'
+import ProviderSnapchat from '~/providers/social/ProviderSnapchat'
+import ProviderSoundcloud from '~/providers/social/ProviderSoundcloud'
+import ProviderSpotify from '~/providers/social/ProviderSpotify'
+import ProviderTiktok from '~/providers/social/ProviderTiktok'
+import ProviderTed from '~/providers/social/ProviderTed'
+import ProviderTumblr from '~/providers/social/ProviderTumblr'
+import ProviderTwitch from '~/providers/social/ProviderTwitch'
+import ProviderVimeo from '~/providers/social/ProviderVimeo'
+import ProviderUnknown from '~/providers/social/ProviderUnknown'
 import { SocialEnum } from '~/types/social'
 import type { ISocial, Social } from '~/types/social'
 import type { IApiRouteQuery } from '~/types/route'
 
 export default class SocialService {
-  public static async make(query: IApiRouteQuery): Promise<SocialModule | undefined> {
+  public static async make(query: IApiRouteQuery): Promise<ProviderModule | undefined> {
     const type = SocialService.find(query.url)
 
-    const providers: ISocial<() => SocialModule> = {
-      dailymotion: () => new SocialDailymotion(query),
-      facebook: () => new SocialFacebook(query),
-      flickr: () => new SocialFlickr(query),
-      instagram: () => new SocialInstagram(query),
-      giphy: () => new SocialGiphy(query),
-      imgur: () => new SocialImgur(query),
-      kickstarter: () => new SocialKickstarter(query),
-      linkedin: () => new SocialLinkedin(query),
-      pinterest: () => new SocialPinterest(query),
-      reddit: () => new SocialReddit(query),
-      snapchat: () => new SocialSnapchat(query),
-      soundcloud: () => new SocialSoundcloud(query),
-      tiktok: () => new SocialTiktok(query),
-      spotify: () => new SocialSpotify(query),
-      ted: () => new SocialTed(query),
-      tumblr: () => new SocialTumblr(query),
-      twitch: () => new SocialTwitch(query),
-      twitter: () => new SocialTwitter(query),
-      vimeo: () => new SocialVimeo(query),
-      youtube: () => new SocialYoutube(query),
-      unknown: () => new SocialUnknown(query),
+    const providers: ISocial<() => ProviderModule> = {
+      dailymotion: () => new ProviderDailymotion(query),
+      facebook: () => new ProviderFacebook(query),
+      flickr: () => new ProviderFlickr(query),
+      instagram: () => new ProviderInstagram(query),
+      giphy: () => new ProviderGiphy(query),
+      imgur: () => new ProviderImgur(query),
+      kickstarter: () => new ProviderKickstarter(query),
+      linkedin: () => new ProviderLinkedin(query),
+      pinterest: () => new ProviderPinterest(query),
+      reddit: () => new ProviderReddit(query),
+      snapchat: () => new ProviderSnapchat(query),
+      soundcloud: () => new ProviderSoundcloud(query),
+      tiktok: () => new ProviderTiktok(query),
+      spotify: () => new ProviderSpotify(query),
+      ted: () => new ProviderTed(query),
+      tumblr: () => new ProviderTumblr(query),
+      twitch: () => new ProviderTwitch(query),
+      twitter: () => new ProviderTwitter(query),
+      vimeo: () => new ProviderVimeo(query),
+      youtube: () => new ProviderYoutube(query),
+      unknown: () => new ProviderUnknown(query),
     }
 
     const provider = providers[type as keyof typeof providers]

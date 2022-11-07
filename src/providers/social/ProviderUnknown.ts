@@ -1,7 +1,7 @@
-import SocialModule from '~/services/SocialService/SocialModule'
+import ProviderModule from '~/providers/social/ProviderModule'
 import type { ISocialIdentifier, Social } from '~/types/social'
 
-export default class SocialUnknown extends SocialModule {
+export default class ProviderUnknown extends ProviderModule {
   type: Social = 'unknown'
   regex = undefined
 

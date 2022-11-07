@@ -1,32 +1,33 @@
+import { colors } from '~/renders/SocialAssets'
 import type { IOpenGraph } from '~/types/api'
-import type { OEmbedApi } from '~/types/oembed'
+import type { OEmbedApi, OEmbedApiParams } from '~/types/oembed'
 import type { FetchMeta, IApiRouteQuery } from '~/types/route'
-import type { Social } from '~/types/social'
+import type { ISocialIdentifier, Social } from '~/types/social'
 import Http from '~/utils/Http'
 
-interface OEmbedApiParams {
-  height?: number
-  width?: number
-  color?: string
-}
-
-export default abstract class OEmbedModule<T = {}> {
+export default abstract class ProviderModule {
   protected query: IApiRouteQuery
-  protected response?: T
-  protected openGraph?: IOpenGraph
-  protected fetchMeta?: FetchMeta
+  protected social: Social = 'unknown'
+  protected url: string
+  protected matches: string[] = []
   protected params: Record<string, string> = {}
+  protected fetchMeta?: FetchMeta
+  protected openGraph?: IOpenGraph
   protected html?: string
+  protected identifiers: ISocialIdentifier = {}
 
   public constructor(query: IApiRouteQuery) {
     this.query = query
+    this.url = query.url
   }
 
-  abstract type: Social
-  abstract endpoint: string
-  public abstract make(): Promise<OEmbedModule<T>>
+  protected abstract type: Social
+  protected abstract regex: RegExp | undefined
+  protected abstract endpoint: string | undefined
+  protected abstract providerMatch(): ISocialIdentifier
+  protected abstract providerApi(): Promise<this>
 
-  protected async fetch(): Promise<T> {
+  protected async fetchOembed<T>(): Promise<T> {
     const params = new URLSearchParams()
     for (const param of Object.entries(this.params))
       params.append(param[0], param[1])
@@ -46,18 +47,26 @@ export default abstract class OEmbedModule<T = {}> {
     return res.body as T
   }
 
-  public toIframeSrc = (): string | undefined => {
+  public getIframeSrc(): string | undefined {
     const encoded = encodeURIComponent(this.html ?? '')
 
     return this.html ? `data:text/html;charset=utf-8,${encoded}` : undefined
   }
 
-  public toOpenGraph(): IOpenGraph {
+  public getOpenGraph(): IOpenGraph {
     return this.openGraph ?? {}
   }
 
   public getFetchMeta(): FetchMeta {
     return this.fetchMeta ?? {}
+  }
+
+  public getIdentifiers(): ISocialIdentifier {
+    return this.identifiers
+  }
+
+  private getColor(): string {
+    return colors[this.social] ?? '#000000'
   }
 
   protected convertOEmbedApi(body: OEmbedApi, params?: OEmbedApiParams) {
@@ -67,6 +76,8 @@ export default abstract class OEmbedModule<T = {}> {
 
     const width = (body?.width)?.toString()
     // let thumbnailWidth = (body?.thumbnail_width)?.toString()
+
+    const color = params?.color ? params.color : this.getColor()
 
     let iframeHeight = height === '100%' ? thumbnailHeight : height
     let iframeWidth = width
@@ -82,7 +93,7 @@ export default abstract class OEmbedModule<T = {}> {
       'title': `${body?.title} ${body?.author_name}`,
       'siteUrl': this.query.url,
       'description': body?.html ? body.html.replace(/<[^>]*>?/gm, '') : undefined,
-      'themeColor': params?.color ? params.color : '#000000',
+      'themeColor': color,
       'image': body?.thumbnail_url,
       'type': body?.type,
       'social': this.type,
@@ -90,5 +101,31 @@ export default abstract class OEmbedModule<T = {}> {
       'width': iframeWidth,
       'height': iframeHeight,
     }
+  }
+
+  private socialIdentifiers(): ISocialIdentifier {
+    if (!this.regex)
+      return {}
+
+    const regExp = new RegExp(this.regex)
+    const matches = this.url.matchAll(regExp)
+    const raw = [...matches]
+    this.matches = raw[0] ?? []
+    this.social = this.type
+
+    return this.providerMatch()
+  }
+
+  public onlyIdentifiers(): ISocialIdentifier {
+    this.socialIdentifiers()
+    this.identifiers = this.providerMatch()
+    return this.identifiers
+  }
+
+  public async make(): Promise<ProviderModule> {
+    this.onlyIdentifiers()
+    await this.providerApi()
+
+    return this
   }
 }

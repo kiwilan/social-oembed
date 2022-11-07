@@ -6,7 +6,7 @@ import SocialService from '~/services/SocialService'
 import type { ISocial } from '~/types/social'
 import ParserService from '~/services/ParserService'
 import { colors } from '~/renders/SocialAssets'
-import type SocialModule from '~/services/SocialService/SocialModule'
+import type ProviderModule from '~/providers/social/ProviderModule'
 
 export default class OpenGraph extends ApiModule {
   public model: IOpenGraph = {}
@@ -43,7 +43,7 @@ export default class OpenGraph extends ApiModule {
     return og
   }
 
-  private async getOembed(): Promise<SocialModule | undefined> {
+  private async getOembed(): Promise<ProviderModule | undefined> {
     const oembed = await SocialService.make(this.query)
     if (oembed) {
       this.model = oembed.getOpenGraph()

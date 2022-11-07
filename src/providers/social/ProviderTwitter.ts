@@ -1,4 +1,4 @@
-import SocialModule from '~/services/SocialService/SocialModule'
+import ProviderModule from '~/providers/social/ProviderModule'
 import type { ISocialIdentifier, Social } from '~/types/social'
 
 interface TwitterApi {
@@ -18,13 +18,13 @@ interface TwitterApi {
 /**
  * @see https://developer.twitter.com/en/docs/twitter-for-websites/oembed-api
  */
-export default class SocialTwitter extends SocialModule {
+export default class ProviderTwitter extends ProviderModule {
   protected type: Social = 'twitter'
   // /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status?\/(\d+)/g
   protected regex = /(?:https?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9]+)\/status\/([a-zA-Z0-9]+)/ig
   protected endpoint = 'https://publish.twitter.com/oembed'
 
-  protected parseMatches(): ISocialIdentifier {
+  protected providerMatch(): ISocialIdentifier {
     const id = this.matches[2] ?? undefined
 
     return {
@@ -34,7 +34,7 @@ export default class SocialTwitter extends SocialModule {
     }
   }
 
-  protected async fetchApi(): Promise<this> {
+  protected async providerApi(): Promise<this> {
     this.params = {
       url: this.query.url ?? '',
       align: this.query.align ?? 'center',

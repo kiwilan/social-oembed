@@ -3,26 +3,26 @@ import OpenGraphRender from '~/renders/OpenGraphRender'
 import OEmbedRender from '~/renders/OEmbedRender'
 import type { OpenGraphResponse } from '~/types'
 
-export default class Render {
+export default class RenderService {
   protected constructor(
     protected component: any,
     protected dark: boolean = false,
   ) {}
 
-  public static make(component: any): Render {
-    const render = new Render(component)
+  public static make(component: any): RenderService {
+    const render = new RenderService(component)
 
     return render
   }
 
   public static openGraph(model: OpenGraphResponse, dark = false): string {
-    const render = Render.make(OpenGraphRender)
+    const render = RenderService.make(OpenGraphRender)
     render.dark = dark
     return render.toHtml(model, dark)
   }
 
   public static oembed(model: any): string {
-    const render = Render.make(OEmbedRender)
+    const render = RenderService.make(OEmbedRender)
     return render.toHtml(model)
   }
 
