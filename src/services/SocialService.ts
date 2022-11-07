@@ -21,11 +21,17 @@ import ProviderTwitch from '~/providers/social/ProviderTwitch'
 import ProviderVimeo from '~/providers/social/ProviderVimeo'
 import ProviderUnknown from '~/providers/social/ProviderUnknown'
 import { SocialEnum } from '~/types/social'
-import type { ISocial, Social } from '~/types/social'
+import type { ISocial, ISocialIdentifier, Social } from '~/types/social'
 import type { IApiRouteQuery } from '~/types/route'
 
 export default class SocialService {
-  public static async make(query: IApiRouteQuery): Promise<ProviderModule | undefined> {
+  protected constructor(
+    protected type: Social,
+    protected provider: ProviderModule,
+    protected identifiers?: ISocialIdentifier
+  ) {}
+
+  public static make(query: IApiRouteQuery): SocialService {
     const type = SocialService.find(query.url)
 
     const providers: ISocial<() => ProviderModule> = {
@@ -52,15 +58,22 @@ export default class SocialService {
       unknown: () => new ProviderUnknown(query),
     }
 
-    const provider = providers[type as keyof typeof providers]
+    const provider = providers[type as keyof typeof providers] as unknown as () => ProviderModule
+    const instance = provider()
 
-    if (!provider) {
-      console.error(`No provider found for ${type}`)
-      return undefined
-    }
+    const service = new SocialService(type, instance)
 
+    return service
+  }
+
+  public getIdentifiers(): ISocialIdentifier | undefined {
+    return this.provider?.onlyIdentifiers()
+  }
+
+  public async getOembed(): Promise<ProviderModule> {
     // TODO if API reject request, create iframe from identifiers or openGraph
-    const instance = await provider().make()
+    const instance = await this.provider.make()
+
     return instance
   }
 

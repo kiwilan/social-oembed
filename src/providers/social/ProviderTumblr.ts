@@ -2,10 +2,11 @@ import ProviderModule from '~/providers/social/ProviderModule'
 import type { ISocialIdentifier, Social } from '~/types/social'
 
 export default class ProviderTumblr extends ProviderModule {
-  type: Social = 'tumblr'
-  regex = /(?:https?:\/\/)?(?:www\.)?tumblr\.com\/post\/([a-zA-Z0-9]+)/ig
+  protected type: Social = 'tumblr'
+  protected regex = /(?:https?:\/\/)?(?:www\.)?tumblr\.com\/post\/([a-zA-Z0-9]+)/ig
+  protected endpoint: string | undefined
 
-  public get(): ISocialIdentifier {
+  protected providerMatch(): ISocialIdentifier {
     const id = this.matches[2] ?? undefined
 
     return {
@@ -13,5 +14,9 @@ export default class ProviderTumblr extends ProviderModule {
       user: this.matches[1] ?? undefined,
       id,
     }
+  }
+
+  protected providerApi(): Promise<this> {
+    throw new Error('Method not implemented.')
   }
 }

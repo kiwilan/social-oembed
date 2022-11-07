@@ -3,14 +3,14 @@ import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, FetchMeta, IApiQueryFo
 import OpenGraph from '~/models/OpenGraph'
 import RenderService from '~/services/RenderService'
 import OEmbed from '~/models/OEmbed'
-import SocialService from '~/services/SocialService'
 
 interface FormatResponse {
   response?: {
     [key: string]: any
-    render: string
+    render?: string
   }
   fetchMeta?: FetchMeta
+  format?: ApiQueryFormat
 }
 export default class ApiService {
   protected formatResponse?: FormatResponse
@@ -59,10 +59,11 @@ export default class ApiService {
 
     this.formatResponse = {
       response: {
-        ...og.model,
-        render: RenderService.openGraph(og.model, this.query.dark)
+        ...og.getOpenGraph(),
+        render: RenderService.openGraph(og.getOpenGraph(), this.query)
       },
-      fetchMeta: og.getFetchMeta()
+      fetchMeta: og.getFetchMeta(),
+      format: 'opengraph'
     }
 
     return this.formatResponse
@@ -73,20 +74,17 @@ export default class ApiService {
 
     this.formatResponse = {
       response: {
-        ...oembed.model,
-        render: RenderService.oembed(oembed.model)
+        ...oembed.getModel(),
+        render: oembed.getRender()
       },
-      fetchMeta: oembed.getFetchMeta()
+      fetchMeta: oembed.getFetchMeta(),
+      format: oembed.getIsOpenGraph() ? 'opengraph' : 'oembed'
     }
 
     return this.formatResponse
   }
 
   public async get(): Promise<ApiResponse> {
-    const social = SocialService.find(this.query.url)
-    if (social === 'unknown')
-      this.query.format = 'opengraph'
-
     const formats: IApiQueryFormat<() => Promise<FormatResponse>> = {
       opengraph: () => this.getOpenGraph(),
       oembed: () => this.getOEmbed(),
@@ -101,7 +99,8 @@ export default class ApiService {
       data: this.formatResponse?.response,
       meta: {
         url: this.query.url ?? '',
-        format: this.query.format,
+        format: this.formatResponse?.format ?? 'opengraph',
+        message: this.query.format !== this.formatResponse?.format ? `Format '${this.query.format}' not supported. Using '${this.formatResponse?.format}' instead.` : '',
         docs: '', // TODO docs route
         fetch: this.formatResponse?.fetchMeta ?? {}
       }

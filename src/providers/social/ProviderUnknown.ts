@@ -2,13 +2,18 @@ import ProviderModule from '~/providers/social/ProviderModule'
 import type { ISocialIdentifier, Social } from '~/types/social'
 
 export default class ProviderUnknown extends ProviderModule {
-  type: Social = 'unknown'
-  regex = undefined
+  protected type: Social = 'unknown'
+  protected regex = undefined
+  protected endpoint: string | undefined
 
-  public get(): ISocialIdentifier {
-    console.error(`No provider found for ${this.type}`)
+  protected providerMatch(): ISocialIdentifier {
+    return {}
+  }
 
-    return {
-    }
+  protected async providerApi(): Promise<this> {
+    const body = await this.fetchOpenGraph()
+    this.openGraph = body
+
+    return Promise.resolve(this)
   }
 }

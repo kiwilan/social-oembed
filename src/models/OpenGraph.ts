@@ -9,7 +9,7 @@ import { colors } from '~/renders/SocialAssets'
 import type ProviderModule from '~/providers/social/ProviderModule'
 
 export default class OpenGraph extends ApiModule {
-  public model: IOpenGraph = {}
+  protected model: IOpenGraph = {}
 
   public static async make(query: IApiRouteQuery): Promise<OpenGraph> {
     const og = new OpenGraph(query)
@@ -32,10 +32,10 @@ export default class OpenGraph extends ApiModule {
       await current()
       // fallback cause by API limit
       if (og.model.title === undefined)
-        await og.getOpenGraph(og.query.url)
+        await og.parseOpenGraph(og.query.url)
     }
     else {
-      await og.getOpenGraph(og.query.url)
+      await og.parseOpenGraph(og.query.url)
     }
 
     if (og.social !== 'unknown')
@@ -45,7 +45,7 @@ export default class OpenGraph extends ApiModule {
   }
 
   private async getOembed(): Promise<ProviderModule | undefined> {
-    const oembed = await SocialService.make(this.query)
+    const oembed = await SocialService.make(this.query).getOembed()
     if (oembed) {
       this.model = oembed.getOpenGraph()
       this.fetchMeta = oembed.getFetchMeta()
@@ -73,7 +73,11 @@ export default class OpenGraph extends ApiModule {
     this.model.image = this.checkImage()
   }
 
-  private async getOpenGraph(url: string): Promise<OpenGraph> {
+  public getOpenGraph(): IOpenGraph {
+    return this.model
+  }
+
+  private async parseOpenGraph(url: string): Promise<OpenGraph> {
     const parser = await ParserService.make(url)
 
     this.response = parser.response

@@ -56,6 +56,7 @@ export type ApiResponseData = object
 export interface ApiResponseMeta {
   url: string
   format: Format
+  message?: string
   docs: string
   fetch: FetchMeta
 }

@@ -27,4 +27,8 @@ export default abstract class ApiModule {
   public getFetchMeta(): FetchMeta | undefined {
     return this.fetchMeta
   }
+
+  public getRender(): string | undefined {
+    return this.render
+  }
 }

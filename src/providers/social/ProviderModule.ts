@@ -1,3 +1,4 @@
+import OpenGraph from '~/models/OpenGraph'
 import { colors } from '~/renders/SocialAssets'
 import type { IOpenGraph } from '~/types/api'
 import type { OEmbedApi, OEmbedApiParams } from '~/types/oembed'
@@ -14,6 +15,7 @@ export default abstract class ProviderModule {
   protected fetchMeta?: FetchMeta
   protected openGraph?: IOpenGraph
   protected html?: string
+  protected ok?: boolean
   protected identifiers: ISocialIdentifier = {}
 
   public constructor(query: IApiRouteQuery) {
@@ -27,6 +29,13 @@ export default abstract class ProviderModule {
   protected abstract providerMatch(): ISocialIdentifier
   protected abstract providerApi(): Promise<this>
 
+  protected async fetchOpenGraph(): Promise<IOpenGraph> {
+    console.error(`No provider found for ${this.type}`)
+    const og = await OpenGraph.make(this.query)
+
+    return og.getOpenGraph()
+  }
+
   protected async fetchOembed<T>(): Promise<T> {
     const params = new URLSearchParams()
     for (const param of Object.entries(this.params))
@@ -36,6 +45,7 @@ export default abstract class ProviderModule {
 
     const client = Http.client(url)
     const res = await client.get<T>()
+    this.ok = res.ok
 
     this.fetchMeta = {
       message: res.statusText,
@@ -59,6 +69,10 @@ export default abstract class ProviderModule {
 
   public getFetchMeta(): FetchMeta {
     return this.fetchMeta ?? {}
+  }
+
+  public isValid(): boolean {
+    return this.type !== 'unknown'
   }
 
   public getIdentifiers(): ISocialIdentifier {
