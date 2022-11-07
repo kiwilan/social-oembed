@@ -3,6 +3,7 @@ import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, FetchMeta, IApiQueryFo
 import OpenGraph from '~/models/OpenGraph'
 import RenderService from '~/services/RenderService'
 import OEmbed from '~/models/OEmbed'
+import SocialService from '~/services/SocialService'
 
 interface FormatResponse {
   response?: {
@@ -82,6 +83,10 @@ export default class ApiService {
   }
 
   public async get(): Promise<ApiResponse> {
+    const social = SocialService.find(this.query.url)
+    if (social === 'unknown')
+      this.query.format = 'opengraph'
+
     const formats: IApiQueryFormat<() => Promise<FormatResponse>> = {
       opengraph: () => this.getOpenGraph(),
       oembed: () => this.getOEmbed(),

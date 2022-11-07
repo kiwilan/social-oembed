@@ -18,6 +18,7 @@ const oembeds: string[] = [
   'https://open.spotify.com/track/6xMpUNOfaSkyywPiFFXZFh',
   // 'https://www.dailymotion.com/video/x1t5li3',
   // 'https://vimeo.com/600970110',
+  'https://www.netflix.com',
   'https://www.tiktok.com/@mrnatasmr/video/7155146642000219398?is_copy_url=1&is_from_webapp=v1',
 ]
 

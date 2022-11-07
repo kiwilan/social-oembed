@@ -36,3 +36,7 @@ export type SocialOEmbed = `${SocialEnum.twitter}` | `${SocialEnum.tiktok}`
 
 type SocialExtends<T> = Partial<Record<SocialEnum, T>>
 export interface ISocial<T> extends SocialExtends<T> {}
+
+export interface ISocialPlus<T> extends SocialExtends<T> {
+  netflix?: T
+}

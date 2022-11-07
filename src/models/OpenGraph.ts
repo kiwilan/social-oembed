@@ -16,26 +16,27 @@ export default class OpenGraph extends ApiModule {
 
     if (!og.query.url) {
       console.error('OpenGraph: No URL provided')
-      return og
+      throw new Error('No URL provided')
     }
 
     og.social = SocialService.find(og.query.url)
 
-    const formats: ISocial<() => Promise<any>> = {
+    const formats: ISocial<() => Promise<ProviderModule | undefined>> = {
       // spotify: () => og.getOembed(),
       twitter: () => og.getOembed(),
       tiktok: () => og.getOembed(),
     }
 
     const current = formats[og.social]
-    if (current)
+    if (current) {
       await current()
-    else
+      // fallback cause by API limit
+      if (og.model.title === undefined)
+        await og.getOpenGraph(og.query.url)
+    }
+    else {
       await og.getOpenGraph(og.query.url)
-
-    // fallback cause by API limit
-    if (og.model.title === undefined)
-      await og.getOpenGraph(og.query.url)
+    }
 
     if (og.social !== 'unknown')
       og.model.themeColor = colors[og.social]
@@ -67,7 +68,7 @@ export default class OpenGraph extends ApiModule {
       icon: metaValues.icon,
     }
 
-    this.model.siteUrl = this.checkUrl(this.model.siteUrl)
+    this.model.siteUrl = this.checkUrl(this.model.siteUrl) ?? this.query.url
     this.model.icon = this.checkUrl(this.model.icon)
     this.model.image = this.checkImage()
   }
