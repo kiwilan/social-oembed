@@ -110,6 +110,10 @@ const OpenGraphRender = (og: IOpenGraph, dark: boolean) => {
             marginTop,
             fontSize: textSm,
             color: colorLight,
+            overflow: 'hidden',
+            display: '-webkit-box',
+            WebkitLineClamp: 1,
+            WebkitBoxOrient: 'vertical',
           }}
         >
           {removeHttp(og.siteUrl)}

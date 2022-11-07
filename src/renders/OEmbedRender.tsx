@@ -50,11 +50,12 @@ const OEmbedRender = (
           height={height}
           title={title}
           style={{
-            border: 'none',
+            border: 0,
             margin: '0 auto',
+            overflow: 'auto',
           }}
           scrolling="yes"
-          frameBorder="0"
+          frameBorder={0}
           allowFullScreen
           allow={allow}
           loading="lazy"
