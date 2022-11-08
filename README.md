@@ -41,7 +41,38 @@ With oEmbed, it's really complicated, each social network have their own API, wi
 
 **: to get Instagram or Facebook data, with iframely or with Meta API, you have to register your application on Meta, with many validations. Social oEmbed offer another solution without any key from Meta.*
 
-### Features/Roadmap
+## Features
+
+- OpenGraph
+  - Dark mode with `dark=true` query parameter
+  - [ ] Twitter card query with `twitter=true` query parameter
+- oEmbed with fallback
+  - [x] Dailymotion *all*
+  - [ ] Instagram *partial*
+  - [ ] Facebook *partial*
+  - [ ] Flickr
+  - [ ] Giphy
+  - [ ] Imgur
+  - [ ] Kickstarter
+  - [ ] LinkedIn
+  - [ ] Pinterest
+  - [ ] Reddit
+  - [ ] Snapchat
+  - [ ] Soundcloud
+  - [x] Spotify *all*
+  - [ ] TED
+  - [ ] Tumblr
+  - [x] TikTok *all*
+  - [ ] Twitch
+  - [x] Twitter *all*
+  - [x] Vimeo
+  - [x] YouTube *partial*
+- HTML rendering for OpenGraph and oEmbed
+- [ ] Smart queries for oEmbed API (customize render for each social network)
+- [ ] Host your own instance
+- [ ] Docker
+
+### Roadmap
 
 - [x] OpenGraph
   - [x] `og:title`, `og:description`, `og:image`, `og:url`, `og:type`, `og:site_name`, `og:locale`
@@ -52,39 +83,18 @@ With oEmbed, it's really complicated, each social network have their own API, wi
   - [x] Opiniated render
 - [x] oEmbed
   - [ ] Major social networks support
-    - [x] Dailymotion
-    - [ ] Instagram
-    - [ ] Facebook
-    - [ ] Flickr
-    - [ ] Giphy
-    - [ ] Imgur
-    - [ ] Kickstarter
-    - [ ] LinkedIn
-    - [ ] Pinterest
-    - [ ] Reddit
-    - [ ] Snapchat
-    - [ ] Soundcloud
-    - [x] Spotify
-    - [ ] TED
-    - [ ] Tumblr
-    - [x] TikTok
-    - [ ] Twitch
-    - [x] Twitter
-    - [x] Vimeo
-    - [x] YouTube
   - [x] Providers system
-  - [ ] metadata query to get OpenGraph
   - [ ] smart queries for each social network
   - [ ] queries for iframe
   - [x] fallback to OpenGraph if no oEmbed, no provider or oEmbed error
-  - [ ] oembed rebuilt with match
+  - [x] oEmbed rebuilt with match
 - [ ] Host your own instance
 - [ ] Auth middleware <https://github.com/fastify/middie>
   - [ ] Domains allow `*` or `*.domain.com`
   - [ ] API key as query or header
 - [ ] Documentation
-  - [ ] Usage from JS client side with fetch, from PHP with Guzzle
-  - [ ] Usage response example, typescript interfaces
+  - [ ] Usage from JS client side with fetch
+  - [x] Usage response example, typescript interfaces
   - [ ] Usage oembed
   - [ ] Social networks providers specs
   - [ ] examples alpinejs/react/vuejs
@@ -131,7 +141,99 @@ curl --request GET \
 
 ### oEmbed
 
-Coming soon...
+Example: <https://social-oembed.git-projects.xyz/api?url=https://www.youtube.com/watch?v=C243DQBfjho&format=oembed>
+
+```bash
+curl --request GET \
+    --data-urlencode "format=oembed" \
+    --data-urlencode "url=https://www.youtube.com/watch?v=C243DQBfjho" \
+    --get "https://social-oembed.git-projects.xyz/api" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"
+```
+
+## How it works ?
+
+### OpenGraph
+
+Social oEmbed will parse `url` website with [cheerio](https://cheerio.js.org/) and extract OpenGraph data from meta tags. If open graph data are not found, it will try to extract Twitter data or meta tags. If no data are found, it won't return an error, will have just an empty result. The response will be available into `data`, another metadata you will find an an opiniated HTML render into `data.render`, you could just display this into your application.
+
+All data about fetch are available into `meta.fetch` object.
+
+### oEmbed
+
+Social oEmbed will try to find a provider from `url`, if exists, it will use it to get oEmbed data from social network API. The API have to return a correct response to display an iframe, but sometimes oEmbed API have limits. If the request failed, the provider will try to rebuild embed url to inject it into an iframe. Like OpenGraph, you will have some metadata (built on OpenGraph type) into `data` and a `data.render` with an iframe. If no provider exists, you will have a fallback to OpenGraph.
+
+All data about fetch are available into `meta.fetch` object.
+
+Note: if Social oEmbed can't find a provider from `url`, your social network could be not supported by Social oEmbed and you can contribute to add it. But if provider exists, it could be the `url` parse bug, you can open an issue.
+
+// TODO contribute and issue
+
+### `data` object
+
+```yaml
+title?: string
+description?: string
+image?: string
+siteUrl?: string
+type?: string
+siteName?: string
+locale?: string
+audio?: string
+video?: string
+determiner?: string
+article:author?: string
+themeColor?: string
+icon?: string
+width?: string
+height?: string
+social: Social
+embedUrl?: string # oEmbed only
+render: string
+```
+
+#### `Social` object
+
+This data represent social networks supported.
+
+```yaml
+dailymotion
+instagram
+facebook
+flickr
+giphy
+imgur
+kickstarter
+linkedin
+pinterest
+reddit
+snapchat
+soundcloud
+spotify
+ted
+tumblr
+tiktok
+twitch
+twitter
+vimeo
+youtube
+unknown
+```
+
+### `meta` object
+
+```yaml
+url: string # original url
+format: string # opengraph or oembed
+message: string # error message
+docs: string # documentation url
+fetch:
+  message: string
+  status: number
+  ok: boolean
+  type: string # json, text or unknown
+```
 
 ## **Setup**
 
@@ -212,6 +314,12 @@ pnpm lint:fix
 Based on [Fastify](https://www.fastify.io/) and [TypeScript](https://www.typescriptlang.org/), with [ESBuild](https://esbuild.github.io/) for bundling (ESM format).
 
 From template [fastify-esbuild](https://github.com/davipon/fastify-esbuild) by [davipon](https://davipon.hashnode.dev/better-backend-dx-fastify-esbuild).
+
+- `node` >= 16.x
+- `pnpm` >= 7.x
+- `fastify` 4.x
+- `react` 18.x
+- `esbuild` 0.15.x
 
 ## License
 
