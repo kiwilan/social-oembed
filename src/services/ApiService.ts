@@ -60,7 +60,7 @@ export default class ApiService {
     this.formatResponse = {
       response: {
         ...og.getOpenGraph(),
-        render: RenderService.openGraph(og.getOpenGraph(), this.query)
+        render: og.getRender()
       },
       fetchMeta: og.getFetchMeta(),
       format: 'opengraph'
@@ -100,7 +100,7 @@ export default class ApiService {
       meta: {
         url: this.query.url ?? '',
         format: this.formatResponse?.format ?? 'opengraph',
-        message: this.query.format !== this.formatResponse?.format ? `Format '${this.query.format}' not supported. Using '${this.formatResponse?.format}' instead.` : '',
+        message: this.query.format !== this.formatResponse?.format ? `Format '${this.query.format}' not supported. Using '${this.formatResponse?.format}' instead.` : 'N/A',
         docs: '', // TODO docs route
         fetch: this.formatResponse?.fetchMeta ?? {}
       }

@@ -3,7 +3,7 @@ import { colors } from '~/renders/SocialAssets'
 import type { IOpenGraph } from '~/types/api'
 import type { OEmbedApi, OEmbedApiParams } from '~/types/oembed'
 import type { FetchMeta, IApiRouteQuery } from '~/types/route'
-import type { IframeSize, ISocialIdentifier, Social } from '~/types/social'
+import type { ISocialIdentifier, IframeSize, Social } from '~/types/social'
 import Http from '~/utils/Http'
 
 export default abstract class ProviderModule {

@@ -6,7 +6,7 @@ export default abstract class ApiModule {
   protected query: IApiRouteQuery
   protected fetchMeta?: FetchMeta
   protected render?: string
-  protected isValid?: boolean
+  protected isValid = false
   public response?: FetchResponse
   public social: Social = 'unknown'
 

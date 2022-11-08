@@ -22,6 +22,7 @@ export type OpenGraphType = keyof typeof OpenGraphEnum
 export type IOpenGraphExtends<T> = Partial<Record<OpenGraphEnum, T>>
 export interface IOpenGraph<T = string> extends IOpenGraphExtends<T> {
   social?: Social
+  isValid?: boolean
 }
 
 export interface IOEmbed {

@@ -7,6 +7,7 @@ import type { ISocial } from '~/types/social'
 import ParserService from '~/services/ParserService'
 import { colors } from '~/renders/SocialAssets'
 import type ProviderModule from '~/providers/social/ProviderModule'
+import RenderService from '~/services/RenderService'
 
 export default class OpenGraph extends ApiModule {
   protected model: IOpenGraph = {}
@@ -41,7 +42,16 @@ export default class OpenGraph extends ApiModule {
     if (og.social !== 'unknown')
       og.model.themeColor = colors[og.social]
 
+    og.checkOpenGraphValid()
+    og.model.isValid = og.isValid
+    og.render = og.isValid ? RenderService.openGraph(og.getOpenGraph(), og.query) : undefined
+
     return og
+  }
+
+  private checkOpenGraphValid() {
+    if (this.fetchMeta?.ok)
+      this.isValid = true
   }
 
   private async getOembed(): Promise<ProviderModule | undefined> {
