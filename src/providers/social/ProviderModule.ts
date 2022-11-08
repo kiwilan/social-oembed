@@ -15,6 +15,7 @@ export default abstract class ProviderModule {
   protected fetchMeta?: FetchMeta
   protected openGraph?: IOpenGraph
   protected html?: string
+  protected overrideIframe = false
   protected ok = false
   protected identifiers: ISocialIdentifier = {}
 
@@ -58,10 +59,10 @@ export default abstract class ProviderModule {
     return res.body as T
   }
 
-  public getIframeSrc(): string | undefined {
-    const encoded = encodeURIComponent(this.html ?? '')
+  protected generateIframeSrc(html?: string): string | undefined {
+    const encoded = encodeURIComponent(html ?? '')
 
-    return this.html ? `data:text/html;charset=utf-8,${encoded}` : undefined
+    return html ? `data:text/html;charset=utf-8,${encoded}` : undefined
   }
 
   public getiframeSize(): IframeSize {
@@ -74,6 +75,14 @@ export default abstract class ProviderModule {
 
   public getFetchMeta(): FetchMeta {
     return this.fetchMeta ?? {}
+  }
+
+  public getOverrideIframe(): boolean {
+    return this.overrideIframe
+  }
+
+  public getHtml(): string | undefined {
+    return this.html
   }
 
   public isValid(): boolean {

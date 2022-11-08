@@ -25,6 +25,8 @@ export default class ProviderTwitter extends ProviderModule {
   protected endpoint = 'https://publish.twitter.com/oembed'
   protected iframeSize: IframeSize = { width: 550, height: 500 }
 
+  // TODO init() with params
+
   protected providerMatch(): ISocialIdentifier {
     const id = this.matches[2] ?? undefined
 
@@ -41,13 +43,16 @@ export default class ProviderTwitter extends ProviderModule {
       align: this.query.align ?? 'center',
       hide_media: this.query.hide_media ? 'true' : 'false',
       lang: this.query.lang ?? 'en',
-      theme: this.query.theme ?? 'light',
+      // theme: this.query.theme ?? 'light',
+      theme: 'dark',
       omit_script: this.query.omit_script ? 'true' : 'false',
     }
 
     const body = await this.fetchOembed<TwitterApi>()
 
-    this.html = body?.html
+    // From https://joshuatz-twitter-iframe-generator.glitch.me
+    this.html = `<iframe style="border:none;margin:auto;" width="550" height="620" data-tweet-url="${this.url}" src="${this.generateIframeSrc(body.html)}"></iframe>`
+    this.overrideIframe = true
     this.openGraph = {
       siteName: body?.provider_name,
       title: body?.author_name,

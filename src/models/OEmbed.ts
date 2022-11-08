@@ -17,6 +17,7 @@ export default class OEmbed extends ApiModule {
     let openGraph: IOpenGraph = {}
     let fetchMeta: FetchMeta | undefined = {}
     const social = await SocialService.make(oembed.query).getOembed()
+    // console.log(social)
 
     // TODO shared interface
     if (social.isValid()) {
@@ -25,8 +26,11 @@ export default class OEmbed extends ApiModule {
       fetchMeta = social.getFetchMeta()
 
       const embedUrl = social.getIdentifiers().embedUrl
-      if (embedUrl)
+      if (embedUrl && !social.getOverrideIframe())
         oembed.render = RenderService.oembed(embedUrl, openGraph, query, iframeSize)
+
+      if (social.getOverrideIframe())
+        oembed.render = social.getHtml()
     }
     else {
       const og = await OpenGraph.make(query)
@@ -35,6 +39,11 @@ export default class OEmbed extends ApiModule {
       oembed.render = RenderService.openGraph(openGraph, query)
       oembed.isOpenGraph = true
     }
+
+    if (oembed.fetchMeta?.ok)
+      oembed.isValid = true
+
+    oembed.model.isValid = oembed.isValid
 
     if (social) {
       oembed.model = {

@@ -1,6 +1,29 @@
 const SocialTiktok = () => {
   return (
     <div>
+      <div>
+        <blockquote className="twitter-tweet">
+          <p lang="fr" dir="ltr">
+            <a href="https://twitter.com/hashtag/Mayerling?src=hash&amp;ref_src=twsrc%5Etfw">
+              #Mayerling
+            </a>
+            <a href="https://twitter.com/hashtag/Lumi%C3%A8reSur?src=hash&amp;ref_src=twsrc%5Etfw">
+              #LumièreSur
+            </a>
+            <br />
+            ...les costumes du ballet de Kenneth MacMillan, signés Nicholas
+            Georgiadis et réalisés dans les ateliers de l&#39;Opéra de Paris.😍
+            <br />
+            <br />À découvrir dès le 25 octobre au Palais Garnier :
+            <a href="https://t.co/x0U3adV7UF">https://t.co/x0U3adV7UF</a>
+            <a href="https://t.co/ZccNbRk6rn">pic.twitter.com/ZccNbRk6rn</a>
+          </p>
+          &mdash; Ballet Opéra Paris (@BalletOParis)
+          <a href="https://twitter.com/BalletOParis/status/1580947790250721283?ref_src=twsrc%5Etfw">
+            October 14, 2022
+          </a>
+        </blockquote>
+      </div>
       <blockquote
         className="tiktok-embed"
         cite="https://www.tiktok.com/@mrnatasmr/video/7157758350887881990"
