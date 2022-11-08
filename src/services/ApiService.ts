@@ -1,7 +1,6 @@
 import type { FastifyRequest } from 'fastify'
 import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, FetchMeta, IApiQueryFormat, IApiRouteQuery, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
 import OpenGraph from '~/models/OpenGraph'
-import RenderService from '~/services/RenderService'
 import OEmbed from '~/models/OEmbed'
 
 interface FormatResponse {

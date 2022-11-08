@@ -1,5 +1,5 @@
 import ProviderModule from '~/providers/social/ProviderModule'
-import type { ISocialIdentifier, Social } from '~/types/social'
+import type { ISocialIdentifier, IframeSize, Social } from '~/types/social'
 
 interface TwitterApi {
   url?: string
@@ -23,6 +23,7 @@ export default class ProviderTwitter extends ProviderModule {
   // /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status?\/(\d+)/g
   protected regex = /(?:https?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9]+)\/status\/([a-zA-Z0-9]+)/ig
   protected endpoint = 'https://publish.twitter.com/oembed'
+  protected iframeSize: IframeSize = { width: 550, height: 500 }
 
   protected providerMatch(): ISocialIdentifier {
     const id = this.matches[2] ?? undefined

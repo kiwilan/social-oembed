@@ -1,20 +1,13 @@
 import ProviderModule from '~/providers/social/ProviderModule'
-import type { ISocialIdentifier, Social } from '~/types/social'
+import type { ISocialIdentifier, IframeSize, Social } from '~/types/social'
 
 export default class ProviderTwitch extends ProviderModule {
-  protected endpoint: string | undefined
-  protected providerMatch(): ISocialIdentifier {
-    throw new Error('Method not implemented.')
-  }
-
-  protected providerApi(): Promise<this> {
-    throw new Error('Method not implemented.')
-  }
-
   protected type: Social = 'twitch'
   protected regex = /(?:https?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9]+)/ig
+  protected endpoint: string | undefined
+  protected iframeSize: IframeSize = { width: 550, height: 500 }
 
-  public get(): ISocialIdentifier {
+  protected providerMatch(): ISocialIdentifier {
     const id = this.matches[2] ?? undefined
 
     return {
@@ -22,5 +15,9 @@ export default class ProviderTwitch extends ProviderModule {
       user: this.matches[1] ?? undefined,
       id,
     }
+  }
+
+  protected providerApi(): Promise<this> {
+    throw new Error('Method not implemented.')
   }
 }

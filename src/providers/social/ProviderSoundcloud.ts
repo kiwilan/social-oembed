@@ -1,10 +1,11 @@
 import ProviderModule from '~/providers/social/ProviderModule'
-import type { ISocialIdentifier, Social } from '~/types/social'
+import type { ISocialIdentifier, IframeSize, Social } from '~/types/social'
 
 export default class ProviderSoundcloud extends ProviderModule {
   protected type: Social = 'soundcloud'
   protected regex = /(?:https?:\/\/)?(?:www\.)?soundcloud\.com\/([a-zA-Z0-9]+)/ig
   protected endpoint: string | undefined
+  protected iframeSize: IframeSize = { width: 550, height: 500 }
 
   protected providerMatch(): ISocialIdentifier {
     const id = this.matches[2] ?? undefined
