@@ -18,6 +18,8 @@ export default class ProviderGiphy extends ProviderModule {
   }
 
   protected providerApi(): Promise<this> {
-    throw new Error('Method not implemented.')
+    // throw new Error('Method not implemented.')
+
+    return Promise.resolve(this)
   }
 }
