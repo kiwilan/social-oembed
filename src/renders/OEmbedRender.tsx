@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 import type { IApiRouteQuery } from '~/types/route'
 import type { OEmbedRenderProps } from '~/types/social'
 
@@ -28,12 +29,24 @@ const OEmbedRender = (
     }`,
   }
 
+  const iframe = {
+    div: {
+      display: 'flex',
+      '&:active': {
+        outline: '0',
+        border: 'none',
+        '-moz-outline-style': 'none',
+      },
+      '&:focus': {
+        outline: 0,
+        border: 'none',
+        '-moz-outline-style': 'none',
+      },
+    },
+  }
+
   return (
-    <div
-      style={{
-        display: 'flex',
-      }}
-    >
+    <div style={iframe.div}>
       {oembed.isValid ? (
         <iframe
           src={oembed.url}
@@ -44,6 +57,7 @@ const OEmbedRender = (
             border: 0,
             margin: '0 auto',
             overflow: 'auto',
+            outline: 'none',
           }}
           scrolling="yes"
           frameBorder={0}
