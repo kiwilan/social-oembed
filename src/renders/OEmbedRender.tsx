@@ -15,7 +15,7 @@ const OEmbedRender = (
   const widthQuery = props.query.width
 
   const allowMobile =
-    'accelerometer; autoplay; encrypted-media; gyroscope; clipboard-write; picture-in-picture;'
+    'accelerometer; encrypted-media; gyroscope; clipboard-write;'
 
   const oembed = {
     isValid: props.embedUrl ? props.embedUrl : false,
@@ -23,7 +23,7 @@ const OEmbedRender = (
     width: widthQuery || widthProvider,
     height: heigthQuery || heightProvider,
     title: props.model?.title,
-    allow: `fullscreen;encrypted-media; ${
+    allow: `fullscreen;encrypted-media;picture-in-picture;autoplay; ${
       props.query.is_mobile ? allowMobile : ''
     }`,
   }
