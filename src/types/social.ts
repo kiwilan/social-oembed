@@ -20,7 +20,7 @@ export interface IProviderModule {
   }
   apiParams?: Record<string, string>
   forceFetch?: boolean
-  type: ApiQueryFormat
+  type?: ApiQueryFormat
 }
 
 export interface ISocialIdentifier {

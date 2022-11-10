@@ -26,6 +26,6 @@
       "type": "shell",
       "command": "pnpm dev",
       "problemMatcher": []
-    },
+    }
   ]
 }

@@ -1,6 +1,5 @@
 import ProviderModule from '~/providers/social/ProviderModule'
 import type { IOpenGraph } from '~/types/api'
-import type { OEmbedApi } from '~/types/oembed'
 import type { IProviderModule, ISocialIdentifier, Social } from '~/types/social'
 
 export default class ProviderFlickr extends ProviderModule {
