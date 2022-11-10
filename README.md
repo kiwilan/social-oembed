@@ -95,6 +95,8 @@ With oEmbed, it's really complicated, each social network have their own API, wi
 - [x] Auth middleware <https://github.com/fastify/middie>
   - [ ] Domains allow `*` or `*.domain.com`
   - [x] API key as query or header
+  - [ ] Request limit
+  - [ ] helmet with <https://github.com/fastify/fastify-helmet>
 - [ ] Documentation
   - [ ] Usage from JS client side with fetch
   - [x] Usage response example, typescript interfaces
