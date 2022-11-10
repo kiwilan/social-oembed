@@ -98,8 +98,6 @@ const start = async (fastify: FastifyInstance) => {
 
     const dotenv = Dotenv.make()
 
-    console.log(dotenv)
-
     await fastify.register(cors, {
       origin: dotenv.origin,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
