@@ -71,6 +71,9 @@ With oEmbed, it's really complicated, each social network have their own API, wi
 - [ ] Smart queries for oEmbed API (customize render for each social network)
 - [ ] Host your own instance
 - [ ] Docker
+- [x] Middleware
+  - api_key / Bearer token
+  - url
 
 ### Roadmap
 
@@ -89,9 +92,9 @@ With oEmbed, it's really complicated, each social network have their own API, wi
   - [x] fallback to OpenGraph if no oEmbed, no provider or oEmbed error
   - [x] oEmbed rebuilt with match
 - [ ] Host your own instance
-- [ ] Auth middleware <https://github.com/fastify/middie>
+- [x] Auth middleware <https://github.com/fastify/middie>
   - [ ] Domains allow `*` or `*.domain.com`
-  - [ ] API key as query or header
+  - [x] API key as query or header
 - [ ] Documentation
   - [ ] Usage from JS client side with fetch
   - [x] Usage response example, typescript interfaces

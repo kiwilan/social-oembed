@@ -5,7 +5,6 @@ import fastifyEnv from '@fastify/env'
 import cors from '@fastify/cors'
 import middie from '@fastify/middie'
 import type { FastifyInstance } from 'fastify'
-import serveStatic from 'serve-static'
 import Middleware from './utils/Middleware'
 import type { IDotEnvRaw } from '~/types/dotenv'
 import Dotenv from '~/utils/DotEnv'
@@ -76,22 +75,6 @@ const logger = process.env.NODE_ENV_LOG === 'production' ? { level: dotenvConfig
     },
   }
 }
-
-// const subsystem = async (fastify: FastifyInstance, opts: any) => {
-//   fastify.addHook('onRequest', async (req, reply) => {
-//     console.log('first')
-//   })
-
-//   fastify.use((req, res, next) => {
-//     console.log('second')
-//     next()
-//   })
-
-//   fastify.addHook('onRequest', async (req, reply) => {
-//     console.log('third')
-//   })
-// }
-
 const start = async (fastify: FastifyInstance) => {
   try {
     await fastify.register(fastifyEnv, options)

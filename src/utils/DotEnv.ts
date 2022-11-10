@@ -82,10 +82,16 @@ export default class Dotenv {
 
   private domainsParsed(): string[] {
     const domains: string[] = []
-    this.domainsDotenv().forEach(domain => {
-      domains.push(`http://${domain}`)
-      domains.push(`https://${domain}`)
-    })
+
+    if (this.domainsDotenv().includes('*')) {
+      domains.push('*')
+    }
+    else {
+      this.domainsDotenv().forEach(domain => {
+        domains.push(`http://${domain}`)
+        domains.push(`https://${domain}`)
+      })
+    }
 
     return domains
   }
