@@ -48,8 +48,8 @@ With oEmbed, it's really complicated, each social network have their own API, wi
   - [ ] Twitter card query with `twitter=true` query parameter
 - oEmbed with fallback
   - [x] Dailymotion *all*
-  - [ ] Instagram *partial*
-  - [ ] Facebook *partial*
+  - [x] Instagram *partial*
+  - [x] Facebook *partial*
   - [ ] Flickr
   - [ ] Giphy
   - [ ] Imgur

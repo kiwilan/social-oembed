@@ -1,5 +1,4 @@
 import fs from 'fs'
-import type { FastifyRequest } from 'fastify'
 import type { IDotEnvFormat, IDotEnvRaw, LogLevel, NodeEnv } from '~/types/dotenv'
 
 export default class Dotenv {
@@ -71,57 +70,6 @@ export default class Dotenv {
     })
 
     return dotenvConfig
-  }
-
-  public static checkApiKey(req: FastifyRequest) {
-    const config = Dotenv.make().config
-    const query = req.query as any
-    const key = query?.api_key
-    if (config.API_KEY_ENABLED && config.API_KEY !== key) {
-      // TODO redirect
-      // const meta = api.meta
-
-      // if (!meta.fetch)
-      //   meta.fetch = {}
-
-      // meta.fetch.ok = false
-      // meta.fetch.status = 401
-      // meta.fetch.message = 'Invalid API key with query param `api_key`'
-
-      // const response: RouteResponse = {
-      //   content: {
-      //     data: {},
-      //     meta,
-      //   },
-      //   status: 401,
-      // }
-
-      // return response
-    }
-  }
-
-  public static checkUrl() {
-    // TODO check url
-    // if (!api.url) {
-    //   const meta = api.meta
-
-    //   if (!meta.fetch)
-    //     meta.fetch = {}
-
-    //   meta.fetch.ok = false
-    //   meta.fetch.status = 401
-    //   meta.fetch.message = 'Invalid query with query param `url`'
-
-    //   const response: RouteResponse = {
-    //     content: {
-    //       data: {},
-    //       meta,
-    //     },
-    //     status: 401,
-    //   }
-
-    //   return response
-    // }
   }
 
   private domainsDotenv(): string[] {
