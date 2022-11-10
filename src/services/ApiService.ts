@@ -43,8 +43,8 @@ export default class ApiService {
       lang: query?.lang ?? 'en',
       theme: query?.theme as TwitterTheme ?? 'light',
       omit_script: query?.omit_script === 'true' || false,
-      width: query?.width ?? '100%',
-      height: query?.height ?? '450',
+      width: query?.width,
+      height: query?.height,
       is_mobile: query?.is_mobile === 'true' || false
     }
   }
