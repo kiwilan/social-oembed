@@ -2,6 +2,7 @@ import type { FastifyInstance, FastifySchema } from 'fastify'
 import { Type } from '@sinclair/typebox'
 import type { ApiResponseMeta, Endpoint } from '~/types/route'
 import ApiService from '~/services/ApiService'
+import { getRoute } from '~/utils/Route'
 
 const docs = async (fastify: FastifyInstance) => {
   const schema: FastifySchema = {
@@ -15,7 +16,7 @@ const docs = async (fastify: FastifyInstance) => {
 
   fastify.route({
     method: 'GET',
-    url: '/api' as Endpoint,
+    url: getRoute('/api'),
     schema,
     async handler(req) {
       const api = ApiService.make(req)

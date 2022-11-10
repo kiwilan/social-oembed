@@ -9,6 +9,10 @@ const isRoute = (object: unknown): object is Route => {
   return Object.prototype.hasOwnProperty.call(object, 'endpoint')
 }
 
+export const getRoute = (endpoint: Endpoint): Endpoint => {
+  return endpoint
+}
+
 /**
  * Create an url from `Endpoint` or `Route`
  */
