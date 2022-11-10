@@ -26,7 +26,8 @@
 
 ------
 
-> :warning: *VERY EXPERIMENTAL* In early development, not stable.
+> **Warning**
+> *VERY EXPERIMENTAL* In early development, not stable.
 
 ## Why ?
 
