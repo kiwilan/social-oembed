@@ -26,8 +26,7 @@
 
 ------
 
-> *VERY EXPERIMENTAL*
-> In early development, not stable.
+> :warning: *VERY EXPERIMENTAL* In early development, not stable.
 
 ## Why ?
 
@@ -147,12 +146,12 @@ curl --request GET \
 
 ### oEmbed
 
-Example: <https://social-oembed.git-projects.xyz/api?url=https://www.youtube.com/watch?v=C243DQBfjho&format=oembed>
+Example: <https://social-oembed.git-projects.xyz/api?url=https://www.youtube.com/watch?v=fXmAurh012s&format=oembed>
 
 ```bash
 curl --request GET \
     --data-urlencode "format=oembed" \
-    --data-urlencode "url=https://www.youtube.com/watch?v=C243DQBfjho" \
+    --data-urlencode "url=https://www.youtube.com/watch?v=fXmAurh012s" \
     --get "https://social-oembed.git-projects.xyz/api" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"

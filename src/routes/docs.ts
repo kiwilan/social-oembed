@@ -2,7 +2,6 @@ import type { FastifyInstance, FastifySchema } from 'fastify'
 import { Type } from '@sinclair/typebox'
 import type { Instance } from '~/types'
 import InstanceConfig from '~/utils/InstanceConfig'
-import type { Endpoint } from '~/types/route'
 import { getRoute } from '~/utils/Route'
 
 const docs = async (fastify: FastifyInstance) => {

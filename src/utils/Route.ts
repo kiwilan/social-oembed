@@ -45,35 +45,35 @@ export const route = (route: Endpoint | Route): string => {
   }
 }
 
-// /**
-//  * Create a `Route` from `Request`
-//  */
-// export const routeBuilder = (req: FastifyRequest): Route => {
-//   const dotenv = DotEnv.make()
-//   const baseURL = dotenv.config.API_URL
-//   const url = req.url.replace(baseURL, '').replace(/\/$/, '')
-//   let route: Route = { endpoint: '/' }
+/**
+ * Create a `Route` from `Request`
+ */
+export const routeBuilder = (req: FastifyRequest): Route => {
+  // const dotenv = DotEnv.make()
+  // const baseURL = dotenv.config.API_URL
+  // const url = req.url.replace(baseURL, '').replace(/\/$/, '')
+  const route: Route = { endpoint: '/' }
 
-//   const splitted = url.split('?')
-//   if (splitted.length === 1) {
-//     route = { endpoint: splitted[0] as Endpoint }
-//     return route
-//   }
+  // const splitted = url.split('?')
+  // if (splitted.length === 1) {
+  //   route = { endpoint: splitted[0] as Endpoint }
+  //   return route
+  // }
 
-//   route.endpoint = splitted[0] as Endpoint
+  // route.endpoint = splitted[0] as Endpoint
 
-//   // get query params
-//   const query = splitted[1]
-//   const params = new URLSearchParams(query)
-//   const queryObject = {}
-//   params.forEach((value, key) => {
-//     if (queryObject) {
-//       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//       // @ts-expect-error
-//       queryObject[key] = value
-//     }
-//   })
-//   route.query = queryObject as RouteQuery
+  // // get query params
+  // const query = splitted[1]
+  // const params = new URLSearchParams(query)
+  // const queryObject = {}
+  // params.forEach((value, key) => {
+  //   if (queryObject) {
+  //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //     // @ts-expect-error
+  //     queryObject[key] = value
+  //   }
+  // })
+  // route.query = queryObject as RouteQuery
 
-//   return route
-// }
+  return route
+}

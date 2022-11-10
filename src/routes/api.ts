@@ -1,6 +1,6 @@
 import type { FastifyInstance, FastifySchema } from 'fastify'
 import { Type } from '@sinclair/typebox'
-import type { ApiResponseMeta, Endpoint } from '~/types/route'
+import type { ApiResponseMeta } from '~/types/route'
 import ApiService from '~/services/ApiService'
 import { getRoute } from '~/utils/Route'
 
