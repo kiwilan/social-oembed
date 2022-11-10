@@ -2,7 +2,7 @@ import type { FastifyInstance, FastifySchema } from 'fastify'
 import { Type } from '@sinclair/typebox'
 import type { Instance } from '~/types'
 import InstanceConfig from '~/utils/InstanceConfig'
-import { route } from '~/utils/Route'
+import type { Endpoint } from '~/types/route'
 
 const docs = async (fastify: FastifyInstance) => {
   const schema: FastifySchema = {
@@ -17,7 +17,7 @@ const docs = async (fastify: FastifyInstance) => {
 
   fastify.route({
     method: 'GET',
-    url: route('/docs'),
+    url: '/docs' as Endpoint,
     schema,
     async handler() {
       return {
