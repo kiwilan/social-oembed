@@ -96,19 +96,22 @@ const start = async (fastify: FastifyInstance) => {
 
     await fastify.after()
 
-    const dotenv = Dotenv.make().config
+    const dotenv = Dotenv.make()
+
+    console.log(dotenv)
+
     await fastify.register(cors, {
-      origin: dotenv.API_DOMAINS_PARSED,
+      origin: dotenv.origin,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Accept', 'Origin', 'Authorization'],
       credentials: true,
       maxAge: 86400
     })
 
-    const port = dotenv.API_PORT
+    const port = dotenv.config.API_PORT
     await fastify.listen({ port })
 
-    console.warn(`Server listening on ${dotenv.API_URL}`)
+    console.warn(`Server listening on ${dotenv.config.API_URL}`)
   }
   catch (err) {
     fastify.log.error(err)

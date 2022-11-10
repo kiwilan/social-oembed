@@ -4,7 +4,8 @@ import type { IDotEnvFormat, IDotEnvRaw, LogLevel, NodeEnv } from '~/types/doten
 export default class Dotenv {
   protected constructor(
     public raw: IDotEnvRaw,
-    public config: IDotEnvFormat
+    public config: IDotEnvFormat,
+    public origin?: string | string[]
   ) {
   }
 
@@ -42,12 +43,19 @@ export default class Dotenv {
       API_KEY_ENABLED: typeof key === 'string',
       API_DOMAINS: [],
       API_DOMAINS_PARSED: [],
+      API_DOMAINS_ALL: false,
     }
 
     const dotenv = new Dotenv(raw, config)
 
     dotenv.config.API_DOMAINS = dotenv.domainsDotenv()
     dotenv.config.API_DOMAINS_PARSED = dotenv.domainsParsed()
+    if (dotenv.config.API_DOMAINS_PARSED.includes('*'))
+      dotenv.config.API_DOMAINS_ALL = true
+
+    dotenv.origin = dotenv.config.API_DOMAINS_ALL
+      ? '*'
+      : dotenv.config.API_DOMAINS_PARSED
 
     return dotenv
   }
@@ -81,13 +89,24 @@ export default class Dotenv {
   }
 
   private domainsParsed(): string[] {
+    const dotenvDomains = this.domainsDotenv()
     const domains: string[] = []
+    let allow = false
 
-    if (this.domainsDotenv().includes('*')) {
+    if (dotenvDomains && dotenvDomains[0] === '*')
+      allow = true
+
+    if (allow) {
       domains.push('*')
     }
     else {
-      this.domainsDotenv().forEach(domain => {
+      dotenvDomains.forEach(domain => {
+        if (domain.startsWith('*')) {
+          const domainParsed = domain.replace('*.', '')
+          domains.push(`http://${domainParsed}`)
+          domains.push(`https://${domainParsed}`)
+        }
+
         domains.push(`http://${domain}`)
         domains.push(`https://${domain}`)
       })

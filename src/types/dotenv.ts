@@ -22,4 +22,5 @@ export interface IDotEnvFormat {
   API_KEY_ENABLED: boolean
   API_DOMAINS: string[]
   API_DOMAINS_PARSED: string[]
+  API_DOMAINS_ALL: boolean
 }
