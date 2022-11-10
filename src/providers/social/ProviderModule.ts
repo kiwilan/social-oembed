@@ -1,53 +1,57 @@
-import OpenGraph from '~/models/OpenGraph'
-import { colors } from '~/renders/SocialAssets'
 import type { IOpenGraph } from '~/types/api'
-import type { OEmbedApi, OEmbedApiParams } from '~/types/oembed'
 import type { FetchMeta, IApiRouteQuery } from '~/types/route'
-import type { ISocialIdentifier, IframeSize, Social } from '~/types/social'
+import type { ISocialIdentifier, ProviderParams, ProviderPublish, Social } from '~/types/social'
 import Http from '~/utils/Http'
 
 export default abstract class ProviderModule {
-  protected query: IApiRouteQuery
-  protected social: Social = 'unknown'
-  protected url: string
-  protected matches: string[] = []
-  protected params: Record<string, string> = {}
-  protected fetchMeta?: FetchMeta
-  protected openGraph?: IOpenGraph
-  protected html?: string
-  protected overrideIframe = false
-  protected ok = false
-  protected identifiers: ISocialIdentifier = {}
+  public constructor(
+    protected params: ProviderParams = {
+      identifiers: {},
+      matches: [],
+      query: { format: 'opengraph', url: '' },
+      url: '',
+    },
+    protected module: ProviderPublish = {
+      endpoint: undefined,
+      iframe: undefined,
+      social: 'unknown',
+      apiParams: {}
+    },
+    protected isValid: boolean = false,
+    protected fetchMeta?: FetchMeta,
+    protected openGraph?: IOpenGraph,
+  ) {}
 
-  public constructor(query: IApiRouteQuery) {
-    this.query = query
-    this.url = query.url
+  protected abstract init(): ProviderPublish
+  protected abstract setIdentifiers(): ISocialIdentifier
+  protected abstract setResponse(): Promise<any>
+
+  public make(query: IApiRouteQuery) {
+    this.params = this.setParams(query)
+    this.module = this.init()
+
+    return this
   }
 
-  protected abstract type: Social
-  protected abstract regex: RegExp | undefined
-  protected abstract endpoint: string | undefined
-  protected abstract iframeSize: IframeSize
-  protected abstract providerMatch(): ISocialIdentifier
-  protected abstract providerApi(): Promise<this>
-
-  protected async fetchOpenGraph(): Promise<IOpenGraph> {
-    console.error(`No provider found for ${this.type}`)
-    const og = await OpenGraph.make(this.query)
-
-    return og.getOpenGraph()
+  protected setParams(query: IApiRouteQuery): ProviderParams {
+    return {
+      url: query.url ?? '',
+      query,
+      identifiers: {},
+      matches: [],
+    }
   }
 
-  protected async fetchOembed<T>(): Promise<T> {
+  protected async fetchApi<T>(): Promise<T> {
     const params = new URLSearchParams()
     for (const param of Object.entries(this.params))
       params.append(param[0], param[1])
 
-    const url = `${this.endpoint}?${params.toString()}`
+    const url = `${this.module.endpoint}?${params.toString()}`
 
     const client = Http.client(url)
     const res = await client.get<T>()
-    this.ok = res.ok ?? false
+    this.isValid = res.ok ?? false
 
     this.fetchMeta = {
       message: res.statusText,
@@ -57,107 +61,5 @@ export default abstract class ProviderModule {
     }
 
     return res.body as T
-  }
-
-  protected generateIframeSrc(html?: string): string | undefined {
-    const encoded = encodeURIComponent(html ?? '')
-
-    return html ? `data:text/html;charset=utf-8,${encoded}` : undefined
-  }
-
-  public getiframeSize(): IframeSize {
-    return this.iframeSize
-  }
-
-  public getOpenGraph(): IOpenGraph {
-    return this.openGraph ?? {}
-  }
-
-  public getFetchMeta(): FetchMeta {
-    return this.fetchMeta ?? {}
-  }
-
-  public getOverrideIframe(): boolean {
-    return this.overrideIframe
-  }
-
-  public getHtml(): string | undefined {
-    return this.html
-  }
-
-  public isValid(): boolean {
-    return this.type !== 'unknown'
-  }
-
-  public getIsOk(): boolean {
-    return this.ok
-  }
-
-  public getIdentifiers(): ISocialIdentifier {
-    return this.identifiers
-  }
-
-  private getColor(): string {
-    return colors[this.social] ?? '#000000'
-  }
-
-  protected convertOEmbedApi(body: OEmbedApi, params?: OEmbedApiParams) {
-    this.html = body?.html
-    const height = (body?.height)?.toString()
-    const thumbnailHeight = (body?.thumbnail_height)?.toString()
-
-    const width = (body?.width)?.toString()
-    // let thumbnailWidth = (body?.thumbnail_width)?.toString()
-
-    const color = params?.color ? params.color : this.getColor()
-
-    let iframeHeight = height === '100%' ? thumbnailHeight : height
-    let iframeWidth = width
-
-    if (params?.height)
-      iframeHeight = params.height.toString()
-
-    if (params?.width)
-      iframeWidth = params.width.toString()
-
-    this.openGraph = {
-      'siteName': body?.provider_name,
-      'title': `${body?.title} ${body?.author_name}`,
-      'siteUrl': this.query.url,
-      'description': body?.html ? body.html.replace(/<[^>]*>?/gm, '') : undefined,
-      'themeColor': color,
-      'image': body?.thumbnail_url,
-      'type': body?.type,
-      'social': this.type,
-      'article:author': body?.author_name,
-      'width': iframeWidth,
-      'height': iframeHeight,
-    }
-  }
-
-  private socialIdentifiers(): ISocialIdentifier {
-    if (!this.regex)
-      return {}
-
-    const regExp = new RegExp(this.regex)
-    const matches = this.url.matchAll(regExp)
-    const raw = [...matches]
-    this.matches = raw[0] ?? []
-    this.social = this.type
-
-    return this.providerMatch()
-  }
-
-  public onlyIdentifiers(): ISocialIdentifier {
-    this.socialIdentifiers()
-    this.identifiers = this.providerMatch()
-    return this.identifiers
-  }
-
-  public async make(): Promise<ProviderModule> {
-    this.onlyIdentifiers()
-    await this.providerApi()
-
-    return this
   }
 }

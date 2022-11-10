@@ -31,51 +31,60 @@ export default class SocialService {
     protected identifiers?: ISocialIdentifier
   ) {}
 
-  public static make(query: IApiRouteQuery): SocialService {
+  public static async make(query: IApiRouteQuery): SocialService {
     const type = SocialService.find(query.url)
 
     const providers: ISocial<() => ProviderModule> = {
-      dailymotion: () => new ProviderDailymotion(query),
-      facebook: () => new ProviderFacebook(query),
-      flickr: () => new ProviderFlickr(query),
-      instagram: () => new ProviderInstagram(query),
-      giphy: () => new ProviderGiphy(query),
-      imgur: () => new ProviderImgur(query),
-      kickstarter: () => new ProviderKickstarter(query),
-      linkedin: () => new ProviderLinkedin(query),
-      pinterest: () => new ProviderPinterest(query),
-      reddit: () => new ProviderReddit(query),
-      snapchat: () => new ProviderSnapchat(query),
-      soundcloud: () => new ProviderSoundcloud(query),
-      tiktok: () => new ProviderTiktok(query),
-      spotify: () => new ProviderSpotify(query),
-      ted: () => new ProviderTed(query),
-      tumblr: () => new ProviderTumblr(query),
-      twitch: () => new ProviderTwitch(query),
-      twitter: () => new ProviderTwitter(query),
-      vimeo: () => new ProviderVimeo(query),
-      youtube: () => new ProviderYoutube(query),
-      unknown: () => new ProviderUnknown(query),
+      // dailymotion: () => new ProviderDailymotion(query),
+      // facebook: () => new ProviderFacebook(query),
+      // flickr: () => new ProviderFlickr(query),
+      // instagram: () => new ProviderInstagram(query),
+      // giphy: () => new ProviderGiphy(query),
+      // imgur: () => new ProviderImgur(query),
+      // kickstarter: () => new ProviderKickstarter(query),
+      // linkedin: () => new ProviderLinkedin(query),
+      // pinterest: () => new ProviderPinterest(query),
+      // reddit: () => new ProviderReddit(query),
+      // snapchat: () => new ProviderSnapchat(query),
+      // soundcloud: () => new ProviderSoundcloud(query),
+      // tiktok: () => new ProviderTiktok(query),
+      spotify: () => new ProviderSpotify(),
+      // ted: () => new ProviderTed(query),
+      // tumblr: () => new ProviderTumblr(query),
+      // twitch: () => new ProviderTwitch(query),
+      // twitter: () => new ProviderTwitter(query),
+      // vimeo: () => new ProviderVimeo(query),
+      // youtube: () => new ProviderYoutube(query),
+      // unknown: () => new ProviderUnknown(query),
     }
 
-    const provider = providers[type as keyof typeof providers] as unknown as () => ProviderModule
-    const instance = provider()
+    const provider = providers[type as keyof typeof providers]
+    if (!provider)
+      throw new Error('Provider not found')
 
-    const service = new SocialService(type, instance)
+    const Provider = provider()
+    const instance = Provider.make(query)
+    console.log(instance)
 
-    return service
+    // const instance = new Provider(query)
+
+    // const instance = provider()
+
+    // const service = new SocialService(type, instance)
+
+    // return service
   }
 
-  public getIdentifiers(): ISocialIdentifier | undefined {
-    return this.provider?.onlyIdentifiers()
-  }
+  // public getIdentifiers(): ISocialIdentifier | undefined {
+  //   return this.provider?.onlyIdentifiers()
+  // }
 
-  public async getOembed(): Promise<ProviderModule> {
-    // TODO if API reject request, create iframe from identifiers or openGraph
-    const instance = await this.provider.make()
+  // public async getOembed(): Promise<ProviderModule> {
+  //   // TODO if API reject request, create iframe from identifiers or openGraph
+  //   const instance = await this.provider.make()
 
-    return instance
-  }
+  //   return instance
+  // }
 
   public static find(url: string): Social {
     let type: Social = 'unknown'

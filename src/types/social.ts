@@ -1,3 +1,23 @@
+import type { IApiRouteQuery } from './route'
+
+export interface ProviderParams {
+  url: string
+  query: IApiRouteQuery
+  matches: string[]
+  identifiers: ISocialIdentifier
+}
+
+export interface ProviderPublish {
+  social: Social
+  regex?: RegExp
+  endpoint?: string
+  iframe?: {
+    height?: number | string
+    width?: number | string
+  }
+  apiParams?: Record<string, string>
+}
+
 export interface ISocialIdentifier {
   url?: string
   user?: string

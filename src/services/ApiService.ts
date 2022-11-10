@@ -63,7 +63,7 @@ export default class ApiService {
   }
 
   private async getOEmbed(): Promise<FormatResponse> {
-    // const oembed = await OEmbed.make(this.query)
+    const oembed = await OEmbed.make(this.query)
 
     this.formatResponse = {
       // response: {
