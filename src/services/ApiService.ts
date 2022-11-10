@@ -1,16 +1,9 @@
 import type { FastifyRequest } from 'fastify'
-import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, FetchMeta, IApiQueryFormat, IApiRouteQuery, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
+import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, IApiQueryFormat, IApiRouteQuery, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
 import OpenGraph from '~/models/OpenGraph'
 import OEmbed from '~/models/OEmbed'
+import type { FormatResponse } from '~/types'
 
-interface FormatResponse {
-  response?: {
-    [key: string]: any
-    render?: string
-  }
-  fetchMeta?: FetchMeta
-  format?: ApiQueryFormat
-}
 export default class ApiService {
   protected formatResponse?: FormatResponse
 
@@ -69,15 +62,15 @@ export default class ApiService {
   }
 
   private async getOEmbed(): Promise<FormatResponse> {
-    const oembed = await OEmbed.make(this.query)
+    // const oembed = await OEmbed.make(this.query)
 
     this.formatResponse = {
-      response: {
-        ...oembed.getModel(),
-        render: oembed.getRender()
-      },
-      fetchMeta: oembed.getFetchMeta(),
-      format: oembed.getIsOpenGraph() ? 'opengraph' : 'oembed'
+      // response: {
+      //   ...oembed.getModel(),
+      //   render: oembed.getRender()
+      // },
+      // fetchMeta: oembed.getFetchMeta(),
+      // format: oembed.getIsOpenGraph() ? 'opengraph' : 'oembed'
     }
 
     return this.formatResponse
@@ -94,12 +87,16 @@ export default class ApiService {
     if (format)
       await format()
 
+    const message = this.query.format !== this.formatResponse?.format
+      ? `Format '${this.query.format}' not supported. Using '${this.formatResponse?.format}' instead.`
+      : 'N/A'
+
     return {
       data: this.formatResponse?.response,
       meta: {
         url: this.query.url ?? '',
         format: this.formatResponse?.format ?? 'opengraph',
-        message: this.query.format !== this.formatResponse?.format ? `Format '${this.query.format}' not supported. Using '${this.formatResponse?.format}' instead.` : 'N/A',
+        message,
         docs: '', // TODO docs route
         fetch: this.formatResponse?.fetchMeta ?? {}
       }

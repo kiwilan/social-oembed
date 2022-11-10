@@ -1,3 +1,5 @@
+import type { ApiQueryFormat, FetchMeta } from './route'
+
 export interface Instance {
   name: string
   version?: string
@@ -38,4 +40,13 @@ export interface OpenGraphResponse {
 
 export interface Renderer {
   render?: any
+}
+
+export interface FormatResponse {
+  response?: {
+    [key: string]: any
+    render?: string
+  }
+  fetchMeta?: FetchMeta
+  format?: ApiQueryFormat
 }
