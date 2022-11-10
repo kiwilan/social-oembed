@@ -1,7 +1,6 @@
 import ApiModule from '~/models/ApiModule'
 import type { IOpenGraph } from '~/types/api'
 import type { IApiRouteQuery } from '~/types/route'
-import type { MetaValues } from '~/types/html'
 import SocialService from '~/services/SocialService'
 import type { ISocial } from '~/types/social'
 import ParserService from '~/services/ParserService'
@@ -56,18 +55,41 @@ export default class OpenGraph extends ApiModule {
     return og
   }
 
-  private convertHtml(metaValues: MetaValues) {
+  private convertHtml(metaValues: Record<string, any>) {
     this.model = {
-      title: metaValues.title,
-      description: metaValues.description,
-      image: metaValues.image,
-      siteUrl: metaValues.siteUrl,
-      type: metaValues.type,
-      siteName: metaValues.siteName,
-      locale: metaValues.locale,
-      themeColor: metaValues.themeColor,
-      social: this.social,
-      icon: metaValues.icon,
+      'title': metaValues.title,
+      'description': metaValues.description,
+      'image': metaValues.image,
+      'siteUrl': metaValues.siteUrl,
+      'type': metaValues.type,
+      'siteName': metaValues.siteName,
+      'locale': metaValues.locale,
+      'themeColor': metaValues.themeColor,
+      'social': this.social,
+      'icon': metaValues.icon,
+      'twitter:card': metaValues['twitter:card'],
+      'twitter:site:id': metaValues['twitter:site:id'],
+      'twitter:site': metaValues['twitter:site'],
+      'twitter:url': metaValues['twitter:url'],
+      'twitter:creator': metaValues['twitter:creator'],
+      'twitter:creator:id': metaValues['twitter:creator:id'],
+      'twitter:description': metaValues['twitter:description'],
+      'twitter:title': metaValues['twitter:title'],
+      'twitter:image': metaValues['twitter:image'],
+      'twitter:image:alt': metaValues['twitter:image:alt'],
+      'twitter:player': metaValues['twitter:player'],
+      'twitter:player:width': metaValues['twitter:player:width'],
+      'twitter:player:height': metaValues['twitter:player:height'],
+      'twitter:player:stream': metaValues['twitter:player:stream'],
+      'twitter:app:name:iphone': metaValues['twitter:app:name:iphone'],
+      'twitter:app:id:iphone': metaValues['twitter:app:id:iphone'],
+      'twitter:app:url:iphone': metaValues['twitter:app:url:iphone'],
+      'twitter:app:name:ipad': metaValues['twitter:app:name:ipad'],
+      'twitter:app:id:ipad': metaValues['twitter:app:id:ipad'],
+      'twitter:app:url:ipad': metaValues['twitter:app:url:ipad'],
+      'twitter:app:name:googleplay': metaValues['twitter:app:name:googleplay'],
+      'twitter:app:id:googleplay': metaValues['twitter:app:id:googleplay'],
+      'twitter:app:url:googleplay': metaValues['twitter:app:url:googleplay'],
     }
 
     this.model.siteUrl = this.checkUrl(this.model.siteUrl) ?? this.query.url
@@ -80,7 +102,7 @@ export default class OpenGraph extends ApiModule {
   }
 
   private async parseOpenGraph(url: string): Promise<OpenGraph> {
-    const parser = await ParserService.make(url)
+    const parser = await ParserService.make(url, 'cheerio', this.query.opengraph)
 
     this.response = parser.response
     this.fetchMeta = parser.fetchMeta

@@ -21,6 +21,7 @@ export default class OEmbed extends ApiModule {
     oembed.fetchMeta = provider.fetchMeta
 
     const render = RenderService.make(query)
+
     oembed.render = provider.module.type === 'opengraph'
       ? render.toOpenGraph({
         og: provider.openGraph,

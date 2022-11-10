@@ -27,7 +27,7 @@
 ------
 
 > **Warning**
-> *VERY EXPERIMENTAL* In early development, not stable.
+> In early development, not stable.
 
 ## Why ?
 
@@ -82,15 +82,16 @@ With oEmbed, it's really complicated, each social network have their own API, wi
   - [x] Color `theme-color`
   - [x] Fallback to `twitter:title`, `twitter:description`, `twitter:image`, `twitter:url`, `twitter:card`, `twitter:site`, `twitter:creator`
   - [ ] All meta
-  - [ ] `twitter` query for card
+  - [x] `twitter` query for card
   - [x] Opiniated render
 - [x] oEmbed
   - [ ] Major social networks support
   - [x] Providers system
   - [ ] smart queries for each social network
-  - [ ] queries for iframe
+  - [x] queries for iframe
   - [x] fallback to OpenGraph if no oEmbed, no provider or oEmbed error
   - [x] oEmbed rebuilt with match
+  - [ ] add api key for each provider
 - [ ] Host your own instance
 - [x] Auth middleware <https://github.com/fastify/middie>
   - [ ] Domains allow `*` or `*.domain.com`

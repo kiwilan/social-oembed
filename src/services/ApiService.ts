@@ -1,5 +1,5 @@
 import type { FastifyRequest } from 'fastify'
-import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, IApiQueryFormat, IApiRouteQuery, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
+import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, IApiQueryFormat, IApiRouteQuery, QueryOpenGraph, TwitterAlign, TwitterConversation, TwitterTheme } from '~/types/route'
 import OpenGraph from '~/models/OpenGraph'
 import OEmbed from '~/models/OEmbed'
 import type { FormatResponse } from '~/types'
@@ -34,6 +34,7 @@ export default class ApiService {
     return {
       api_key: apiKey,
       dark: query?.dark === 'true' || false,
+      opengraph: query?.opengraph as QueryOpenGraph || 'all',
       oembed: query?.oembed as ProviderFetch || 'empty',
       format: query?.format as ApiQueryFormat || 'opengraph',
       url: query?.url || 'unkown',

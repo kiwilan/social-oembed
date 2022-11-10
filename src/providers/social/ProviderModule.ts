@@ -59,7 +59,7 @@ export default abstract class ProviderModule {
         const og = await OpenGraph.make(this.params.query)
         this.openGraph = og.getOpenGraph()
         this.fetchMeta = og.getFetchMeta()
-        this.module.type = this.params.fetch === 'opengraph'
+        this.module.type = this.params.fetch === 'opengraph' || this.module.social === 'unknown'
           ? 'opengraph'
           : 'oembed'
       }
