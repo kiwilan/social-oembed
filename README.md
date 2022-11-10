@@ -104,6 +104,7 @@ With oEmbed, it's really complicated, each social network have their own API, wi
   - [ ] Social networks providers specs
   - [ ] examples alpinejs/react/vuejs
   - [ ] Deploy nginx and pm2 docs
+- [ ] Vite with <https://github.com/fastify/fastify-dx>
 - [ ] Use Mongo to cache data
 - [ ] Use [Bun](https://bun.sh/) when it will be stable
 

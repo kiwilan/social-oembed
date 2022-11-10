@@ -3,6 +3,7 @@ import type { ApiQueryFormat, ApiResponse, ApiRouteQuery, IApiQueryFormat, IApiR
 import OpenGraph from '~/models/OpenGraph'
 import OEmbed from '~/models/OEmbed'
 import type { FormatResponse } from '~/types'
+import { route } from '~/utils/Route'
 
 export default class ApiService {
   protected formatResponse?: FormatResponse
@@ -97,7 +98,7 @@ export default class ApiService {
         url: this.query.url ?? '',
         format: this.formatResponse?.format ?? 'opengraph',
         message,
-        docs: '', // TODO docs route
+        docs: route('/docs'),
         fetch: this.formatResponse?.fetchMeta ?? {}
       }
     }

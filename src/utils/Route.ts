@@ -1,46 +1,45 @@
-// import type { FastifyRequest } from 'fastify'
-// import DotEnv from '~/utils/DotEnv'
-// import type { Endpoint, Route, RouteQuery } from '~/types'
+import type { FastifyRequest } from 'fastify'
+import type { Endpoint, Route } from '~/types/route'
+import DotEnv from '~/utils/DotEnv'
 
-// /**
-//  * Check if current `object` is `Route`
-//  */
-// const isRoute = (object: unknown): object is Route => {
-//   return Object.prototype.hasOwnProperty.call(object, 'endpoint')
-// }
+/**
+ * Check if current `object` is `Route`
+ */
+const isRoute = (object: unknown): object is Route => {
+  return Object.prototype.hasOwnProperty.call(object, 'endpoint')
+}
 
-// /**
-//  * Create an url from `Endpoint` or `Route`
-//  */
-// export const route = (route: Endpoint | Route): string => {
-//   let current: Route
-//   if (!isRoute(route))
-//     current = { endpoint: route }
-//   else
-//     current = route
+/**
+ * Create an url from `Endpoint` or `Route`
+ */
+export const route = (route: Endpoint | Route): string => {
+  let current: Route
+  if (!isRoute(route))
+    current = { endpoint: route }
+  else
+    current = route
 
-//   const dotenv = DotEnv.make()
+  const dotenv = DotEnv.make()
 
-//   try {
-//     const url = new URL(current.endpoint, dotenv.config.API_URL)
+  try {
+    const url = new URL(current.endpoint, dotenv.config.API_URL)
+    if (current.query) {
+      Object.keys(current.query).forEach((key) => {
+        if (current.query)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+          url.searchParams.append(key, current.query[key])
+      })
+    }
 
-//     if (current.query) {
-//       Object.keys(current.query).forEach((key) => {
-//         if (current.query)
-//         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//         // @ts-expect-error
-//           url.searchParams.append(key, current.query[key])
-//       })
-//     }
+    return url.toString()
+  }
+  catch (error) {
+    console.error(error)
 
-//     return url.toString()
-//   }
-//   catch (error) {
-//     console.error(error)
-
-//     return 'error'
-//   }
-// }
+    return 'error'
+  }
+}
 
 // /**
 //  * Create a `Route` from `Request`

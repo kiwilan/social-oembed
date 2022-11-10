@@ -11,7 +11,12 @@ export interface Instance {
     }
   }
   examples?: {
-    [key: string]: string
+    opengraph?: {
+      github?: string
+    }
+    oembed?: {
+      youtube?: string
+    }
   }
 }
 
