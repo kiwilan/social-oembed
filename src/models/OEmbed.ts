@@ -1,8 +1,7 @@
-import OpenGraph from './OpenGraph'
 import ApiModule from '~/models/ApiModule'
 import SocialService from '~/services/SocialService'
-import type { FetchMeta, IApiRouteQuery } from '~/types/route'
-import type { IApiData, IOpenGraph } from '~/types/api'
+import type { IApiRouteQuery } from '~/types/route'
+import type { IApiData } from '~/types/api'
 import RenderService from '~/services/RenderService'
 
 export default class OEmbed extends ApiModule {
@@ -10,7 +9,17 @@ export default class OEmbed extends ApiModule {
   protected isOpenGraph = false
 
   public static async make(query: IApiRouteQuery): Promise<OEmbed> {
-    const social = await SocialService.make(query)
+    const social = await SocialService.make(query, query.oembed)
+    const provider = social.getProvider()
+
+    const oembed = new OEmbed(query)
+
+    oembed.render = RenderService.oembed({
+      query,
+      embedUrl: provider.identifiers.embedUrl,
+      iframeSize: provider.module.iframe
+    })
+
     // const oembed = new OEmbed(query)
     // if (!oembed.query.url)
     //   return oembed
@@ -18,7 +27,6 @@ export default class OEmbed extends ApiModule {
     // let openGraph: IOpenGraph = {}
     // let fetchMeta: FetchMeta | undefined = {}
     // const social = await SocialService.make(oembed.query).getOembed()
-    // // console.log(social)
 
     // // TODO shared interface
     // if (social.isValid()) {
@@ -28,7 +36,7 @@ export default class OEmbed extends ApiModule {
 
     //   const embedUrl = social.getIdentifiers().embedUrl
     //   if (embedUrl && !social.getOverrideIframe())
-    //     oembed.render = RenderService.oembed(embedUrl, openGraph, query, iframeSize)
+    // oembed.render = RenderService.oembed(embedUrl, openGraph, query, iframeSize)
 
     //   if (social.getOverrideIframe())
     //     oembed.render = social.getHtml()
@@ -47,14 +55,14 @@ export default class OEmbed extends ApiModule {
     // oembed.model.isValid = oembed.isValid
 
     // if (social) {
-    //   oembed.model = {
-    //     ...openGraph,
-    //     embedUrl: social.getIdentifiers().embedUrl
-    //   }
-    //   oembed.fetchMeta = fetchMeta
+    oembed.model = {
+      ...provider.openGraph,
+      embedUrl: provider.identifiers.embedUrl
+    }
+    oembed.fetchMeta = provider.fetchMeta
     // }
 
-    // return oembed
+    return oembed
   }
 
   public getModel(): IApiData {

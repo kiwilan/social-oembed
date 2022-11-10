@@ -1,5 +1,6 @@
 import ProviderModule from '~/providers/social/ProviderModule'
-import type { ISocialIdentifier, IframeSize, Social } from '~/types/social'
+import type { IOpenGraph } from '~/types/api'
+import type { IProviderModule, ISocialIdentifier, Social } from '~/types/social'
 
 interface TwitterApi {
   url?: string
@@ -19,49 +20,50 @@ interface TwitterApi {
  * @see https://developer.twitter.com/en/docs/twitter-for-websites/oembed-api
  */
 export default class ProviderTwitter extends ProviderModule {
-  protected type: Social = 'twitter'
-  // /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status?\/(\d+)/g
-  protected regex = /(?:https?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9]+)\/status\/([a-zA-Z0-9]+)/ig
-  protected endpoint = 'https://publish.twitter.com/oembed'
-  protected iframeSize: IframeSize = { width: 550, height: 500 }
+  protected init(): IProviderModule {
+    return {
+      social: 'twitter' as Social,
+      regex: /(?:https?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9]+)\/status\/([a-zA-Z0-9]+)/ig,
+      endpoint: 'https://publish.twitter.com/oembed',
+      iframe: { width: 550, height: 500 },
+    }
+  }
 
-  // TODO init() with params
-
-  protected providerMatch(): ISocialIdentifier {
-    const id = this.matches[2] ?? undefined
+  protected setIdentifiers(): ISocialIdentifier {
+    const id = this.params.matches[2] ?? undefined
 
     return {
-      url: this.matches[0] ?? undefined,
-      user: this.matches[1] ?? undefined,
+      url: this.params.matches[0] ?? undefined,
+      user: this.params.matches[1] ?? undefined,
       id,
     }
   }
 
-  protected async providerApi(): Promise<this> {
-    this.params = {
-      url: this.query.url ?? '',
-      align: this.query.align ?? 'center',
-      hide_media: this.query.hide_media ? 'true' : 'false',
-      lang: this.query.lang ?? 'en',
+  protected async setResponse(): Promise<IOpenGraph> {
+    const query = this.params.query
+    this.module.apiParams = {
+      url: query.url,
+      align: query.align ?? 'center',
+      hide_media: query.hide_media ? 'true' : 'false',
+      lang: query.lang ?? 'en',
       // theme: this.query.theme ?? 'light',
       theme: 'dark',
-      omit_script: this.query.omit_script ? 'true' : 'false',
+      omit_script: query.omit_script ? 'true' : 'false',
     }
 
-    const body = await this.fetchOembed<TwitterApi>()
+    const body = await this.fetchApi<TwitterApi>()
 
     // From https://joshuatz-twitter-iframe-generator.glitch.me
-    this.html = `<iframe style="border:none;margin:auto;" width="550" height="620" data-tweet-url="${this.url}" src="${this.generateIframeSrc(body.html)}"></iframe>`
-    this.overrideIframe = true
-    this.openGraph = {
+    // this.html = `<iframe style="border:none;margin:auto;" width="550" height="620" data-tweet-url="${this.url}" src="${this.generateIframeSrc(body.html)}"></iframe>`
+    // this.overrideIframe = true
+
+    return {
       siteName: body?.provider_name,
       title: body?.author_name,
       siteUrl: body?.url,
       description: body?.html ? body.html.replace(/<[^>]*>?/gm, '') : undefined,
       themeColor: '#1DA1F2',
-      social: this.type,
+      social: this.module.social,
     }
-
-    return this
   }
 }

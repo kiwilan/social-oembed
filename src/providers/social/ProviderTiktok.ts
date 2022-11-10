@@ -1,43 +1,47 @@
 import ProviderModule from '~/providers/social/ProviderModule'
+import type { IOpenGraph } from '~/types/api'
 import type { OEmbedApi } from '~/types/oembed'
-import type { ISocialIdentifier, IframeSize, Social } from '~/types/social'
+import type { IProviderModule, ISocialIdentifier, Social } from '~/types/social'
 
 /**
  * @see https://developers.tiktok.com/doc/embed-videos/
  */
 export default class ProviderTiktok extends ProviderModule {
-  protected type: Social = 'tiktok'
-  protected regex = /(@[a-zA-z0-9]*|.*)(\/.*\/|trending.?shareId=)([\d]*)/gm
-  protected endpoint = 'https://www.tiktok.com/oembed'
-  protected iframeSize: IframeSize = { height: 750, width: 340 }
+  protected init(): IProviderModule {
+    return {
+      social: 'tiktok' as Social,
+      regex: /(@[a-zA-z0-9]*|.*)(\/.*\/|trending.?shareId=)([\d]*)/gm,
+      endpoint: 'https://www.tiktok.com/oembed',
+      iframe: { height: 750, width: 340 },
+    }
+  }
 
-  protected providerMatch(): ISocialIdentifier {
-    let type = this.matches[2] ?? undefined
+  protected setIdentifiers(): ISocialIdentifier {
+    let type = this.params.matches[2] ?? undefined
     if (type) {
       type = type.replace('/', '')
       type = type.replace('\\', '')
     }
-    const id = this.matches[3] ?? undefined
+    const id = this.params.matches[3] ?? undefined
     const embedUrl = id ? `https://www.tiktok.com/embed/${id}` : undefined
 
     return {
-      url: this.matches[0] ?? undefined,
+      url: this.params.matches[0] ?? undefined,
       type,
       id,
       embedUrl
     }
   }
 
-  protected async providerApi(): Promise<this> {
-    this.params = {
-      url: this.query.url ?? '',
+  protected async setResponse(): Promise<IOpenGraph> {
+    this.module.apiParams = {
+      url: this.params.query.url,
     }
 
-    const body = await this.fetchOembed<OEmbedApi>()
-    this.convertOEmbedApi(body, {
+    const body = await this.fetchApi<OEmbedApi>()
+
+    return this.oembedApiToOpenGraph(body, {
       height: 750
     })
-
-    return this
   }
 }

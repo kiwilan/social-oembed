@@ -24,7 +24,17 @@ export default class RenderService {
     return render.toHtml(model, render.dark)
   }
 
-  public static oembed(embedUrl: string, model: any, query: IApiRouteQuery, iframeSize: IframeSize): string {
+  public static oembed({
+    embedUrl,
+    model,
+    query,
+    iframeSize,
+  }: {
+    query: IApiRouteQuery
+    embedUrl?: string
+    model?: any
+    iframeSize?: IframeSize
+  }): string {
     const render = RenderService.make(OEmbedRender, query)
     return render.toHtml(embedUrl, model, iframeSize)
   }

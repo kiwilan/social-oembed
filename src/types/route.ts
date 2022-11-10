@@ -1,4 +1,5 @@
 import type { FetchType } from './http'
+import type { ProviderFetch } from './social'
 
 export type Endpoint = '/' | '/docs' | '/api'
 
@@ -11,7 +12,7 @@ export type ApiQueryFormat = keyof typeof ApiQueryFormatEnum
 type IApiQueryFormatExtends<T> = Partial<Record<ApiQueryFormatEnum, T>>
 export interface IApiQueryFormat<T> extends IApiQueryFormatExtends<T> {}
 
-export type ApiRouteQueryKey = 'url' | 'format' | 'api_key' | 'dark' | 'align' | 'conversation' | 'hide_media' | 'lang' | 'theme' | 'omit_script' | 'width' | 'height' | 'is_mobile'
+export type ApiRouteQueryKey = 'url' | 'format' | 'oembed' | 'api_key' | 'dark' | 'align' | 'conversation' | 'hide_media' | 'lang' | 'theme' | 'omit_script' | 'width' | 'height' | 'is_mobile'
 export type ApiRouteQuery = Record<ApiRouteQueryKey, string | undefined> | undefined
 // export type ApiRouteQuery = Record<Partial<ApiRouteQueryKey>, string>
 
@@ -24,6 +25,8 @@ export interface IApiRouteQuery {
   format: ApiQueryFormat
   api_key?: string | boolean
   dark?: boolean
+  // oembed
+  oembed?: ProviderFetch
   // twitter api
   align?: TwitterAlign
   conversation?: TwitterConversation

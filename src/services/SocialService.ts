@@ -21,41 +21,40 @@ import ProviderTwitch from '~/providers/social/ProviderTwitch'
 import ProviderVimeo from '~/providers/social/ProviderVimeo'
 import ProviderUnknown from '~/providers/social/ProviderUnknown'
 import { SocialEnum } from '~/types/social'
-import type { ISocial, ISocialIdentifier, Social } from '~/types/social'
-import type { IApiRouteQuery } from '~/types/route'
+import type { ISocial, ISocialIdentifier, ProviderFetch, Social } from '~/types/social'
+import type { FetchMeta, IApiRouteQuery } from '~/types/route'
+import type { IOpenGraph } from '~/types/api'
 
 export default class SocialService {
   protected constructor(
-    protected type: Social,
     protected provider: ProviderModule,
-    protected identifiers?: ISocialIdentifier
   ) {}
 
-  public static async make(query: IApiRouteQuery): SocialService {
+  public static async make(query: IApiRouteQuery, fetch: ProviderFetch = 'empty'): Promise<SocialService> {
     const type = SocialService.find(query.url)
 
     const providers: ISocial<() => ProviderModule> = {
-      // dailymotion: () => new ProviderDailymotion(query),
-      // facebook: () => new ProviderFacebook(query),
-      // flickr: () => new ProviderFlickr(query),
-      // instagram: () => new ProviderInstagram(query),
-      // giphy: () => new ProviderGiphy(query),
-      // imgur: () => new ProviderImgur(query),
-      // kickstarter: () => new ProviderKickstarter(query),
-      // linkedin: () => new ProviderLinkedin(query),
-      // pinterest: () => new ProviderPinterest(query),
-      // reddit: () => new ProviderReddit(query),
-      // snapchat: () => new ProviderSnapchat(query),
-      // soundcloud: () => new ProviderSoundcloud(query),
-      // tiktok: () => new ProviderTiktok(query),
+      dailymotion: () => new ProviderDailymotion(),
+      facebook: () => new ProviderFacebook(),
+      flickr: () => new ProviderFlickr(),
+      instagram: () => new ProviderInstagram(),
+      giphy: () => new ProviderGiphy(),
+      imgur: () => new ProviderImgur(),
+      kickstarter: () => new ProviderKickstarter(),
+      linkedin: () => new ProviderLinkedin(),
+      pinterest: () => new ProviderPinterest(),
+      reddit: () => new ProviderReddit(),
+      snapchat: () => new ProviderSnapchat(),
+      soundcloud: () => new ProviderSoundcloud(),
+      tiktok: () => new ProviderTiktok(),
       spotify: () => new ProviderSpotify(),
-      // ted: () => new ProviderTed(query),
-      // tumblr: () => new ProviderTumblr(query),
-      // twitch: () => new ProviderTwitch(query),
-      // twitter: () => new ProviderTwitter(query),
-      // vimeo: () => new ProviderVimeo(query),
-      // youtube: () => new ProviderYoutube(query),
-      // unknown: () => new ProviderUnknown(query),
+      ted: () => new ProviderTed(),
+      tumblr: () => new ProviderTumblr(),
+      twitch: () => new ProviderTwitch(),
+      twitter: () => new ProviderTwitter(),
+      vimeo: () => new ProviderVimeo(),
+      youtube: () => new ProviderYoutube(),
+      unknown: () => new ProviderUnknown(),
     }
 
     const provider = providers[type as keyof typeof providers]
@@ -63,28 +62,34 @@ export default class SocialService {
       throw new Error('Provider not found')
 
     const Provider = provider()
-    const instance = Provider.make(query)
-    console.log(instance)
+    const instance = await Provider.make(query, fetch)
 
-    // const instance = new Provider(query)
-
-    // const instance = provider()
-
-    // const service = new SocialService(type, instance)
-
-    // return service
+    return new SocialService(instance)
   }
 
-  // public getIdentifiers(): ISocialIdentifier | undefined {
-  //   return this.provider?.onlyIdentifiers()
-  // }
+  public getProvider(): ProviderModule {
+    return this.provider
+  }
 
-  // public async getOembed(): Promise<ProviderModule> {
-  //   // TODO if API reject request, create iframe from identifiers or openGraph
-  //   const instance = await this.provider.make()
+  public getIdentifiers(): ISocialIdentifier | undefined {
+    return this.provider.identifiers
+  }
 
-  //   return instance
-  // }
+  public getFetchMeta(): FetchMeta | undefined {
+    return this.provider.fetchMeta
+  }
+
+  public getOpenGraph(): IOpenGraph | undefined {
+    return this.provider.openGraph
+  }
+
+  public getHtml(): string | undefined {
+    return this.provider.html
+  }
+
+  public isValid(): boolean {
+    return this.provider.isValid
+  }
 
   public static find(url: string): Social {
     let type: Social = 'unknown'

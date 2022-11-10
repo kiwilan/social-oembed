@@ -1,20 +1,22 @@
 import ProviderModule from '~/providers/social/ProviderModule'
-import type { ISocialIdentifier, IframeSize, Social } from '~/types/social'
+import type { IOpenGraph } from '~/types/api'
+import type { IProviderModule, ISocialIdentifier, Social } from '~/types/social'
 
 export default class ProviderUnknown extends ProviderModule {
-  protected type: Social = 'unknown'
-  protected regex = undefined
-  protected endpoint: string | undefined
-  protected iframeSize: IframeSize = { width: 550, height: 500 }
+  protected init(): IProviderModule {
+    return {
+      social: 'unknown' as Social,
+      regex: undefined,
+      endpoint: undefined,
+      iframe: { width: 500, height: 500 },
+    }
+  }
 
-  protected providerMatch(): ISocialIdentifier {
+  protected setIdentifiers(): ISocialIdentifier {
     return {}
   }
 
-  protected async providerApi(): Promise<this> {
-    const body = await this.fetchOpenGraph()
-    this.openGraph = body
-
-    return Promise.resolve(this)
+  protected async setResponse(): Promise<IOpenGraph> {
+    return {}
   }
 }

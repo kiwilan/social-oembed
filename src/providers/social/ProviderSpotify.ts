@@ -1,13 +1,14 @@
 import ProviderModule from '~/providers/social/ProviderModule'
+import type { IOpenGraph } from '~/types/api'
 import type { OEmbedApi } from '~/types/oembed'
-import type { ISocialIdentifier, IframeSize, ProviderPublish, Social } from '~/types/social'
+import type { IProviderModule, ISocialIdentifier, Social } from '~/types/social'
 
 /**
  * @see https://developer.twitter.com/en/docs/twitter-for-websites/oembed-api
  * Limitations: requests
  */
 export default class ProviderSpotify extends ProviderModule {
-  protected init(): ProviderPublish {
+  protected init(): IProviderModule {
     return {
       social: 'spotify' as Social,
       regex: /^(https:\/\/open.spotify.com\/|user:track:album:artist:playlist:)([a-zA-Z0-9]+)(.*)$/mg,
@@ -29,7 +30,7 @@ export default class ProviderSpotify extends ProviderModule {
     }
   }
 
-  protected async setResponse(): Promise<this> {
+  protected async setResponse(): Promise<IOpenGraph> {
     this.module.apiParams = {
       url: this.params.query.url,
       utm_source: 'generator',
@@ -37,8 +38,7 @@ export default class ProviderSpotify extends ProviderModule {
     }
 
     const body = await this.fetchApi<OEmbedApi>()
-    // this.convertOEmbedApi(body)
 
-    return this
+    return this.oembedApiToOpenGraph(body)
   }
 }

@@ -4,6 +4,7 @@ import OpenGraph from '~/models/OpenGraph'
 import OEmbed from '~/models/OEmbed'
 import type { FormatResponse } from '~/types'
 import { route } from '~/utils/Route'
+import type { ProviderFetch } from '~/types/social'
 
 export default class ApiService {
   protected formatResponse?: FormatResponse
@@ -33,6 +34,7 @@ export default class ApiService {
     return {
       api_key: apiKey,
       dark: query?.dark === 'true' || false,
+      oembed: query?.oembed as ProviderFetch || 'empty',
       format: query?.format as ApiQueryFormat || 'opengraph',
       url: query?.url || 'unkown',
       align: query?.align as TwitterAlign ?? 'center',
@@ -66,12 +68,12 @@ export default class ApiService {
     const oembed = await OEmbed.make(this.query)
 
     this.formatResponse = {
-      // response: {
-      //   ...oembed.getModel(),
-      //   render: oembed.getRender()
-      // },
-      // fetchMeta: oembed.getFetchMeta(),
-      // format: oembed.getIsOpenGraph() ? 'opengraph' : 'oembed'
+      response: {
+        ...oembed.getModel(),
+        render: oembed.getRender()
+      },
+      fetchMeta: oembed.getFetchMeta(),
+      format: oembed.getIsOpenGraph() ? 'opengraph' : 'oembed'
     }
 
     return this.formatResponse

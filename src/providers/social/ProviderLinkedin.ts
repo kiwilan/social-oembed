@@ -1,25 +1,28 @@
 import ProviderModule from '~/providers/social/ProviderModule'
-import type { ISocialIdentifier, IframeSize, Social } from '~/types/social'
+import type { IOpenGraph } from '~/types/api'
+import type { IProviderModule, ISocialIdentifier, Social } from '~/types/social'
 
 export default class ProviderLinkedin extends ProviderModule {
-  protected type: Social = 'linkedin'
-  protected regex = /(?:https?:\/\/)?(?:www\.)?linkedin\.com\/([a-zA-Z0-9]+)/ig
-  protected endpoint: string | undefined
-  protected iframeSize: IframeSize = { width: 550, height: 500 }
+  protected init(): IProviderModule {
+    return {
+      social: 'linkedin' as Social,
+      regex: /(?:https?:\/\/)?(?:www\.)?linkedin\.com\/([a-zA-Z0-9]+)/ig,
+      endpoint: '',
+      iframe: { width: 550, height: 500 },
+    }
+  }
 
-  protected providerMatch(): ISocialIdentifier {
-    const id = this.matches[2] ?? undefined
+  protected setIdentifiers(): ISocialIdentifier {
+    const id = this.params.matches[2] ?? undefined
 
     return {
-      url: this.matches[0] ?? undefined,
-      user: this.matches[1] ?? undefined,
+      url: this.params.matches[0] ?? undefined,
+      user: this.params.matches[1] ?? undefined,
       id,
     }
   }
 
-  protected providerApi(): Promise<this> {
-    // throw new Error('Method not implemented.')
-
-    return Promise.resolve(this)
+  protected async setResponse(): Promise<IOpenGraph> {
+    return {}
   }
 }

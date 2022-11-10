@@ -1,13 +1,14 @@
 import type { IApiRouteQuery } from './route'
 
+export type ProviderFetch = 'oembed' | 'opengraph' | 'empty'
 export interface ProviderParams {
   url: string
   query: IApiRouteQuery
   matches: string[]
-  identifiers: ISocialIdentifier
+  fetch: ProviderFetch
 }
 
-export interface ProviderPublish {
+export interface IProviderModule {
   social: Social
   regex?: RegExp
   endpoint?: string
