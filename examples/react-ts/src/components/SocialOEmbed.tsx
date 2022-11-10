@@ -25,6 +25,8 @@ const SocialOEmbed = (props: { url: string; oembed?: boolean }) => {
     params.append('url', url)
     params.append('format', oembed ? 'oembed' : 'opengraph')
     params.append('dark', 'true')
+    params.append('hide_media', 'true')
+    params.append('theme', 'dark')
     const res = await fetch(`${api}?${params.toString()}`)
     const body = await res.json()
 

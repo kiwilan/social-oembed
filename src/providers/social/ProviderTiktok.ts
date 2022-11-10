@@ -13,6 +13,7 @@ export default class ProviderTiktok extends ProviderModule {
       regex: /(@[a-zA-z0-9]*|.*)(\/.*\/|trending.?shareId=)([\d]*)/gm,
       endpoint: 'https://www.tiktok.com/oembed',
       iframe: { height: 750, width: 340 },
+      forceFetch: true,
     }
   }
 

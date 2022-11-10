@@ -1,7 +1,14 @@
 import SocialIcon from './SocialIcon'
+import type { OpenGraphRenderProps } from '~/types/social'
 import type { IOpenGraph } from '~/types/api'
+import type { IApiRouteQuery } from '~/types/route'
 
-const OpenGraphRender = (og: IOpenGraph, dark: boolean) => {
+const OpenGraphRender = (
+  props: OpenGraphRenderProps & {
+    query: IApiRouteQuery
+  }
+) => {
+  const dark = props.query.dark || false
   const borderColor = dark ? '#374151' : '#E5E7EB'
   const backgroundColor = dark ? '#1f2937' : '#F9FAFB'
   const color = dark ? '#f9fafb' : '#111827'
@@ -15,6 +22,8 @@ const OpenGraphRender = (og: IOpenGraph, dark: boolean) => {
   const marginTop = '0.5rem'
   const fontFamily =
     'font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"'
+
+  const og: IOpenGraph = props.og || {}
   const themeColor = og.themeColor ?? '#ffffff'
 
   const removeHttp = (url?: string) =>

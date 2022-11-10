@@ -6,7 +6,6 @@ import SocialService from '~/services/SocialService'
 import type { ISocial } from '~/types/social'
 import ParserService from '~/services/ParserService'
 import { colors } from '~/renders/SocialAssets'
-import type ProviderModule from '~/providers/social/ProviderModule'
 import RenderService from '~/services/RenderService'
 
 export default class OpenGraph extends ApiModule {
@@ -22,46 +21,39 @@ export default class OpenGraph extends ApiModule {
 
     og.social = SocialService.find(og.query.url)
 
-    const formats: ISocial<() => Promise<ProviderModule | undefined>> = {
-      // spotify: () => og.getOembed(),
-      twitter: () => og.getOembed(),
-      tiktok: () => og.getOembed(),
+    const formats: ISocial<boolean> = {
+      twitter: true,
+      tiktok: true,
     }
 
-    const current = formats[og.social]
-    if (current) {
-      await current()
-      // fallback cause by API limit
-      if (og.model.title === undefined)
-        await og.parseOpenGraph(og.query.url)
+    const provider = formats[og.social]
+
+    if (provider) {
+      const social = await SocialService.make(query)
+      og.model = social.getOpenGraph()
+      og.fetchMeta = social.getFetchMeta()
     }
-    else {
-      await og.parseOpenGraph(og.query.url)
+
+    if (!provider || !og.model.isValid) {
+      const instance = await og.parseOpenGraph(og.query.url)
+      og.model = instance.getOpenGraph()
+      og.fetchMeta = instance.getFetchMeta()
     }
 
     if (og.social !== 'unknown')
       og.model.themeColor = colors[og.social]
 
-    og.checkOpenGraphValid()
-    og.model.isValid = og.isValid
-    og.render = og.isValid ? RenderService.openGraph(og.getOpenGraph(), og.query) : undefined
+    if (og.model.title || og.model.siteUrl)
+      og.isValid = true
+
+    const render = RenderService.make(og.query)
+    og.render = og.isValid
+      ? render.toOpenGraph({
+        og: og.getOpenGraph(),
+      })
+      : undefined
 
     return og
-  }
-
-  private checkOpenGraphValid() {
-    if (this.fetchMeta?.ok)
-      this.isValid = true
-  }
-
-  private async getOembed(): Promise<ProviderModule | undefined> {
-    const oembed = await SocialService.make(this.query).getOembed()
-    if (oembed) {
-      this.model = oembed.getOpenGraph()
-      this.fetchMeta = oembed.getFetchMeta()
-    }
-
-    return oembed
   }
 
   private convertHtml(metaValues: MetaValues) {

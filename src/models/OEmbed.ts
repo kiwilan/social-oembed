@@ -14,53 +14,22 @@ export default class OEmbed extends ApiModule {
 
     const oembed = new OEmbed(query)
 
-    oembed.render = RenderService.oembed({
-      query,
-      embedUrl: provider.identifiers.embedUrl,
-      iframeSize: provider.module.iframe
-    })
-
-    // const oembed = new OEmbed(query)
-    // if (!oembed.query.url)
-    //   return oembed
-
-    // let openGraph: IOpenGraph = {}
-    // let fetchMeta: FetchMeta | undefined = {}
-    // const social = await SocialService.make(oembed.query).getOembed()
-
-    // // TODO shared interface
-    // if (social.isValid()) {
-    //   const iframeSize = social.getiframeSize()
-    //   openGraph = social.getOpenGraph()
-    //   fetchMeta = social.getFetchMeta()
-
-    //   const embedUrl = social.getIdentifiers().embedUrl
-    //   if (embedUrl && !social.getOverrideIframe())
-    // oembed.render = RenderService.oembed(embedUrl, openGraph, query, iframeSize)
-
-    //   if (social.getOverrideIframe())
-    //     oembed.render = social.getHtml()
-    // }
-    // else {
-    //   const og = await OpenGraph.make(query)
-    //   openGraph = og.getOpenGraph()
-    //   fetchMeta = og.getFetchMeta()
-    //   oembed.render = RenderService.openGraph(openGraph, query)
-    //   oembed.isOpenGraph = true
-    // }
-
-    // if (oembed.fetchMeta?.ok)
-    //   oembed.isValid = true
-
-    // oembed.model.isValid = oembed.isValid
-
-    // if (social) {
     oembed.model = {
       ...provider.openGraph,
       embedUrl: provider.identifiers.embedUrl
     }
     oembed.fetchMeta = provider.fetchMeta
-    // }
+
+    const render = RenderService.make(query)
+    oembed.render = provider.module.type === 'oembed'
+      ? render.toOEmbed({
+        embedUrl: provider.identifiers.embedUrl,
+        model: provider.openGraph,
+        provider,
+      })
+      : render.toOpenGraph({
+        og: provider.openGraph,
+      })
 
     return oembed
   }

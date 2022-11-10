@@ -1,4 +1,6 @@
-import type { IApiRouteQuery } from './route'
+import type { IApiData, IOpenGraph } from './api'
+import type { ApiQueryFormat, IApiRouteQuery } from './route'
+import type ProviderModule from '~/providers/social/ProviderModule'
 
 export type ProviderFetch = 'oembed' | 'opengraph' | 'empty'
 export interface ProviderParams {
@@ -17,6 +19,8 @@ export interface IProviderModule {
     width?: number | string
   }
   apiParams?: Record<string, string>
+  forceFetch?: boolean
+  type: ApiQueryFormat
 }
 
 export interface ISocialIdentifier {
@@ -67,3 +71,12 @@ export interface ISocialPlus<T> extends SocialExtends<T> {
   netflix?: T
 }
 
+export interface OpenGraphRenderProps {
+  og?: IOpenGraph
+}
+
+export interface OEmbedRenderProps {
+  embedUrl?: string
+  model?: IApiData
+  provider?: ProviderModule
+}

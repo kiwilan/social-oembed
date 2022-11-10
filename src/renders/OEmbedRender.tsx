@@ -1,38 +1,40 @@
-import type { IApiData } from '~/types/api'
-import type { IframeSize } from '~/types/social'
+import type { IApiRouteQuery } from '~/types/route'
+import type { OEmbedRenderProps } from '~/types/social'
 
 const OEmbedRender = (
-  embedUrl?: string,
-  model?: IApiData,
-  iframeSize?: IframeSize
+  props: OEmbedRenderProps & {
+    query: IApiRouteQuery
+  }
 ) => {
   let isValid = false
-  const url = embedUrl
+  const url = props.embedUrl
   let width = '0'
   let height = '0'
   let title = ''
   let allow = 'fullscreen;encrypted-media; '
 
   const setModel = () => {
-    if (!model) {
+    if (!props.model) {
       //
       return
     }
-    width = model.width ? model.width : '100%'
-    height = model.height ? model.height : '450'
-    title = model.title ? model.title : ''
-    allow += model.isMobile
+    // width = props.model.width ? props.model.width : '100%'
+    // height = props.model.height ? props.model.height : '450'
+    title = props.model.title ? props.model.title : ''
+    allow += props.model.isMobile
       ? 'accelerometer; autoplay; encrypted-media; gyroscope; clipboard-write; picture-in-picture;'
       : ''
   }
 
   if (url) {
+    const module = props.provider?.module
+
     isValid = true
-    height = iframeSize?.height ? iframeSize.height.toString() : '450'
-    width = iframeSize?.width ? iframeSize.width.toString() : '100%'
+    height = module?.iframe?.height ? module?.iframe.height.toString() : '450'
+    width = module?.iframe?.width ? module?.iframe.width.toString() : '100%'
   }
 
-  if (model && Object.keys(model).length) {
+  if (props.model && Object.keys(props.model).length) {
     //
     setModel()
   }

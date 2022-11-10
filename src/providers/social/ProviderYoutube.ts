@@ -10,7 +10,7 @@ export default class ProviderYoutube extends ProviderModule {
       social: 'youtube' as Social,
       regex: /^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user|shorts)\/))([^\?&\"'>]+)/g,
       endpoint: '',
-      iframe: { width: 550, height: 500 },
+      iframe: { width: '100%', height: 450 },
     }
   }
 

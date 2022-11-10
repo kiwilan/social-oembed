@@ -19,6 +19,7 @@ export default abstract class ProviderModule {
       iframe: undefined,
       social: 'unknown',
       apiParams: {},
+      type: 'oembed'
     },
     public isValid: boolean = false,
     public identifiers: ISocialIdentifier = {},
@@ -47,17 +48,24 @@ export default abstract class ProviderModule {
       siteUrl: this.params.url,
     }
 
-    if (this.params.fetch === 'oembed')
+    if (this.module.forceFetch) {
       this.openGraph = await this.setResponse()
+    }
+    else {
+      if (this.params.fetch === 'oembed')
+        this.openGraph = await this.setResponse()
 
-    if (this.params.fetch === 'opengraph') {
-      const og = await OpenGraph.make(this.params.query)
-      this.openGraph = og.getOpenGraph()
+      if (this.params.fetch === 'opengraph' || this.params.fetch === 'empty') {
+        const og = await OpenGraph.make(this.params.query)
+        this.openGraph = og.getOpenGraph()
+        this.fetchMeta = og.getFetchMeta()
+        this.module.type = this.params.fetch === 'opengraph'
+          ? 'opengraph'
+          : 'oembed'
+      }
     }
 
-    if (this.params.fetch === 'empty' && this.module.social === 'twitter') {
-      //
-    }
+    this.openGraph.isValid = this.fetchMeta.ok
 
     return this
   }
@@ -84,7 +92,8 @@ export default abstract class ProviderModule {
 
   protected async fetchApi<T>(): Promise<T> {
     const params = new URLSearchParams()
-    for (const param of Object.entries(this.params))
+    const paramsList = Object.entries(this.module.apiParams ?? {})
+    for (const param of paramsList)
       params.append(param[0], param[1])
 
     const url = `${this.module.endpoint}?${params.toString()}`
@@ -105,6 +114,12 @@ export default abstract class ProviderModule {
 
   private getColor(): string {
     return colors[this.module.social] ?? '#000000'
+  }
+
+  protected generateIframeSrc(html?: string): string | undefined {
+    const encoded = encodeURIComponent(html ?? '')
+
+    return html ? `data:text/html;charset=utf-8,${encoded}` : undefined
   }
 
   protected oembedApiToOpenGraph(body: OEmbedApi, params?: OEmbedApiParams): IOpenGraph {

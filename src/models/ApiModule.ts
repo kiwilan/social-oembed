@@ -4,7 +4,7 @@ import type { Social } from '~/types/social'
 
 export default abstract class ApiModule {
   protected query: IApiRouteQuery
-  protected fetchMeta?: FetchMeta
+  protected fetchMeta: FetchMeta
   protected render?: string
   protected isValid = false
   public response?: FetchResponse
@@ -24,7 +24,7 @@ export default abstract class ApiModule {
     }
   }
 
-  public getFetchMeta(): FetchMeta | undefined {
+  public getFetchMeta(): FetchMeta {
     return this.fetchMeta
   }
 

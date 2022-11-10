@@ -26,6 +26,7 @@ export default class ProviderTwitter extends ProviderModule {
       regex: /(?:https?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9]+)\/status\/([a-zA-Z0-9]+)/ig,
       endpoint: 'https://publish.twitter.com/oembed',
       iframe: { width: 550, height: 500 },
+      forceFetch: true,
     }
   }
 
@@ -46,23 +47,20 @@ export default class ProviderTwitter extends ProviderModule {
       align: query.align ?? 'center',
       hide_media: query.hide_media ? 'true' : 'false',
       lang: query.lang ?? 'en',
-      // theme: this.query.theme ?? 'light',
-      theme: 'dark',
+      theme: query.theme ?? 'light',
       omit_script: query.omit_script ? 'true' : 'false',
     }
 
     const body = await this.fetchApi<TwitterApi>()
 
     // From https://joshuatz-twitter-iframe-generator.glitch.me
-    // this.html = `<iframe style="border:none;margin:auto;" width="550" height="620" data-tweet-url="${this.url}" src="${this.generateIframeSrc(body.html)}"></iframe>`
-    // this.overrideIframe = true
+    this.identifiers.embedUrl = this.generateIframeSrc(body.html)
 
     return {
       siteName: body?.provider_name,
       title: body?.author_name,
       siteUrl: body?.url,
       description: body?.html ? body.html.replace(/<[^>]*>?/gm, '') : undefined,
-      themeColor: '#1DA1F2',
       social: this.module.social,
     }
   }

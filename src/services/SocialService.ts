@@ -75,12 +75,12 @@ export default class SocialService {
     return this.provider.identifiers
   }
 
-  public getFetchMeta(): FetchMeta | undefined {
+  public getFetchMeta(): FetchMeta {
     return this.provider.fetchMeta
   }
 
-  public getOpenGraph(): IOpenGraph | undefined {
-    return this.provider.openGraph
+  public getOpenGraph(): IOpenGraph {
+    return this.provider.openGraph ?? {}
   }
 
   public getHtml(): string | undefined {
