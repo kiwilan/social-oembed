@@ -62,9 +62,9 @@ With oEmbed, it's really complicated, each social network have their own API, wi
   - [x] Spotify *all*
   - [ ] TED
   - [ ] Tumblr
-  - [x] TikTok *all*
+  - [x] TikTok *all* (force fetching)
   - [ ] Twitch
-  - [x] Twitter *all*
+  - [x] Twitter *all* (force fetching)
   - [x] Vimeo
   - [x] YouTube *partial*
 - HTML rendering for OpenGraph and oEmbed
