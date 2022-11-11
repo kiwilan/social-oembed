@@ -19,7 +19,7 @@ const config = async () => {
       'process.env.NODE_ENV_LOG': '"production"'
     },
     outExtension: { '.js': '.mjs' },
-    sourcemap: true,
+    sourcemap: false,
     banner: {
       js: `
 import { createRequire } from 'module';
