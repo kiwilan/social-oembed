@@ -23,8 +23,7 @@ const entryPoints = fileArray.filter((file) => file.endsWith('.ts'))
 esbuild.build({
   entryPoints,
   logLevel: 'info',
-  // outdir: env === 'dev' ? 'dist' : 'build',
-  outdir: 'dist',
+  outdir: env === 'dev' ? 'dist' : 'build',
   bundle: env !== 'dev',
   platform: 'node',
   format: 'esm',

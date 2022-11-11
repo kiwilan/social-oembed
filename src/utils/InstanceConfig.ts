@@ -1,7 +1,7 @@
+import Package from '../package.json'
 import { route } from './Route'
 import DotEnv from '~/utils/DotEnv'
 import type { Instance } from '~/types'
-import Package from '~/package.json'
 
 export default class InstanceConfig {
   public config: Instance
