@@ -5,7 +5,7 @@ import type { FetchInit, FetchOptions, FetchParams, FetchResponse, FetchType, Re
 export default class Http {
   protected url: string
   protected options: FetchOptions
-  protected response?: FetchResponse
+  protected response?: FetchResponse<any>
 
   protected constructor(url: string, options: FetchOptions) {
     this.url = url
@@ -18,7 +18,7 @@ export default class Http {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Accept-Encoding': 'gzip',
+          // 'Accept-Encoding': 'gzip',
         },
       }
     }
@@ -28,31 +28,34 @@ export default class Http {
     return http
   }
 
-  public async get(params?: FetchParams): Promise<FetchResponse> {
-    return await this.setResponse('GET', params)
+  public async get<T>(params?: FetchParams): Promise<FetchResponse<T>> {
+    return await this.setResponse<T>('GET', params)
   }
 
-  public async post(params?: FetchParams): Promise<FetchResponse> {
-    return await this.setResponse('POST', params)
+  public async post<T>(params?: FetchParams): Promise<FetchResponse<T>> {
+    return await this.setResponse<T>('POST', params)
   }
 
-  public async patch(params?: FetchParams): Promise<FetchResponse> {
-    return await this.setResponse('PATCH', params)
+  public async patch<T>(params?: FetchParams): Promise<FetchResponse<T>> {
+    return await this.setResponse<T>('PATCH', params)
   }
 
-  public async put(params?: FetchParams): Promise<FetchResponse> {
-    return await this.setResponse('PUT', params)
+  public async put<T>(params?: FetchParams): Promise<FetchResponse<T>> {
+    return await this.setResponse<T>('PUT', params)
   }
 
-  public async delete(params?: FetchParams): Promise<FetchResponse> {
-    return await this.setResponse('DELETE', params)
+  public async delete<T>(params?: FetchParams): Promise<FetchResponse<T>> {
+    return await this.setResponse<T>('DELETE', params)
   }
 
   /**
    * @see https://github.com/node-fetch/node-fetch
    * @docs https://bobbyhadz.com/blog/javascript-error-err-require-esm-of-es-module-node-fetch
    */
-  public static async fetch(params: FetchInit): Promise<Response> {
+  public static async fetch(params: string | FetchInit): Promise<Response> {
+    if (typeof params === 'string')
+      params = { url: params }
+
     if (!params.init) {
       params.init = {
         method: params.options?.method || 'GET',
@@ -67,7 +70,7 @@ export default class Http {
   /**
    * Fetch URL with `fetch` API, handle errors.
    */
-  private async setResponse(method: ResponseMethod = 'GET', params?: FetchParams): Promise<FetchResponse> {
+  private async setResponse<T>(method: ResponseMethod = 'GET', params?: FetchParams): Promise<FetchResponse<T>> {
     const url = params?.url || this.url
     const body = params?.body || this.options.body
 
@@ -75,7 +78,7 @@ export default class Http {
     options.method = method
     options.body = body
 
-    const response: FetchResponse = await Http.fetch({ url, options })
+    const response: FetchResponse<T> = await Http.fetch({ url, options })
       .then(async (res: Response) => {
         let data: string | unknown
 
@@ -103,7 +106,7 @@ export default class Http {
           status: res.status,
           statusText: res.statusText,
           url: res.url,
-        } as FetchResponse
+        } as FetchResponse<T>
       })
       .catch((error: any) => {
         return {
@@ -115,7 +118,7 @@ export default class Http {
           status: 500,
           statusText: error,
           url: this.url,
-        } as FetchResponse
+        } as FetchResponse<any>
       })
 
     return response

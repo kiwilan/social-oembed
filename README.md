@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  API to offer OpenGraph meta or oEmbed media.
+  <strong>API to offer OpenGraph meta or oEmbed media.</strong>
 </p>
 
 <p align="center">
@@ -26,16 +26,16 @@
 
 ------
 
-> *VERY EXPERIMENTAL*  
-> In early development, not stable.  
+> **Warning**
+> In early development, not stable.
 
 ## Why ?
 
-[OpenGraph](https://ogp.me/) protocol offer a way to get meta data from a website to display a nice preview in social media and [oEmbed](https://oembed.com/) offer to display an iframe from another website like social network. To get OpenGraph data from any website, you have to crawl it to extract metadata, for oEmbed, each social network have their own API to get the iframe.
+[OpenGraph](https://ogp.me/) protocol offer a way to get meta data from a website to display a nice preview in social media and [oEmbed](https://oembed.com/) offer to display an iframe from another website like social network.
 
-With OpenGraph, from JavaScript application, on client side, you can't parse a website, you have to call an API to get these data, some services offer this API, but mostly aren't open source. About these services, you can find [opengraph.io](https://www.opengraph.io/) (free with API limit requests) or [iframely](https://iframely.com/) (with own hosted solution).
+With OpenGraph, from JavaScript application, on client side, you can't crawl website to extract metadata, you have to call an API to get these data, some services offer this API, but mostly aren't open source. About these services, you can find [opengraph.io](https://www.opengraph.io/) (free with API limit requests) or [iframely](https://iframely.com/) (with own hosted solution).
 
-With oEmbed, it's really complicated, each social network have their own API, with some limitations (Instagram or Facebook for example), some services offer to get these data but you have to pay for it, and it's really expensive ([smashballoon](https://smashballoon.com/), [embedsocial](https://embedsocial.com/)...). Only [iframely](https://iframely.com/) offer a free plan with some limitations, with own hosted, but you can't access to Instagram or Facebook cause by [Meta limitations](https://www.nosto.com/blog/instagram-api-limit/)*.
+With oEmbed, it's really complicated, each social network have their own API, with some limitations, some services offer to get these data but you have to pay for it, and it's really expensive ([smashballoon](https://smashballoon.com/), [embedsocial](https://embedsocial.com/)...). Only [iframely](https://iframely.com/) offer a free plan with some limitations, with own hosted, but with some limitations with Instagram or Facebook cause by [Meta](https://www.nosto.com/blog/instagram-api-limit/)*.
 
 **This project is an attempt to offer a free (with own hosted solution) and open source API to get OpenGraph and oEmbed data.**
 
@@ -43,27 +43,51 @@ With oEmbed, it's really complicated, each social network have their own API, wi
 
 ## Features
 
-- OpenGraph metadata
+- OpenGraph
+  - Dark mode with `dark=true` query parameter
+  - Twitter card query with `twitter=true` query parameter
+  - Opiniated HTML render
+- oEmbed
+  - Social network providers: Dailymotion *all*, Instagram *partial*, Facebook *partial*, Flickr, Giphy, Imgur, Kickstarter, LinkedIn, Pinterest, Reddit, Snapchat, Soundcloud, Spotify *all*, TED, Tumblr, TikTok *all* (force fetching), Twitch, Twitter *all* (force fetching), Vimeo, YouTube *partial*
+  - No fetch option with `oembed=nofetch` query parameter (by default)
+  - Fallback on OpenGraph
+  - Opiniated HTML render
+  - [ ] Smart queries for oEmbed API (customize render for each social network)
+- [ ] Host your own instance
+  - [ ] Docker
+- Middleware (auth with `api_key` query parameter or `Bearer token`, `url` query parameter)
 
 ### Roadmap
 
-- API key as query or header
-- Domains allow `*` or `*.domain.com`
 - [x] OpenGraph
+  - [x] `og:title`, `og:description`, `og:image`, `og:url`, `og:type`, `og:site_name`, `og:locale`
+  - [x] Color `theme-color`
+  - [x] Fallback to `twitter:title`, `twitter:description`, `twitter:image`, `twitter:url`, `twitter:card`, `twitter:site`, `twitter:creator`
   - [ ] All meta
-  - [ ] Twitter Cards
-- [ ] oEmbed
+  - [x] `twitter` query for card
+  - [x] Opiniated render
+- [x] oEmbed
   - [ ] Major social networks support
-    - [ ] Providers system
+  - [x] Providers system
+  - [ ] smart queries for each social network
+  - [x] queries for iframe
+  - [x] fallback to OpenGraph if no oEmbed, no provider or oEmbed error
+  - [x] oEmbed rebuilt with match
+  - [ ] add api key for each provider
 - [ ] Host your own instance
-- [ ] Auth middleware <https://github.com/fastify/middie>
+- [x] Auth middleware <https://github.com/fastify/middie>
+  - [ ] Domains allow `*` or `*.domain.com`
+  - [x] API key as query or header
+  - [ ] Request limit
+  - [ ] helmet with <https://github.com/fastify/fastify-helmet>
 - [ ] Documentation
-  - [ ] Usage from JS client side with fetch, from PHP with Guzzle
-  - [ ] Usage response example, typescript interfaces
-  - [ ] Usage oembed
+  - [ ] Usage from JS client side with fetch
+  - [x] Usage response example, typescript interfaces
+  - [x] Usage oembed
   - [ ] Social networks providers specs
   - [ ] examples alpinejs/react/vuejs
   - [ ] Deploy nginx and pm2 docs
+- [ ] Vite with <https://github.com/fastify/fastify-dx>
 - [ ] Use Mongo to cache data
 - [ ] Use [Bun](https://bun.sh/) when it will be stable
 
@@ -79,11 +103,11 @@ Demo instance: `https://social-oembed.git-projects.xyz`.
 GET /api
 ```
 
-| Parameter | Type                    | Required                            | Description                               |
-|-----------|-------------------------|-------------------------------------|-------------------------------------------|
-| `url`     | `string`                | `true`                              | URL of website like `https://github.com`. |
-| `format`  | `opengraph` or `oembed` | `false`                             | Format of data, default is `opengraph`.   |
-| `api_key` | `string`                | Depend of `.env` `API_KEY` variable | API key.                                  |
+| Parameter | Type                  | Required                            | Description                               |
+| --------- | --------------------- | ----------------------------------- | ----------------------------------------- |
+| `url`     | `string`              | `true`                              | URL of website like `https://github.com`. |
+| `format`  | `opengraph`, `oembed` | `false`                             | Format of data, default is `opengraph`.   |
+| `api_key` | `string`              | Depend of `.env` `API_KEY` variable | API key.                                  |
 
 ```http
 GET /docs
@@ -97,8 +121,8 @@ Example: <https://social-oembed.git-projects.xyz/api?url=https://github.com&form
 
 ```bash
 curl --request GET \
-    --data-urlencode "url=https://github.com" \
     --data-urlencode "format=opengraph" \
+    --data-urlencode "url=https://github.com" \
     --get "https://social-oembed.git-projects.xyz/api" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"
@@ -106,7 +130,99 @@ curl --request GET \
 
 ### oEmbed
 
-Coming soon...
+Example: <https://social-oembed.git-projects.xyz/api?url=https://www.youtube.com/watch?v=fXmAurh012s&format=oembed>
+
+```bash
+curl --request GET \
+    --data-urlencode "format=oembed" \
+    --data-urlencode "url=https://www.youtube.com/watch?v=fXmAurh012s" \
+    --get "https://social-oembed.git-projects.xyz/api" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"
+```
+
+## How it works ?
+
+### OpenGraph
+
+Social oEmbed will parse `url` website with [cheerio](https://cheerio.js.org/) and extract OpenGraph data from meta tags. If open graph data are not found, it will try to extract Twitter data or meta tags. If no data are found, it won't return an error, will have just an empty result. The response will be available into `data`, another metadata you will find an an opiniated HTML render into `data.render`, you could just display this into your application.
+
+All data about fetch are available into `meta.fetch` object.
+
+### oEmbed
+
+Social oEmbed will try to find a provider from `url`, if exists, it will use it to get oEmbed data from social network API. The API have to return a correct response to display an iframe, but sometimes oEmbed API have limits. If the request failed, the provider will try to rebuild embed url to inject it into an iframe. Like OpenGraph, you will have some metadata (built on OpenGraph type) into `data` and a `data.render` with an iframe. If no provider exists, you will have a fallback to OpenGraph.
+
+All data about fetch are available into `meta.fetch` object.
+
+Note: if Social oEmbed can't find a provider from `url`, your social network could be not supported by Social oEmbed and you can contribute to add it. But if provider exists, it could be the `url` parse bug, you can open an issue.
+
+// TODO contribute and issue
+
+### `data` object
+
+```yaml
+title?: string
+description?: string
+image?: string
+siteUrl?: string
+type?: string
+siteName?: string
+locale?: string
+audio?: string
+video?: string
+determiner?: string
+article:author?: string
+themeColor?: string
+icon?: string
+width?: string
+height?: string
+social: Social
+embedUrl?: string # oEmbed only
+render: string
+```
+
+#### `Social` object
+
+This data represent social networks supported.
+
+```yaml
+dailymotion
+instagram
+facebook
+flickr
+giphy
+imgur
+kickstarter
+linkedin
+pinterest
+reddit
+snapchat
+soundcloud
+spotify
+ted
+tumblr
+tiktok
+twitch
+twitter
+vimeo
+youtube
+unknown
+```
+
+### `meta` object
+
+```yaml
+url: string # original url
+format: string # opengraph or oembed
+message: string # error message
+docs: string # documentation url
+fetch:
+  message: string
+  status: number
+  ok: boolean
+  type: string # json, text or unknown
+```
 
 ## **Setup**
 
@@ -134,13 +250,15 @@ Server is available on <http://localhost:3000>.
 
 ### `.env`
 
-| Variable      | Type                         | Default                                        | Description                                                                        |
-|---------------|------------------------------|------------------------------------------------|------------------------------------------------------------------------------------|
-| `API_PORT`    | `number`                     | `3000`                                         | Port used by your application                                                      |
-| `API_HOST`    | `string`                     | `localhost`                                    | Host of your application                                                           |
-| `API_HTTPS`   | `boolean`                    | `false`                                        | Enable https for you application                                                   |
-| `API_KEY`     | `string` `undefined` `false` | `false`                                        | API key if you want to set it, if `undefined`, API key protection is disabled      |
-| `API_DOMAINS` | `string`                     | `localhost:3000,127.0.0.1:3000,127.0.0.1:5173` | Domains allowed to use the API, seperated by commans, use `*` to allow all domains |
+| Variable      | Type                                                   | Default                         | Description                                                                             |
+| ------------- | ------------------------------------------------------ | ------------------------------- | --------------------------------------------------------------------------------------- |
+| `NODE_ENV`    | `development`,`test`,`production`                      | `development`                   | Current environment.                                                                    |
+| `LOG_LEVEL`   | `debug`,`error`,`fatal`,`info`,`trace`,`warn`,`silent` | `debug`                         | Log level for debug.                                                                    |
+| `API_PORT`    | `number`                                               | `3000`                          | Port used by your application                                                           |
+| `API_HOST`    | `string`                                               | `localhost`                     | Host of your application                                                                |
+| `API_HTTPS`   | `boolean`                                              | `false`                         | Enable https for you application                                                        |
+| `API_KEY`     | `string`, `undefined`, `false`                         | `false`                         | API key if you want to set it, if `undefined` or `false` API key protection is disabled |
+| `API_DOMAINS` | `string`                                               | `localhost:3000,127.0.0.1:3000` | Domains allowed to use the API, seperated by commans, use `*` to allow all domains      |
 
 ### Production
 
@@ -185,6 +303,12 @@ pnpm lint:fix
 Based on [Fastify](https://www.fastify.io/) and [TypeScript](https://www.typescriptlang.org/), with [ESBuild](https://esbuild.github.io/) for bundling (ESM format).
 
 From template [fastify-esbuild](https://github.com/davipon/fastify-esbuild) by [davipon](https://davipon.hashnode.dev/better-backend-dx-fastify-esbuild).
+
+- `node` >= 16.x
+- `pnpm` >= 7.x
+- `fastify` 4.x
+- `react` 18.x
+- `esbuild` 0.15.x
 
 ## License
 

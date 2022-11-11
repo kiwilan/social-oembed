@@ -1,150 +1,147 @@
-import * as cheerio from 'cheerio'
-import Http from '../utils/Http'
-import Module from '../models/Module'
-import OpenGraphService from '../services/OpenGraphService'
-import type { FetchMeta, MetaNode, MetaValues, OpenGraphResponse } from '~/types'
+import ApiModule from '~/models/ApiModule'
+import type { IOpenGraph } from '~/types/api'
+import type { IApiRouteQuery } from '~/types/route'
+import SocialService from '~/services/SocialService'
+import type { ISocial } from '~/types/social'
+import ParserService from '~/services/ParserService'
+import { colors } from '~/renders/SocialAssets'
+import RenderService from '~/services/RenderService'
 
-export default class OpenGraphItem extends Module {
-  public ok = false
-  public originalUrl: string
-  public error?: string
-  public title?: string
-  public description?: string
-  public image?: string
-  public siteUrl?: string
-  public type?: string
-  public siteName?: string
-  public locale?: string
-  public themeColor?: string
+export default class OpenGraph extends ApiModule {
+  protected model: IOpenGraph = {}
 
-  // docs: https://www.digitalocean.com/community/tutorials/how-to-use-classes-in-typescript
-  // protected constructor(
-  //   public name: string,
-  //   public age: number
-  // ) {}
+  public static async make(query: IApiRouteQuery): Promise<OpenGraph> {
+    const og = new OpenGraph(query)
 
-  protected constructor(originalUrl: string, meta?: FetchMeta) {
-    if (!meta) {
-      meta = {
-        message: 'Constructor error',
-        ok: false,
-        status: 500,
-        type: 'unknown'
-      }
-    }
-    super(meta)
-    this.originalUrl = originalUrl
-  }
-
-  public static async make(originalUrl: string): Promise<OpenGraphItem> {
-    const og = new OpenGraphItem(originalUrl)
-
-    const http = Http.client(originalUrl)
-    const res = await http.get()
-
-    if (res.ok && res.type === 'text') {
-      const metaValues = og.parseHtml(res.body)
-      og.setOpenGraph(metaValues)
+    if (!og.query.url) {
+      console.error('OpenGraph: No URL provided')
+      throw new Error('No URL provided')
     }
 
-    og.setMeta({
-      message: res.type === 'text'
-        ? res.statusText
-        : 'Error: endpoint has `application/json` content-type',
-      ok: res.type === 'text'
-        ? res.ok
-        : false,
-      status: res.status,
-      type: res.type,
-    })
+    og.social = SocialService.find(og.query.url)
+
+    const formats: ISocial<boolean> = {
+      twitter: true,
+      tiktok: true,
+    }
+
+    const provider = formats[og.social]
+
+    if (provider) {
+      const social = await SocialService.make(query)
+      og.model = social.getOpenGraph()
+      og.fetchMeta = social.getFetchMeta()
+    }
+
+    if (!provider || !og.model.isValid) {
+      const instance = await og.parseOpenGraph(og.query.url)
+      og.model = instance.getOpenGraph()
+      og.fetchMeta = instance.getFetchMeta()
+    }
+
+    if (og.social !== 'unknown')
+      og.model.themeColor = colors[og.social]
+
+    if (og.model.title || og.model.siteUrl)
+      og.isValid = true
+
+    const render = RenderService.make(og.query)
+    og.render = og.isValid
+      ? render.toOpenGraph({
+        og: og.getOpenGraph(),
+      })
+      : undefined
 
     return og
   }
 
-  public getOpenGraph(): OpenGraphResponse {
-    return {
-      title: this.title,
-      description: this.description,
-      image: this.image,
-      siteUrl: this.siteUrl,
-      type: this.type,
-      siteName: this.siteName,
-      locale: this.locale,
-      themeColor: this.themeColor,
+  private convertHtml(metaValues: Record<string, any>) {
+    this.model = {
+      'title': metaValues.title,
+      'description': metaValues.description,
+      'image': metaValues.image,
+      'siteUrl': metaValues.siteUrl,
+      'type': metaValues.type,
+      'siteName': metaValues.siteName,
+      'locale': metaValues.locale,
+      'themeColor': metaValues.themeColor,
+      'social': this.social,
+      'icon': metaValues.icon,
+      'twitter:card': metaValues['twitter:card'],
+      'twitter:site:id': metaValues['twitter:site:id'],
+      'twitter:site': metaValues['twitter:site'],
+      'twitter:url': metaValues['twitter:url'],
+      'twitter:creator': metaValues['twitter:creator'],
+      'twitter:creator:id': metaValues['twitter:creator:id'],
+      'twitter:description': metaValues['twitter:description'],
+      'twitter:title': metaValues['twitter:title'],
+      'twitter:image': metaValues['twitter:image'],
+      'twitter:image:alt': metaValues['twitter:image:alt'],
+      'twitter:player': metaValues['twitter:player'],
+      'twitter:player:width': metaValues['twitter:player:width'],
+      'twitter:player:height': metaValues['twitter:player:height'],
+      'twitter:player:stream': metaValues['twitter:player:stream'],
+      'twitter:app:name:iphone': metaValues['twitter:app:name:iphone'],
+      'twitter:app:id:iphone': metaValues['twitter:app:id:iphone'],
+      'twitter:app:url:iphone': metaValues['twitter:app:url:iphone'],
+      'twitter:app:name:ipad': metaValues['twitter:app:name:ipad'],
+      'twitter:app:id:ipad': metaValues['twitter:app:id:ipad'],
+      'twitter:app:url:ipad': metaValues['twitter:app:url:ipad'],
+      'twitter:app:name:googleplay': metaValues['twitter:app:name:googleplay'],
+      'twitter:app:id:googleplay': metaValues['twitter:app:id:googleplay'],
+      'twitter:app:url:googleplay': metaValues['twitter:app:url:googleplay'],
     }
+
+    this.model.siteUrl = this.checkUrl(this.model.siteUrl) ?? this.query.url
+    this.model.icon = this.checkUrl(this.model.icon)
+    this.model.image = this.checkImage()
   }
 
-  public getFetchMeta(): FetchMeta {
-    return this.meta
+  public getOpenGraph(): IOpenGraph {
+    return this.model
   }
 
-  private setOpenGraph(metaValues: MetaValues) {
-    this.title = metaValues.title
-    this.description = metaValues.description
-    this.image = metaValues.image
-    this.siteUrl = metaValues.siteUrl
-    this.type = metaValues.type
-    this.siteName = metaValues.siteName
-    this.locale = metaValues.locale
-    this.themeColor = metaValues.themeColor
+  private async parseOpenGraph(url: string): Promise<OpenGraph> {
+    const parser = await ParserService.make(url, 'cheerio', this.query.opengraph)
 
-    this.siteUrl = this.checkUrl()
-    this.image = this.checkImage()
+    this.response = parser.response
+    this.fetchMeta = parser.fetchMeta
+    this.convertHtml(parser.metaValues ?? {})
+
+    return this
   }
 
-  private parseHtml(html?: string): MetaValues {
-    const $ = cheerio.load(html ?? '')
+  private checkUrl(url?: string): string | undefined {
+    let format: URL
 
-    const metaValues: MetaValues = {}
-    Object.entries(OpenGraphService.metaNodes()).forEach((el) => {
-      const entry = el[0] // e.g. title
-      const nodes: MetaNode[] = el[1]
-
-      nodes.forEach((node) => {
-        const current = $(node.query) // e.g. [property="og:title"]
-        const type = node.type as string // e.g. attr
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        const value = current[type](node.value) // e.g. content
-
-        // add into metaValues only if empty
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        if (!metaValues[entry])
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-expect-error
-          metaValues[entry] = value
-      })
-    })
-
-    return metaValues
-  }
-
-  private checkUrl(): string {
-    let url: URL
-
-    if (!this.siteUrl)
-      return this.originalUrl
+    if (!url)
+      return url
 
     try {
-      url = new URL(this.siteUrl)
+      format = new URL(url)
     }
     catch (error) {
-      url = new URL(this.originalUrl)
+      format = new URL(this.query.url ?? '')
     }
 
-    let current = url.href
+    let current = format.href
     current = current.replace(/\/$/, '')
 
     return current
   }
 
   private checkImage(): string | undefined {
-    const image = this.image
+    let image = this.model.image
 
     if (image && image.startsWith('/'))
-      return `${this.siteUrl}${image}`
+      image = `${this.model.siteUrl}${image}`
 
-    return this.image
+    image = this.cleanUrl(image)
+
+    return image
+  }
+
+  private cleanUrl(url?: string): string | undefined {
+    return url ? url.replace('//', '/') : undefined
   }
 }

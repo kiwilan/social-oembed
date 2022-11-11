@@ -15,6 +15,9 @@ const config = async () => {
     platform: 'node',
     target: 'esnext',
     format: 'esm',
+    define: {
+      'process.env.NODE_ENV_LOG': '"production"'
+    },
     outExtension: { '.js': '.mjs' },
     sourcemap: true,
     banner: {

@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 import esbuild from 'esbuild'
-import { load, transformSource } from './loader.js'
 
 const env = process.argv[2]
 

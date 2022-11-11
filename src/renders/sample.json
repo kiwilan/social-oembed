@@ -1,0 +1,96 @@
+{
+  "dailymotion": {
+    "label": "Vivaldi - Les 4 Saisons",
+    "url": "https://www.dailymotion.com/video/x1t5li3",
+    "short": "https://dai.ly/x1t5li3",
+    "embed": "https://www.dailymotion.com/embed/video/x1t5li3"
+  },
+  "instagram": {
+    "label": "operadeparis",
+    "profile": "https://www.instagram.com/operadeparis",
+    "url": "https://www.instagram.com/p/CjcnkEXMmSI",
+    "share": "https://www.instagram.com/reel/CjcnkEXMmSI",
+    "embed": "https://www.instagram.com/reel/CjcnkEXMmSI/?utm_source=ig_embed&amp;utm_campaign=loading",
+    "others": [
+      "https://www.instagram.com/reel/Cj7eZ35JPPK",
+      "https://www.instagram.com/reel/CjcnkEXMmSI"
+    ]
+  },
+  "facebook": {
+    "profile": "https://www.facebook.com/operadeparis",
+    "url": "https://www.facebook.com/operadeparis/videos/536238788377856",
+    "short": "https://fb.watch/ggYd_BtJ79",
+    "embed": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Foperadeparis%2Fvideos%2F536238788377856%2F&show_text=false&width=476&t=0",
+    "others": [
+      "https://www.facebook.com/operadeparis/posts/pfbid02XTQ4NjNTBysSVFvbGX6zH3AYCya6Jmu5KqZtAoTn6woHwHaCLxT9eATc3Pt2zmSDl"
+    ]
+  },
+  "flickr": {
+    "label": "Opera",
+    "url": "https://www.flickr.com/photos/jmlpyt/52419782706/in/photolist-2nTqZei-2nSa681-2nSN6m5-2nSAps9-2nUhL1U-2nSoBzm-2nTbu9B-2nShhsg-2nTAxTW-2nSTCxn-2nTtnAx-2nTHZLX-2nTR15a-2nU9WAe-2nQyt4v-2nPXSHW-2nP63Sf-2nRFz9W-2nS5dzE-2nRzwtk-2nQVwGX-2nSZbAr-2nNJrtJ-2nPfvqv-2nQF5PX-2nQF77p-2nPSyCz-2nTkzfw-2nTd2gL-2nPPo6U-2nQxHGt-2nRwHBj-2nT3NdH-2nSukFw-2nTyG4L-2nNFHvE-2nQkB7Y-2nT6ANM-2nT8nBS-2ietoZN-2nQbxPq-2nNFFXV-2nQTxYm-2nR9Z5u-2nNMz57-2nTuXr5-2nRbjHL-2nP1C8Y-2nRKsQt-2nTS2LB",
+    "short": "https://flic.kr/p/2nSa681",
+    "others": [
+      "https://www.flickr.com/photos/tonygongsydney/27813354642/in/photolist-E7diFY-EYFZiJ-JnLHkh-zEY1wo-2iJMiMz-2iwgA9Z-2iHb19Q-2kJZNCd-Y1Mp5n-2inZwGK-26HjzWy-21AxWQB-2iMyqbj-HcvLh5-2hHmfwq-E2VCeL-QP1XCd-2iibPm8-2krN55s-Jf7b8G-H1rqY-2iicbbE-2bt18rP-J2Uide-2hsCbe3-9SEBQ6-GSwhMG-LzchCV-W3URFN-ACNn7G-CA8z2z-2gVWXAW-uY3WFj-21hxKTm-2k7hN3E-2j3qqPD-J1haJD-2es1eUm-2h7SV6c-Bc62cf-2hyeckP-2jBtpHb-RAZMei-2j2BKw3-2ky8Ppy-2hiZYRF-HxuSvN-TVfKnG-UjfLpK-2k1kWri"
+    ]
+  },
+  "giphy": {
+    "label": "london theatre GIF",
+    "url": "https://giphy.com/gifs/phantomoftheopera-london-theatre-l41JFtLH0sRXjp22Q",
+    "embed": "https://giphy.com/embed/l41JFtLH0sRXjp22Q",
+    "share": "https://media.giphy.com/media/l41JFtLH0sRXjp22Q/giphy.gif",
+    "short": "http://gph.is/2vWK2OC?tc=1",
+    "others": [
+      "https://giphy.com/gifs/phantomoftheopera-the-phantom-of-opera-london-26AHw4qN1k1LJDb3y",
+      "https://giphy.com/gifs/halfasixpence-london-l0HlBxkwCUcjTjTMc"
+    ]
+  },
+  "imgur": {},
+  "kickstarter": {},
+  "linkedin": {},
+  "pinterest": {},
+  "reddit": {},
+  "snapchat": {},
+  "soundcloud": {},
+  "spotify": {
+    "label": "Les quatre saisons",
+    "url": "https://open.spotify.com/track/6xMpUNOfaSkyywPiFFXZFh",
+    "share": "https://open.spotify.com/track/6xMpUNOfaSkyywPiFFXZFh?si=0ac6060423d540ed",
+    "embed": "https://open.spotify.com/embed/track/6xMpUNOfaSkyywPiFFXZFh?utm_source=generator",
+    "track": "https://open.spotify.com/track/7HS4gcV9uraDTvnjEaZ3Rv",
+    "album": "https://open.spotify.com/album/3JqX5g07TbeiF0NEK7eYl0",
+    "artist": "https://open.spotify.com/artist/2M4eNCvV3CJUswavkhAQg2",
+    "playlist": "https://open.spotify.com/playlist/7foVOxUPEXUOsuLnoBqHLF",
+    "others": []
+  },
+  "ted": {},
+  "tumblr": {},
+  "tiktok": {
+    "label": "ASMR mrnatasmr",
+    "url": "https://www.tiktok.com/@mrnatasmr/video/7155146642000219398?is_copy_url=1&is_from_webapp=v1",
+    "direct": "https://www.tiktok.com/@mrnatasmr/video/7155146642000219398"
+  },
+  "twitch": {},
+  "twitter": {
+    "label": "Ballet Opéra Paris",
+    "profile": "https://twitter.com/balletoparis",
+    "profile_link": "https://twitter.com/BalletOParis?s=20&t=kZTtgbvNXVIVkUR5zwNeIw",
+    "url": "https://twitter.com/BalletOParis/status/1580947790250721283",
+    "embed": "https://twitter.com/BalletOParis/status/1580947790250721283?ref_src=twsrc%5Etfw"
+  },
+  "vimeo": {
+    "label": "",
+    "profile": "https://vimeo.com/operagaller",
+    "url": "https://vimeo.com/600970110",
+    "embed": "https://player.vimeo.com/video/600970110?h=f3f6997aba",
+    "others": [
+      "https://vimeo.com/135419730",
+      "https://vimeo.com/274833676"
+    ]
+  },
+  "youtube": {
+    "label": "Les Quatre Saisons de Antonio Vivaldi",
+    "url": "https://www.youtube.com/watch?v=C243DQBfjho",
+    "embed": "https://www.youtube.com/embed/C243DQBfjho",
+    "short": "https://youtu.be/C243DQBfjho"
+  }
+}
