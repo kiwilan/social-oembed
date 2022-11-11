@@ -26,7 +26,7 @@
 
 ------
 
-> **Warning** .
+> **Warning**  
 > In early development, not stable.
 
 ## Why ?
