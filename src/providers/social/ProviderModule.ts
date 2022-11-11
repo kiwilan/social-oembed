@@ -52,7 +52,7 @@ export default abstract class ProviderModule {
       this.openGraph = await this.setResponse()
     }
     else {
-      if (this.params.fetch === 'oembed')
+      if (this.params.fetch === 'fetch')
         this.openGraph = await this.setResponse()
 
       if (this.params.fetch === 'opengraph' || this.params.fetch === 'nofetch') {

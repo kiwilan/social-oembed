@@ -45,17 +45,44 @@ With oEmbed, it's really complicated, each social network have their own API, wi
 
 - OpenGraph
   - Dark mode with `dark=true` query parameter
-  - Twitter card query with `twitter=true` query parameter
+  - Twitter card query with `opengraph=twitter` query parameter
   - Opiniated HTML render
 - oEmbed
-  - Social network providers: Dailymotion *all*, Instagram *partial*, Facebook *partial*, Flickr, Giphy, Imgur, Kickstarter, LinkedIn, Pinterest, Reddit, Snapchat, Soundcloud, Spotify *all*, TED, Tumblr, TikTok *all* (force fetching), Twitch, Twitter *all* (force fetching), Vimeo, YouTube *partial*
-  - No fetch option with `oembed=nofetch` query parameter (by default)
-  - Fallback on OpenGraph
-  - Opiniated HTML render
-  - [ ] Smart queries for oEmbed API (customize render for each social network)
-- [ ] Host your own instance
-  - [ ] Docker
-- Middleware (auth with `api_key` query parameter or `Bearer token`, `url` query parameter)
+  - Social network providers
+  - Fallback on OpenGraph if no oEmbed provider
+  - HTML render
+    - Rebuilt HTML iframe from `url` query parameter (`oembed=nofetch`) : use some rules to find media ID from URL and rebuild HTML iframe without external request
+    - Get HTML and metadata from oEmbed API (`oembed=fetch`) : some API have request limit or API key limit, if request is rejected, fallback on OpenGraph
+    - Get metadata from website (`oembed=opengraph`) : some social networks use a lot of JavaScript, crawl can be limited
+  - Smart queries, customize render for each social network [ ]
+- Host your own instance [ ]
+  - Docker [ ]
+- Middleware
+  - auth with `api_key` query parameter or `Bearer token`
+  - `url` query parameter
+
+### Social providers
+
+- [x] Dailymotion: regex
+- [x] Instagram: regex
+- [x] Facebook: regex
+- [ ] Flickr
+- [ ] Giphy
+- [ ] Imgur
+- [ ] Kickstarter
+- [ ] Linkedin
+- [ ] Pinterest
+- [ ] Reddit
+- [ ] Snapchat
+- [ ] Soundcloud
+- [x] Spotify: regex, API
+- [ ] Ted
+- [ ] Tumblr
+- [x] Tiktok: regex, API
+- [ ] Twitch
+- [x] Twitter: regex, API
+- [ ] Vimeo
+- [x] Youtube: regex
 
 ### Roadmap
 
@@ -180,34 +207,6 @@ height?: string
 social: Social
 embedUrl?: string # oEmbed only
 render: string
-```
-
-#### `Social` object
-
-This data represent social networks supported.
-
-```yaml
-dailymotion
-instagram
-facebook
-flickr
-giphy
-imgur
-kickstarter
-linkedin
-pinterest
-reddit
-snapchat
-soundcloud
-spotify
-ted
-tumblr
-tiktok
-twitch
-twitter
-vimeo
-youtube
-unknown
 ```
 
 ### `meta` object
