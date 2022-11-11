@@ -18,7 +18,10 @@ const apiRoute = async (fastify: FastifyInstance) => {
     method: 'GET',
     url: getRoute('/api'),
     schema,
-    async handler(req) {
+    async handler(req, reply) {
+      reply.header('content-type', 'application/json')
+      reply.header('Access-Control-Allow-Origin', '*')
+
       console.log(req.headers)
       const api = ApiService.make(req)
       const response = api.get()
