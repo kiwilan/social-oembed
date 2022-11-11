@@ -1,7 +1,7 @@
 import type { FetchType } from './http'
 import type { ProviderFetch } from './social'
 
-export type Endpoint = '/' | '/docs' | '/api'
+export type Endpoint = '/' | '/instance' | '/api'
 
 enum ApiQueryFormatEnum {
   opengraph = 'opengraph',
@@ -63,7 +63,7 @@ export interface ApiResponseMeta {
   url: string
   format: Format
   message?: string
-  docs: string
+  instance: string
   fetch: FetchMeta
 }
 

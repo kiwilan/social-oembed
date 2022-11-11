@@ -4,7 +4,7 @@ import type { Instance } from '~/types'
 import InstanceConfig from '~/utils/InstanceConfig'
 import { getRoute } from '~/utils/Route'
 
-const docs = async (fastify: FastifyInstance) => {
+const instanceRoute = async (fastify: FastifyInstance) => {
   const schema: FastifySchema = {
     response: {
       200: {
@@ -17,7 +17,7 @@ const docs = async (fastify: FastifyInstance) => {
 
   fastify.route({
     method: 'GET',
-    url: getRoute('/docs'),
+    url: getRoute('/instance'),
     schema,
     async handler() {
       return {
@@ -27,4 +27,4 @@ const docs = async (fastify: FastifyInstance) => {
   })
 }
 
-export default docs
+export default instanceRoute

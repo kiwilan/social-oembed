@@ -10,7 +10,7 @@ const root: FastifyPluginAsync = async (fastify): Promise<void> => {
         meta: {
           routes: {
             api: route('/api'),
-            docs: route('/docs'),
+            instance: route('/instance'),
           }
         }
       }

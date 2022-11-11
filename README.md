@@ -26,7 +26,7 @@
 
 ------
 
-> **Warning** .
+> **Warning**  
 > In early development, not stable.
 
 ## Why ?
@@ -110,7 +110,7 @@ GET /api
 | `api_key` | `string`              | Depend of `.env` `API_KEY` variable | API key.                                  |
 
 ```http
-GET /docs
+GET /instance
 ```
 
 Information about API.
@@ -216,7 +216,7 @@ unknown
 url: string # original url
 format: string # opengraph or oembed
 message: string # error message
-docs: string # documentation url
+instance: string # documentation url
 fetch:
   message: string
   status: number
