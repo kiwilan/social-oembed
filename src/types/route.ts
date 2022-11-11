@@ -63,7 +63,7 @@ export interface ApiResponseMeta {
   url: string
   format: Format
   message?: string
-  docs: string
+  instance: string
   fetch: FetchMeta
 }
 

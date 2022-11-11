@@ -101,7 +101,7 @@ export default class ApiService {
         url: this.query.url ?? '',
         format: this.formatResponse?.format ?? 'opengraph',
         message,
-        docs: route('/docs'),
+        instance: route('/instance'),
         fetch: this.formatResponse?.fetchMeta ?? {}
       }
     }

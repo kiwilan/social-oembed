@@ -107,6 +107,12 @@ export default class Dotenv {
           domains.push(`https://${domainParsed}`)
         }
 
+        if (domain.includes('localhost')) {
+          const localhostIP = domain.replace('localhost', '127.0.0.1')
+          domains.push(`http://${localhostIP}`)
+          domains.push(`https://${localhostIP}`)
+        }
+
         domains.push(`http://${domain}`)
         domains.push(`https://${domain}`)
       })

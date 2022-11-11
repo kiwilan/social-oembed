@@ -19,6 +19,7 @@ const apiRoute = async (fastify: FastifyInstance) => {
     url: getRoute('/api'),
     schema,
     async handler(req) {
+      console.log(req.headers)
       const api = ApiService.make(req)
       const response = api.get()
 

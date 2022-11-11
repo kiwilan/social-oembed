@@ -6,13 +6,13 @@ specifiers:
   '@commitlint/config-conventional': ^17.2.0
   '@commitlint/cz-commitlint': ^17.2.0
   '@fastify/autoload': ^5.4.1
-  '@fastify/cors': ^8.1.1
+  '@fastify/cors': ^8.2.0
   '@fastify/env': ^4.1.0
   '@fastify/helmet': ^10.0.2
   '@fastify/middie': ^8.0.0
   '@fastify/sensible': ^5.1.1
   '@fastify/swagger': ^8.1.0
-  '@sinclair/typebox': ^0.25.2
+  '@sinclair/typebox': ^0.25.8
   '@types/connect': ^3.4.35
   '@types/node': ^18.11.9
   '@types/node-fetch': ^2.6.2
@@ -25,11 +25,11 @@ specifiers:
   eslint: ^8.27.0
   fastify: ^4.9.2
   fastify-plugin: ^4.3.0
-  husky: ^8.0.1
+  husky: ^8.0.2
   inquirer: ^9.1.4
   json-schema-to-ts: ^2.6.0
   lint-staged: 13.0.3
-  node-fetch: ^3.2.10
+  node-fetch: ^3.3.0
   pino: ^8.7.0
   pino-pretty: ^9.1.1
   puppeteer: ^19.2.2
@@ -40,22 +40,22 @@ specifiers:
   standard-version: ^9.5.0
   thread-stream: ^2.2.0
   tiny-glob: ^0.2.9
-  tsx: ^3.11.0
+  tsx: ^3.12.0
   typescript: ^4.8.4
 
 dependencies:
   '@fastify/autoload': 5.4.1
-  '@fastify/cors': 8.1.1
+  '@fastify/cors': 8.2.0
   '@fastify/env': 4.1.0
   '@fastify/helmet': 10.0.2
   '@fastify/middie': 8.0.0
   '@fastify/sensible': 5.1.1
   '@fastify/swagger': 8.1.0
-  '@sinclair/typebox': 0.25.2
+  '@sinclair/typebox': 0.25.8
   cheerio: 1.0.0-rc.12
   fastify: 4.9.2
   fastify-plugin: 4.3.0
-  node-fetch: 3.2.10
+  node-fetch: 3.3.0
   puppeteer: 19.2.2
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -76,7 +76,7 @@ devDependencies:
   esbuild: 0.15.13
   esbuild-plugin-pino: 1.2.5
   eslint: 8.27.0
-  husky: 8.0.1
+  husky: 8.0.2
   inquirer: 9.1.4
   json-schema-to-ts: 2.6.0
   lint-staged: 13.0.3
@@ -85,7 +85,7 @@ devDependencies:
   standard-version: 9.5.0
   thread-stream: 2.2.0
   tiny-glob: 0.2.9
-  tsx: 3.11.0
+  tsx: 3.12.0
   typescript: 4.8.4
 
 packages:
@@ -102,7 +102,7 @@ packages:
       eslint-plugin-import: 2.26.0_jnohwm7eexgw7uduhweedcbnpe
       eslint-plugin-jsonc: 2.5.0_eslint@8.27.0
       eslint-plugin-markdown: 3.0.0_eslint@8.27.0
-      eslint-plugin-n: 15.5.0_eslint@8.27.0
+      eslint-plugin-n: 15.5.1_eslint@8.27.0
       eslint-plugin-no-only-tests: 3.1.0
       eslint-plugin-promise: 6.1.1_eslint@8.27.0
       eslint-plugin-unicorn: 43.0.2_eslint@8.27.0
@@ -162,7 +162,7 @@ packages:
       eslint-plugin-html: 7.1.0
       eslint-plugin-import: 2.26.0_jnohwm7eexgw7uduhweedcbnpe
       eslint-plugin-jsonc: 2.5.0_eslint@8.27.0
-      eslint-plugin-n: 15.5.0_eslint@8.27.0
+      eslint-plugin-n: 15.5.1_eslint@8.27.0
       eslint-plugin-promise: 6.1.1_eslint@8.27.0
       eslint-plugin-unicorn: 43.0.2_eslint@8.27.0
       eslint-plugin-vue: 9.7.0_eslint@8.27.0
@@ -453,11 +453,11 @@ packages:
       pkg-up: 3.1.0
     dev: false
 
-  /@fastify/cors/8.1.1:
-    resolution: {integrity: sha512-YpkNonoJtn7Zcq2uyh0bFPcjW+njWZ9rz5gl8o5NDUvpBIPjg5m/3IHvsq91Pp/fFhLL7XgVOUyk+gMl8tb5FQ==}
+  /@fastify/cors/8.2.0:
+    resolution: {integrity: sha512-qDgwpmg6C4D0D3nh8MTMuRXWyEwPnDZDBODaJv90FP2o9ukbahJByW4FtrM5Bpod5KbTf1oIExBmpItbUTQmHg==}
     dependencies:
       fastify-plugin: 4.3.0
-      mnemonist: 0.39.4
+      mnemonist: 0.39.5
     dev: false
 
   /@fastify/deepmerge/1.1.0:
@@ -582,8 +582,8 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@sinclair/typebox/0.25.2:
-    resolution: {integrity: sha512-QWjo2shO8oUWM6rSwIz7tUY8+WxP0fhUYQvaFA5eq+sECaQjQaRZIBXgWhWzzsB+lbgjljB1zRFfyX8mudn1gQ==}
+  /@sinclair/typebox/0.25.8:
+    resolution: {integrity: sha512-/7GXgMOCfnxpIov52cPetqQ7bxRBaTBJAgp04Se2UQB1J0vUfEOIMpn63cLc3S5JXDUflCWxELKDV8eiPpmUTQ==}
     dev: false
 
   /@tsconfig/node10/1.0.9:
@@ -956,8 +956,8 @@ packages:
     resolution: {integrity: sha512-c5AMf34bKdvPhQ7tBGhqkgKNUzMr4WUs+WDtC2ZUGOUncbxKMTvqxYctiseW3+L4bA8ec+GcZ6/A/FW4m8ukng==}
     dev: true
 
-  /array-includes/3.1.5:
-    resolution: {integrity: sha512-iSDYZMMyTPkiFasVqfuAQnWAYcvO/SeBSCGKePoEthjp4LEMTe4uLc7b025o4jAZpHhihh8xPo99TNWUWWkGDQ==}
+  /array-includes/3.1.6:
+    resolution: {integrity: sha512-sgTbLvL6cNnw24FnbaDyjmvddQ2ML8arZsgaJhoABMoplz/4QRhtrYS+alr1BUM1Bwp6dhx8vVCBSLG+StwOFw==}
     engines: {node: '>= 0.4'}
     dependencies:
       call-bind: 1.0.2
@@ -1501,8 +1501,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
-      is-text-path: 1.0.1
       JSONStream: 1.3.5
+      is-text-path: 1.0.1
       lodash: 4.17.21
       meow: 8.1.2
       split2: 3.2.2
@@ -1819,7 +1819,7 @@ packages:
     dev: true
 
   /ee-first/1.1.1:
-    resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
+    resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: false
 
   /emoji-regex/8.0.0:
@@ -1882,8 +1882,8 @@ packages:
       object.assign: 4.1.4
       regexp.prototype.flags: 1.4.3
       safe-regex-test: 1.0.0
-      string.prototype.trimend: 1.0.5
-      string.prototype.trimstart: 1.0.5
+      string.prototype.trimend: 1.0.6
+      string.prototype.trimstart: 1.0.6
       unbox-primitive: 1.0.2
     dev: true
 
@@ -2226,7 +2226,7 @@ packages:
         optional: true
     dependencies:
       '@typescript-eslint/parser': 5.42.1_rmayb2veg2btbq6mbmnyivgasy
-      array-includes: 3.1.5
+      array-includes: 3.1.6
       array.prototype.flat: 1.3.1
       debug: 2.6.9
       doctrine: 2.1.0
@@ -2270,8 +2270,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-n/15.5.0_eslint@8.27.0:
-    resolution: {integrity: sha512-VCqQiZDpdm1Q9grnvy+XsENZoXDgTLqPHRQwgl9qFNNgTKR4YEnQOMN0pFB/9TbmrQ88jdeTnqTcNwRvjqMOtg==}
+  /eslint-plugin-n/15.5.1_eslint@8.27.0:
+    resolution: {integrity: sha512-kAd+xhZm7brHoFLzKLB7/FGRFJNg/srmv67mqb7tto22rpr4wv/LV6RuXzAfv3jbab7+k1wi42PsIhGviywaaw==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       eslint: '>=7.0.0'
@@ -3154,8 +3154,8 @@ packages:
     engines: {node: '>=12.20.0'}
     dev: true
 
-  /husky/8.0.1:
-    resolution: {integrity: sha512-xs7/chUH/CKdOCs7Zy0Aev9e/dKOMZf3K1Az1nar3tzlv0jfqnYtu235bstsWTmXOR0EfINrPa97yy4Lz6RiKw==}
+  /husky/8.0.2:
+    resolution: {integrity: sha512-Tkv80jtvbnkK3mYWxPZePGFpQ/tT3HNSs/sasF9P2YfkMezDl3ON37YN6jUUI4eTg5LcyVynlb6r4eyvOmspvg==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
@@ -3870,8 +3870,8 @@ packages:
     resolution: {integrity: sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==}
     dev: false
 
-  /mnemonist/0.39.4:
-    resolution: {integrity: sha512-WlE2Ugow1ENH5un0OthjsjpJb/nbkUQ/jUOHtZUqh58JNzEHNxkm0tIFRAoExsANW/fTN/rxBUMFY/7jPDvxdQ==}
+  /mnemonist/0.39.5:
+    resolution: {integrity: sha512-FPUtkhtJ0efmEFGpU14x7jGbTB+s18LrzRL2KgoWz9YvcY3cPomz8tih01GbHwnGk/OmkOKfqd/RAQoc8Lm7DQ==}
     dependencies:
       obliterator: 2.0.4
     dev: false
@@ -3923,8 +3923,8 @@ packages:
       whatwg-url: 5.0.0
     dev: false
 
-  /node-fetch/3.2.10:
-    resolution: {integrity: sha512-MhuzNwdURnZ1Cp4XTazr69K0BTizsBroX7Zx3UgDSVcZYKF/6p0CBe4EUb/hLqmzVhl0UpYfgRljQ4yxE+iCxA==}
+  /node-fetch/3.3.0:
+    resolution: {integrity: sha512-BKwRP/O0UvoMKp7GNdwPlObhYGB5DQqwhEDQlNKuoqwVYSxkSZCSbHjnFFmUEtwSKRPU4kNK8PbDYYitwaE3QA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       data-uri-to-buffer: 4.0.0
@@ -4918,16 +4918,16 @@ packages:
       strip-ansi: 7.0.1
     dev: true
 
-  /string.prototype.trimend/1.0.5:
-    resolution: {integrity: sha512-I7RGvmjV4pJ7O3kdf+LXFpVfdNOxtCW/2C8f6jNiW4+PQchwxkCDzlk1/7p+Wl4bqFIZeF47qAHXLuHHWKAxog==}
+  /string.prototype.trimend/1.0.6:
+    resolution: {integrity: sha512-JySq+4mrPf9EsDBEDYMOb/lM7XQLulwg5R/m1r0PXEFqrV0qHvl58sdTilSXtKOflCsK2E8jxf+GKC0T07RWwQ==}
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.4
       es-abstract: 1.20.4
     dev: true
 
-  /string.prototype.trimstart/1.0.5:
-    resolution: {integrity: sha512-THx16TJCGlsN0o6dl2o6ncWUsdgnLRSA23rRE5pyGBw/mLr3Ej/R2LaqCtgP8VNMGZsvMWnf9ooZPyY2bHvUFg==}
+  /string.prototype.trimstart/1.0.6:
+    resolution: {integrity: sha512-omqjMDaY92pbn5HOX7f9IccLA+U1tA9GvtU4JrodiXFfYB7jPzzHpRzpglLAjtUV6bB557zwClJezTqnAiYnQA==}
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.4
@@ -5172,8 +5172,8 @@ packages:
       typescript: 4.8.4
     dev: true
 
-  /tsx/3.11.0:
-    resolution: {integrity: sha512-q+q4xxu41+AafVwvAGqtNJ1ekPFd33ZhTMXvgIpHMqv/W89efwDRE9IyjhEAZm5iTHsshKaf1BYWSk789BrNCA==}
+  /tsx/3.12.0:
+    resolution: {integrity: sha512-Z9drA8U1/jRJRWVTS2rOwdsCfkAShwfYBlE+6BVZsZChDsgYsEZZe44MGNNK6V6wQTTtu1kRNV57MsKRMJfdpg==}
     hasBin: true
     dependencies:
       '@esbuild-kit/cjs-loader': 2.4.0
