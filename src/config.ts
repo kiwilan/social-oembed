@@ -107,15 +107,15 @@ const start = async (fastify: FastifyInstance) => {
 
     const dotenv = Dotenv.make()
 
-    await fastify.register(cors, {
-      // origin: dotenv.origin,
-      origin: '*',
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-      // allowedHeaders: ['Content-Type', 'Accept', 'Origin', 'Authorization', 'X-Requested-With', 'Access-Control-Allow-Origin'],
-      allowedHeaders: ['*'],
-      credentials: true,
-      maxAge: 86400
-    })
+    // await fastify.register(cors, {
+    //   // origin: dotenv.origin,
+    //   origin: '*',
+    //   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    //   // allowedHeaders: ['Content-Type', 'Accept', 'Origin', 'Authorization', 'X-Requested-With', 'Access-Control-Allow-Origin'],
+    //   allowedHeaders: ['*'],
+    //   credentials: true,
+    //   maxAge: 86400
+    // })
 
     const port = dotenv.config.API_PORT
     await fastify.listen({ port })
