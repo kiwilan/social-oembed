@@ -4,7 +4,7 @@ import type { ApiResponseMeta } from '~/types/route'
 import ApiService from '~/services/ApiService'
 import { getRoute } from '~/utils/Route'
 
-const docs = async (fastify: FastifyInstance) => {
+const apiRoute = async (fastify: FastifyInstance) => {
   const schema: FastifySchema = {
     response: {
       200: {
@@ -27,4 +27,4 @@ const docs = async (fastify: FastifyInstance) => {
   })
 }
 
-export default docs
+export default apiRoute
