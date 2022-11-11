@@ -91,7 +91,16 @@ const start = async (fastify: FastifyInstance) => {
     })
 
     fastify.addHook('onRequest', async (request, reply) => {
-      Middleware.make(request, reply)
+      const instance = Middleware.make(request, reply)
+
+      if (instance.abort) {
+        reply.type('application/json')
+          .code(instance.code)
+          .send(JSON.stringify({
+            status: instance.code,
+            message: instance.message
+          }))
+      }
     })
 
     await fastify.after()

@@ -40,7 +40,7 @@
     "cz": "cz",
     "release": "standard-version --no-verify",
     "release:patch": "standard-version --no-verify --release-as patch",
-    "pm2": "pm2 start --name 'social-oembed' './dist/index.mjs'"
+    "pm2": "pm2 start --name 'social-oembed' './build/index.mjs'"
   },
   "dependencies": {
     "@fastify/autoload": "^5.4.1",

@@ -6,11 +6,12 @@ export default class Middleware {
     protected request: FastifyRequest,
     protected reply: FastifyReply,
     protected query: Record<string, string>,
-    protected abort = false,
-    protected message?: string,
+    public abort = false,
+    public code = 500,
+    public message?: string,
   ) {}
 
-  public static make(request: FastifyRequest, reply: FastifyReply) {
+  public static make(request: FastifyRequest, reply: FastifyReply): Middleware {
     const query = request.query as Record<string, string>
     const instance = new Middleware(request, reply, query)
 
@@ -19,8 +20,7 @@ export default class Middleware {
       instance.checkUrl()
     }
 
-    if (instance.abort)
-      reply.badRequest(instance.message)
+    return instance
   }
 
   private checkApiKey() {
@@ -50,6 +50,7 @@ export default class Middleware {
         this.message = `${currentAuth} is invalid (if you want, you can use ${altAuth} too).`
         this.abort = true
       }
+      this.code = 400
     }
   }
 
@@ -57,6 +58,7 @@ export default class Middleware {
     if (this.query?.url === undefined) {
       this.message = '`url` query is required.'
       this.abort = true
+      this.code = 400
     }
   }
 }
