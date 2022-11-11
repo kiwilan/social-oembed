@@ -31,11 +31,11 @@
 
 ## Why ?
 
-[OpenGraph](https://ogp.me/) protocol offer a way to get meta data from a website to display a nice preview in social media and [oEmbed](https://oembed.com/) offer to display an iframe from another website like social network. To get OpenGraph data from any website, you have to crawl it to extract metadata, for oEmbed, each social network have their own API to get the iframe.
+[OpenGraph](https://ogp.me/) protocol offer a way to get meta data from a website to display a nice preview in social media and [oEmbed](https://oembed.com/) offer to display an iframe from another website like social network.
 
-With OpenGraph, from JavaScript application, on client side, you can't parse a website, you have to call an API to get these data, some services offer this API, but mostly aren't open source. About these services, you can find [opengraph.io](https://www.opengraph.io/) (free with API limit requests) or [iframely](https://iframely.com/) (with own hosted solution).
+With OpenGraph, from JavaScript application, on client side, you can't crawl website to extract metadata, you have to call an API to get these data, some services offer this API, but mostly aren't open source. About these services, you can find [opengraph.io](https://www.opengraph.io/) (free with API limit requests) or [iframely](https://iframely.com/) (with own hosted solution).
 
-With oEmbed, it's really complicated, each social network have their own API, with some limitations (Instagram or Facebook for example), some services offer to get these data but you have to pay for it, and it's really expensive ([smashballoon](https://smashballoon.com/), [embedsocial](https://embedsocial.com/)...). Only [iframely](https://iframely.com/) offer a free plan with some limitations, with own hosted, but you can't access to Instagram or Facebook cause by [Meta limitations](https://www.nosto.com/blog/instagram-api-limit/)*.
+With oEmbed, it's really complicated, each social network have their own API, with some limitations, some services offer to get these data but you have to pay for it, and it's really expensive ([smashballoon](https://smashballoon.com/), [embedsocial](https://embedsocial.com/)...). Only [iframely](https://iframely.com/) offer a free plan with some limitations, with own hosted, but with some limitations with Instagram or Facebook cause by [Meta](https://www.nosto.com/blog/instagram-api-limit/)*.
 
 **This project is an attempt to offer a free (with own hosted solution) and open source API to get OpenGraph and oEmbed data.**
 
@@ -45,35 +45,17 @@ With oEmbed, it's really complicated, each social network have their own API, wi
 
 - OpenGraph
   - Dark mode with `dark=true` query parameter
-  - [ ] Twitter card query with `twitter=true` query parameter
-- oEmbed with fallback
-  - [x] Dailymotion *all*
-  - [x] Instagram *partial*
-  - [x] Facebook *partial*
-  - [ ] Flickr
-  - [ ] Giphy
-  - [ ] Imgur
-  - [ ] Kickstarter
-  - [ ] LinkedIn
-  - [ ] Pinterest
-  - [ ] Reddit
-  - [ ] Snapchat
-  - [ ] Soundcloud
-  - [x] Spotify *all*
-  - [ ] TED
-  - [ ] Tumblr
-  - [x] TikTok *all* (force fetching)
-  - [ ] Twitch
-  - [x] Twitter *all* (force fetching)
-  - [x] Vimeo
-  - [x] YouTube *partial*
-- HTML rendering for OpenGraph and oEmbed
-- [ ] Smart queries for oEmbed API (customize render for each social network)
+  - Twitter card query with `twitter=true` query parameter
+  - Opiniated HTML render
+- oEmbed
+  - Social network providers: Dailymotion *all*, Instagram *partial*, Facebook *partial*, Flickr, Giphy, Imgur, Kickstarter, LinkedIn, Pinterest, Reddit, Snapchat, Soundcloud, Spotify *all*, TED, Tumblr, TikTok *all* (force fetching), Twitch, Twitter *all* (force fetching), Vimeo, YouTube *partial*
+  - No fetch option with `oembed=nofetch` query parameter (by default)
+  - Fallback on OpenGraph
+  - Opiniated HTML render
+  - [ ] Smart queries for oEmbed API (customize render for each social network)
 - [ ] Host your own instance
-- [ ] Docker
-- [x] Middleware
-  - api_key / Bearer token
-  - url
+  - [ ] Docker
+- Middleware (auth with `api_key` query parameter or `Bearer token`, `url` query parameter)
 
 ### Roadmap
 
@@ -101,7 +83,7 @@ With oEmbed, it's really complicated, each social network have their own API, wi
 - [ ] Documentation
   - [ ] Usage from JS client side with fetch
   - [x] Usage response example, typescript interfaces
-  - [ ] Usage oembed
+  - [x] Usage oembed
   - [ ] Social networks providers specs
   - [ ] examples alpinejs/react/vuejs
   - [ ] Deploy nginx and pm2 docs

@@ -12,7 +12,7 @@ export default abstract class ProviderModule {
       matches: [],
       query: { format: 'opengraph', url: '' },
       url: '',
-      fetch: 'empty'
+      fetch: 'nofetch'
     },
     public module: IProviderModule = {
       endpoint: undefined,
@@ -39,7 +39,7 @@ export default abstract class ProviderModule {
   protected abstract setIdentifiers(): ISocialIdentifier
   protected abstract setResponse(): Promise<IOpenGraph>
 
-  public async make(query: IApiRouteQuery, fetch: ProviderFetch = 'empty') {
+  public async make(query: IApiRouteQuery, fetch: ProviderFetch = 'nofetch') {
     this.params = this.setParams(query, fetch)
     this.module = this.init()
     this.params.matches = this.setMatches()
@@ -55,7 +55,7 @@ export default abstract class ProviderModule {
       if (this.params.fetch === 'oembed')
         this.openGraph = await this.setResponse()
 
-      if (this.params.fetch === 'opengraph' || this.params.fetch === 'empty') {
+      if (this.params.fetch === 'opengraph' || this.params.fetch === 'nofetch') {
         const og = await OpenGraph.make(this.params.query)
         this.openGraph = og.getOpenGraph()
         this.fetchMeta = og.getFetchMeta()

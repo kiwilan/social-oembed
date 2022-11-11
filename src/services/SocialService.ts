@@ -30,7 +30,7 @@ export default class SocialService {
     protected provider: ProviderModule,
   ) {}
 
-  public static async make(query: IApiRouteQuery, fetch: ProviderFetch = 'empty'): Promise<SocialService> {
+  public static async make(query: IApiRouteQuery, fetch: ProviderFetch = 'nofetch'): Promise<SocialService> {
     const type = SocialService.find(query.url)
 
     const providers: ISocial<() => ProviderModule> = {

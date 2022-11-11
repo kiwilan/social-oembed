@@ -2,7 +2,7 @@ import type { IApiData, IOpenGraph } from './api'
 import type { ApiQueryFormat, IApiRouteQuery } from './route'
 import type ProviderModule from '~/providers/social/ProviderModule'
 
-export type ProviderFetch = 'oembed' | 'opengraph' | 'empty'
+export type ProviderFetch = 'oembed' | 'opengraph' | 'nofetch'
 export interface ProviderParams {
   url: string
   query: IApiRouteQuery
