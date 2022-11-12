@@ -5,7 +5,7 @@
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/social-oembed.png">
       <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/social-oembed.png">
-      <img alt="Social oEmbed" src="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/social-oembed.png" width="100%" height="120" style="max-width: 100%;">
+      <img alt="Social oEmbed" src="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/social-oembed.png" width="100%" height="120" style="max-width: 100%;object-fit: cover">
     </picture>
   </a>
 </p>
