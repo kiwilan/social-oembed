@@ -68,8 +68,6 @@ export const routeBuilder = (req: FastifyRequest): Route => {
   // const queryObject = {}
   // params.forEach((value, key) => {
   //   if (queryObject) {
-  //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //     // @ts-expect-error
   //     queryObject[key] = value
   //   }
   // })
