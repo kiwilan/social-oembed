@@ -35,7 +35,7 @@ export default class ApiService {
       api_key: apiKey,
       dark: query?.dark === 'true' || false,
       opengraph: query?.opengraph as QueryOpenGraph || 'all',
-      oembed: query?.oembed as ProviderFetch || 'empty',
+      oembed: query?.oembed as ProviderFetch || 'nofetch',
       format: query?.format as ApiQueryFormat || 'opengraph',
       url: query?.url || 'unkown',
       align: query?.align as TwitterAlign ?? 'center',
