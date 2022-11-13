@@ -4,3 +4,4 @@ dist
 .env
 src/package.json
 src/providers/.DS_Store
+.DS_Store
