@@ -29,7 +29,7 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "check:types": "tsc --noEmit",
+    "check:types": "npm run config && tsc --noEmit",
     "config": "node build.js",
     "dev": "npm run config && tsx watch src .env",
     "build": "rimraf build && npm run config && tsx esbuild.ts && npm run check:types",
