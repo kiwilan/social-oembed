@@ -1,26 +1,28 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './index.css'
-import SocialOEmbed from './components/SocialOEmbed'
-import SocialTiktok from './components/social-tiktok'
-import SocialInstagram from './components/social-instagram'
-import { oembeds, openGraphs } from './soe-data'
+import Layout from './views/layout'
+import Home from './views/home'
+import Oembed from './views/oembed'
+import Opengraph from './views/opengraph'
+import Post from './views/post'
+import Error from './views/error'
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <div className="space-y-5 my-5 max-w-2xl mx-auto">
-    {openGraphs.map((data, i) => (
-      <div key={i}>
-        <div>{data.name} (OpenGraph)</div>
-        <SocialOEmbed url={data.url} />
-      </div>
-    ))}
-    {oembeds.map((data, i) => (
-      <div key={i}>
-        <div>{data.name} (oEmbed)</div>
-        <SocialOEmbed url={data.url} oembed />
-      </div>
-    ))}
-    {/* <SocialInstagram /> */}
-    {/* <SocialTiktok /> */}
-  </div>
-)
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="oembed" element={<Oembed />} />
+          <Route path="opengraph" element={<Opengraph />} />
+          <Route path="post" element={<Post />} />
+          <Route path="*" element={<Error />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  )
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+root.render(<App />)

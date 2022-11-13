@@ -137,7 +137,7 @@ export default class ParserService {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
         const value: object | undefined = current[type](node.value) // e.g. content
-        if (value) {
+        if (value && meta[node.name] === undefined) {
           const nodeValue = value as { name?: string; content?: string }
           meta[node.name] = nodeValue?.content
         }

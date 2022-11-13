@@ -4,8 +4,11 @@ module.exports = {
     './index.html',
     './src/**/*.{js,ts,jsx,tsx,html}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }

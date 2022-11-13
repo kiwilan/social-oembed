@@ -5,7 +5,7 @@
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/social-oembed.png">
       <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/social-oembed.png">
-      <img alt="Social oEmbed" src="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/social-oembed.png" width="100%" height="120" style="max-width: 100%;">
+      <img alt="Social oEmbed" src="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/social-oembed.png" width="100%" height="90" style="max-width: 100%;object-fit: contain">
     </picture>
   </a>
 </p>
@@ -115,6 +115,8 @@ With oEmbed, it's really complicated, each social network have their own API, wi
   - [ ] examples alpinejs/react/vuejs
   - [ ] Deploy nginx and pm2 docs
 - [ ] Vite with <https://github.com/fastify/fastify-dx>
+- [ ] social providers like <https://iframely.com/links>
+- [ ] meta crawler like <https://debug.iframely.com> and <https://iframely.com/embed>
 - [ ] Use Mongo to cache data
 - [ ] Use [Bun](https://bun.sh/) when it will be stable
 

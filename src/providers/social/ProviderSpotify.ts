@@ -13,7 +13,7 @@ export default class ProviderSpotify extends ProviderModule {
       social: 'spotify' as Social,
       regex: /^(https:\/\/open.spotify.com\/|user:track:album:artist:playlist:)([a-zA-Z0-9]+)(.*)$/mg,
       endpoint: 'https://open.spotify.com/oembed',
-      iframe: { height: 152, width: '100%' },
+      iframe: { height: 152, width: 500 },
     }
   }
 
