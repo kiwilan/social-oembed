@@ -5,7 +5,7 @@
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/social-oembed.png">
       <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/social-oembed.png">
-      <img alt="Social oEmbed" src="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/social-oembed.png" width="100%" height="90" style="max-width: 100%;object-fit: contain">
+       <img alt="Social oEmbed" src="https://raw.githubusercontent.com/kiwilan/social-oembed/main/public/social-oembed.png" width="750" height="150" style="max-width: 100%;">
     </picture>
   </a>
 </p>
@@ -22,6 +22,7 @@
 <p align="center">
   <a href="https://esbuild.github.io"><img src="https://img.shields.io/static/v1?label=esbuild&message=ESM&color=FFCF00&style=flat-square&logo=esbuild&logoColor=ffffff" alt="esbuild"></a>
   <a href="https://gitlab.com/ewilan-riviere/social-oembed/-/pipelines"><img src="https://gitlab.com/ewilan-riviere/social-oembed/badges/main/pipeline.svg" alt="Pipeline"></a>
+  <a href="https://github.com/kiwilan/social-oembed/actions/workflows/CI.yml"><img src="https://github.com/kiwilan/social-oembed/actions/workflows/CI.yml/badge.svg" alt="CI"></a>
 </p>
 
 ------
