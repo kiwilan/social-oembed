@@ -33,7 +33,7 @@
     "check:types": "tsc --noEmit",
     "config": "node build.js",
     "dev": "npm run config && tsx watch src .env",
-    "build": "rimraf build && npm run config && tsx esbuild.ts",
+    "build": "rimraf build && npm run config && tsx esbuild.ts && npm run check:types",
     "start": "npm run build && node build/index.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
