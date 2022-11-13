@@ -1,6 +1,6 @@
 import glob from 'tiny-glob'
 import { build } from 'esbuild'
-// import esbuildPluginPino from 'esbuild-plugin-pino'
+import esbuildPluginPino from 'esbuild-plugin-pino'
 
 const config = async () => {
   const entryPoints = await glob('src/**/*.ts')
@@ -19,7 +19,17 @@ const config = async () => {
     },
     outExtension: { '.js': '.mjs' },
     sourcemap: false,
-    // plugins: [esbuildPluginPino({ transports: ['pino-pretty'] })]
+    banner: {
+      js: `
+import { createRequire } from 'module';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const require = createRequire(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+`,
+    },
+    plugins: [esbuildPluginPino({ transports: ['pino-pretty'] })]
   })
 }
 config()
