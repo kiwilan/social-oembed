@@ -42,6 +42,8 @@ With oEmbed, it's really complicated, each social network have their own API, wi
 
 **: to get Instagram or Facebook data, with iframely or with Meta API, you have to register your application on Meta, with many validations. Social oEmbed offer another solution without any key from Meta.*
 
+You could check the React [demo](https://social-oembed-react.netlify.app) app to see how it works.
+
 ## Features
 
 - OpenGraph
