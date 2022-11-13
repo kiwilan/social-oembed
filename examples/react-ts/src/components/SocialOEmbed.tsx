@@ -21,8 +21,11 @@ const SocialOEmbed = (props: {
   const [openGraph, setOpenGraph] = useState<OpenGraphData>({})
 
   const fetchData = async (url: string, oembed?: boolean, dark = false) => {
-    const endpoint = 'http://localhost:3000'
-    // const endpoint = 'https://social-oembed.git-projects.xyz'
+    const endpoint =
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      (import.meta.env.VITE_SOCIAL_OEMBED_API as string) ??
+      'https://social-oembed.git-projects.xyz'
     const api = `${endpoint}/api`
 
     const params = new URLSearchParams()
