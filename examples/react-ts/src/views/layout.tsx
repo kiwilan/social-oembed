@@ -32,7 +32,7 @@ const layout = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 justify-between">
             <div className="flex">
-              <div className="flex flex-shrink-0 items-center">
+              <Link to="/" className="flex flex-shrink-0 items-center">
                 <img
                   className="block h-8 w-auto lg:hidden"
                   src="/social-oembed-logo.svg"
@@ -43,7 +43,7 @@ const layout = () => {
                   src="/social-oembed-logo.svg"
                   alt="Your Company"
                 />
-              </div>
+              </Link>
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                 {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
                 {navItems.map((item) => (
