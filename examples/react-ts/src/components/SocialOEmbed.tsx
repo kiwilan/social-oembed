@@ -13,10 +13,14 @@ interface OpenGraphData {
   embedUrl?: string
 }
 
-const SocialOEmbed = (props: { url: string; oembed?: boolean }) => {
+const SocialOEmbed = (props: {
+  url: string
+  oembed?: boolean
+  dark?: boolean
+}) => {
   const [openGraph, setOpenGraph] = useState<OpenGraphData>({})
 
-  const fetchData = async (url: string, oembed?: boolean) => {
+  const fetchData = async (url: string, oembed?: boolean, dark = false) => {
     const endpoint = 'http://localhost:3000'
     // const endpoint = 'https://social-oembed.git-projects.xyz'
     const api = `${endpoint}/api`
@@ -24,9 +28,9 @@ const SocialOEmbed = (props: { url: string; oembed?: boolean }) => {
     const params = new URLSearchParams()
     params.append('url', url)
     params.append('format', oembed ? 'oembed' : 'opengraph')
-    params.append('dark', 'true')
+    params.append('dark', dark ? 'true' : 'false')
     params.append('hide_media', 'true')
-    params.append('theme', 'dark')
+    params.append('theme', dark ? 'dark' : 'light')
     const res = await fetch(`${api}?${params.toString()}`)
     const body = await res.json()
 
@@ -34,7 +38,7 @@ const SocialOEmbed = (props: { url: string; oembed?: boolean }) => {
   }
 
   useEffect(() => {
-    fetchData(props.url, props.oembed).then((data) => {
+    fetchData(props.url, props.oembed, props.dark ?? false).then((data) => {
       setOpenGraph(data)
     })
   }, [])
@@ -42,7 +46,10 @@ const SocialOEmbed = (props: { url: string; oembed?: boolean }) => {
   return !openGraph ? (
     <div>Loading...</div>
   ) : (
-    <div dangerouslySetInnerHTML={{ __html: openGraph.render ?? '' }}></div>
+    <div
+      className="not-prose"
+      dangerouslySetInnerHTML={{ __html: openGraph.render ?? '' }}
+    ></div>
   )
 }
 
