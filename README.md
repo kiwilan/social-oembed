@@ -121,7 +121,9 @@ You could check the React [demo](https://social-oembed-react.netlify.app) app to
 - [ ] social providers like <https://iframely.com/links>
 - [ ] meta crawler like <https://debug.iframely.com> and <https://iframely.com/embed>
 - [ ] Use Mongo to cache data
+- [ ] Use [prisma](https://www.prisma.io/)
 - [ ] Use [Bun](https://bun.sh/) when it will be stable
+- [ ] Use [ofetch](https://github.com/unjs/ofetch) instead of `node-fetch`
 
 ## Usage
 
