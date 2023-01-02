@@ -1,5 +1,6 @@
 import * as cheerio from 'cheerio'
-import puppeteer from 'puppeteer'
+import type { PuppeteerLaunchOptions } from 'puppeteer'
+import { launch } from 'puppeteer'
 import type { MetaNode, MetaValues } from '~/types/html'
 import type { FetchResponse } from '~/types/http'
 import type { FetchMeta, QueryOpenGraph } from '~/types/route'
@@ -71,13 +72,13 @@ export default class ParserService {
     console.log(this)
 
     try {
-      const options: puppeteer.PuppeteerLaunchOptions = {
+      const options: PuppeteerLaunchOptions = {
         // args: ['--no-sandbox', '--disable-setuid-sandbox'],
         // headless: true,
         // timeout: 3000,
         // dumpio: true,
       }
-      const browser = await puppeteer.launch(options)
+      const browser = await launch(options)
       const page = await browser.newPage()
       await page.goto(this.url, { waitUntil: 'networkidle2' })
 
