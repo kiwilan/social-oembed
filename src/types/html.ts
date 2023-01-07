@@ -13,4 +13,3 @@ export interface MetaNode {
 
 export interface OpenGraphMeta<T = MetaNode[]> extends IOpenGraphExtends<T> {}
 export interface MetaValues<T = string> extends IOpenGraphExtends<T> {}
-
