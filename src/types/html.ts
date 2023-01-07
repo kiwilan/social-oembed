@@ -1,3 +1,4 @@
+/* eslint-disable eol-last */
 import type { IOpenGraphExtends } from './api'
 
 export interface MetaValue {
@@ -12,5 +13,4 @@ export interface MetaNode {
 }
 
 export interface OpenGraphMeta<T = MetaNode[]> extends IOpenGraphExtends<T> {}
-// eslint-disable-next-line eol-last
 export interface MetaValues<T = string> extends IOpenGraphExtends<T> {}
