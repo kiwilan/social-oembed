@@ -1,3 +1,4 @@
+import React from 'react'
 import type { IApiRouteQuery, OEmbedRenderProps } from '../types'
 
 function OEmbedRender(props: OEmbedRenderProps & {

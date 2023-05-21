@@ -9,8 +9,8 @@ export * from './route'
 export * from './social'
 
 export interface Instance {
-  // name: string
-  // version?: string
+  name: string
+  version?: string
   apiKeyEnabled?: boolean
   instance?: string
   options?: {

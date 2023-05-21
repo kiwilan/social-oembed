@@ -1,3 +1,4 @@
+import React from 'react'
 import type { Social } from '../types'
 import { svg } from './SocialAssets'
 

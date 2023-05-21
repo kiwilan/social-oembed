@@ -1,10 +1,11 @@
+import React from 'react'
 import type { IApiRouteQuery, IOpenGraph, OpenGraphRenderProps } from '../types'
 import SocialIcon from './SocialIcon'
 
-function OpenGraphRender(props: OpenGraphRenderProps & {
-  query: IApiRouteQuery
+function OpenGraphRender(props?: OpenGraphRenderProps & {
+  query?: IApiRouteQuery
 }) {
-  const dark = props.query.dark || false
+  const dark = props?.query?.dark || false
   const borderColor = dark ? '#374151' : '#E5E7EB'
   const backgroundColor = dark ? '#1f2937' : '#F9FAFB'
   const color = dark ? '#f9fafb' : '#111827'
@@ -19,7 +20,7 @@ function OpenGraphRender(props: OpenGraphRenderProps & {
   const fontFamily =
     'font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"'
 
-  const og: IOpenGraph = props.og || {}
+  const og: IOpenGraph = props?.og || {}
   const themeColor = og.themeColor ?? '#ffffff'
 
   const removeHttp = (url?: string) =>

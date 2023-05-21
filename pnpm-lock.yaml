@@ -20,8 +20,8 @@ dependencies:
     specifier: ^5.2.0
     version: 5.2.0
   '@kiwilan/fastify-utils':
-    specifier: ^0.2.11
-    version: 0.2.11
+    specifier: ^0.2.12
+    version: 0.2.12
   '@kiwilan/filesystem':
     specifier: ^0.0.18
     version: 0.0.18
@@ -540,8 +540,8 @@ packages:
       wrap-ansi-cjs: /wrap-ansi@7.0.0
     dev: false
 
-  /@kiwilan/fastify-utils@0.2.11:
-    resolution: {integrity: sha512-0aEchfCcZ7yi8FKPdWddDYXasbOOk+fUkEia4F82apJoi89MtylKP/hxGUik+bwl9co3liMQf3Ia+T3JaE1RPA==}
+  /@kiwilan/fastify-utils@0.2.12:
+    resolution: {integrity: sha512-51cfeh6BJbQcu2Vlgqxy6sv4sVbWNC2S6nI3rnX3S+3M6/xLUBQULcQYF9KHSMmAgMVE2C51pP/zoQRvHjMq8Q==}
     engines: {node: '>=16.0.0', pnpm: '>=8.0.0'}
     dependencies:
       '@fastify/cors': 8.2.1

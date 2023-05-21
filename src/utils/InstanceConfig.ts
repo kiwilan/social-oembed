@@ -13,8 +13,8 @@ export default class InstanceConfig {
     const dotenv = DotEnv.make()
 
     const instance = new InstanceConfig({
-      // name: Package.name,
-      // version: Package.version,
+      name: 'Social oEmbed API',
+      version: '1.0.0',
       apiKeyEnabled: dotenv.config.API_KEY_ENABLED,
       instance: dotenv.config.API_URL,
       options: {

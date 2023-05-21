@@ -1,4 +1,4 @@
-import { renderToString } from 'react-dom/server'
+import ReactDOMServer from 'react-dom/server'
 import OpenGraphRender from '~/renders/OpenGraphRender'
 import OEmbedRender from '~/renders/OEmbedRender'
 import type { IApiRouteQuery, OEmbedRenderProps, OpenGraphRenderProps } from '~/types'
@@ -29,6 +29,6 @@ export default class RenderService {
   }
 
   private toString(component: any, ...props: any): string {
-    return renderToString(component(...props))
+    return ReactDOMServer.renderToString(component(...props))
   }
 }
