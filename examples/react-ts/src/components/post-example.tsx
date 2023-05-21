@@ -1,6 +1,6 @@
 import SocialOEmbed from './SocialOEmbed'
 
-const PostExample = () => {
+function PostExample() {
   return (
     <div className="relative overflow-hidden bg-white py-16">
       <div className="hidden lg:absolute lg:inset-y-0 lg:block lg:h-full lg:w-full lg:[overflow-anchor:none]">

@@ -1,4 +1,4 @@
-const SocialTiktok = () => {
+function SocialTiktok() {
   return (
     <div>
       <div>

@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
-import { Transition } from 'react-transition-group'
 
-const layout = () => {
+function layout() {
   const [open, setOpen] = useState(false)
 
   const duration = 300

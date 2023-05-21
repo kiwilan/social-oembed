@@ -4,7 +4,7 @@ interface Book {
   title: string
 }
 
-const Books = () => {
+function Books() {
   const [books, setBooks] = useState<Book[]>([])
 
   useEffect(() => {

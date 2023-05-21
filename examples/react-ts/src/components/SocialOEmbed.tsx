@@ -13,11 +13,11 @@ interface OpenGraphData {
   embedUrl?: string
 }
 
-const SocialOEmbed = (props: {
+function SocialOEmbed(props: {
   url: string
   oembed?: boolean
   dark?: boolean
-}) => {
+}) {
   const [openGraph, setOpenGraph] = useState<OpenGraphData>({})
 
   const fetchData = async (url: string, oembed?: boolean, dark = false) => {

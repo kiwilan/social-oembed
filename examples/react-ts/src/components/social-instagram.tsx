@@ -1,4 +1,4 @@
-const SocialInstagram = () => {
+function SocialInstagram() {
   return (
     <div
       style={{
