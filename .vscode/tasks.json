@@ -4,28 +4,48 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "install",
+      "label": "NPM install",
       "type": "shell",
       "command": "pnpm i",
-      "problemMatcher": []
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "revealProblems": "onProblem",
+        "close": true
+      }
     },
     {
-      "label": "build",
-      "type": "shell",
-      "command": "pnpm build",
-      "problemMatcher": []
-    },
-    {
-      "label": "lint:fix",
-      "type": "shell",
-      "command": "pnpm lint:fix",
-      "problemMatcher": []
-    },
-    {
-      "label": "dev",
+      "label": "NPM dev",
       "type": "shell",
       "command": "pnpm dev",
-      "problemMatcher": []
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "revealProblems": "onProblem",
+        "close": true
+      }
+    },
+    {
+      "label": "NPM update",
+      "type": "shell",
+      "command": "pnpm update --latest",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "revealProblems": "onProblem",
+        "close": true
+      }
+    },
+    {
+      "label": "NPM build",
+      "type": "shell",
+      "command": "pnpm build",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "revealProblems": "onProblem",
+        "close": true
+      }
     }
   ]
 }

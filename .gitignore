@@ -5,3 +5,13 @@ dist
 src/package.json
 src/providers/.DS_Store
 .DS_Store
+key
+.fastify
+
+src/metadata.json
+
+/Users/ewilan/Workspace/fastify-template/.fastify
+
+/.fastify
+
+/src/dotenv.d.ts

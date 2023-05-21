@@ -1,4 +1,3 @@
-import Package from '../package.json'
 import { route } from './Route'
 import DotEnv from '~/utils/DotEnv'
 import type { Instance } from '~/types'
@@ -14,8 +13,8 @@ export default class InstanceConfig {
     const dotenv = DotEnv.make()
 
     const instance = new InstanceConfig({
-      name: Package.name,
-      version: Package.version,
+      // name: Package.name,
+      // version: Package.version,
       apiKeyEnabled: dotenv.config.API_KEY_ENABLED,
       instance: dotenv.config.API_URL,
       options: {

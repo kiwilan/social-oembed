@@ -1,39 +1,39 @@
 // import type { FastifyInstance, FastifySchema } from 'fastify'
 // import { Type } from '@sinclair/typebox'
-// import type { Instance } from '~/types'
-// import InstanceConfig from '~/utils/InstanceConfig'
+// import type { ApiResponseMeta } from '~/types/route'
+// import ApiService from '~/services/ApiService'
 // import { getRoute } from '~/utils/Route'
 
 import { Router } from '@kiwilan/fastify-utils'
 import { metaRoutes } from '~/services'
 
-// async function instanceRoute(fastify: FastifyInstance) {
+// async function apiRoute(fastify: FastifyInstance) {
 //   const schema: FastifySchema = {
 //     response: {
 //       200: {
-//         data: Type.Unsafe<Instance>(),
+//         data: Type.Any(), // TODO type data
+//         meta: Type.Unsafe<ApiResponseMeta>()
 //       }
 //     }
 //   }
 
-//   const instance = InstanceConfig.make()
-
 //   fastify.route({
 //     method: 'GET',
-//     url: getRoute('/instance'),
+//     url: getRoute('/api'),
 //     schema,
-//     async handler() {
-//       return {
-//         data: instance.config,
-//       }
+//     async handler(req) {
+//       const api = ApiService.make(req)
+//       const response = api.get()
+
+//       return response
 //     },
 //   })
 // }
 
-// export default instanceRoute
+// export default apiRoute
 
 export default Router.newRoute({
-  endpoint: '/instance',
+  endpoint: '/api',
   action: async () => {
     return {
       meta: metaRoutes()

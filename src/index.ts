@@ -1,9 +1,7 @@
-import Fastify from 'fastify'
-import { logger, start } from '~/config'
+import { Server } from '@kiwilan/fastify-utils'
 
-const fastify = Fastify({
-  logger,
-  ignoreTrailingSlash: true,
+Server.run({
+  register: async (fastify) => {
+    console.log(dotenv)
+  }
 })
-
-start(fastify)

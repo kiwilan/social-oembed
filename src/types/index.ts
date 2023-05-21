@@ -1,8 +1,16 @@
 import type { ApiQueryFormat, FetchMeta } from './route'
 
+export * from './api'
+export * from './dotenv'
+export * from './html'
+export * from './http'
+export * from './oembed'
+export * from './route'
+export * from './social'
+
 export interface Instance {
-  name: string
-  version?: string
+  // name: string
+  // version?: string
   apiKeyEnabled?: boolean
   instance?: string
   options?: {

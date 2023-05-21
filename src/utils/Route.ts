@@ -5,18 +5,18 @@ import DotEnv from '~/utils/DotEnv'
 /**
  * Check if current `object` is `Route`
  */
-const isRoute = (object: unknown): object is Route => {
+function isRoute(object: unknown): object is Route {
   return Object.prototype.hasOwnProperty.call(object, 'endpoint')
 }
 
-export const getRoute = (endpoint: Endpoint): Endpoint => {
+export function getRoute(endpoint: Endpoint): Endpoint {
   return endpoint
 }
 
 /**
  * Create an url from `Endpoint` or `Route`
  */
-export const route = (route: Endpoint | Route): string => {
+export function route(route: Endpoint | Route): string {
   let current: Route
   if (!isRoute(route))
     current = { endpoint: route }
@@ -48,7 +48,7 @@ export const route = (route: Endpoint | Route): string => {
 /**
  * Create a `Route` from `Request`
  */
-export const routeBuilder = (req: FastifyRequest): Route => {
+export function routeBuilder(req: FastifyRequest): Route {
   // const dotenv = DotEnv.make()
   // const baseURL = dotenv.config.API_URL
   // const url = req.url.replace(baseURL, '').replace(/\/$/, '')

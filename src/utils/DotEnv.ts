@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'node:fs'
 import type { IDotEnvFormat, IDotEnvRaw, LogLevel, NodeEnv } from '~/types/dotenv'
 
 export default class Dotenv {

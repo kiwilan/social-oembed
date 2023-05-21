@@ -1,7 +1,7 @@
 import { svg } from './SocialAssets'
-import type { Social } from '~/types/social'
+import type { Social } from '~/types'
 
-const SocialIcon = (props: { social?: Social; color?: string }) => {
+function SocialIcon(props: { social?: Social; color?: string }) {
   let social = props.social
   if (!social) {
     //

@@ -25,9 +25,9 @@
   <a href="https://github.com/kiwilan/social-oembed/actions/workflows/CI.yml"><img src="https://github.com/kiwilan/social-oembed/actions/workflows/CI.yml/badge.svg" alt="CI"></a>
 </p>
 
-------
+---
 
-> **Warning**  
+> **Warning**
 > In early development, not stable.
 
 ## Why ?
@@ -36,11 +36,11 @@
 
 With OpenGraph, from JavaScript application, on client side, you can't crawl website to extract metadata, you have to call an API to get these data, some services offer this API, but mostly aren't open source. About these services, you can find [opengraph.io](https://www.opengraph.io/) (free with API limit requests) or [iframely](https://iframely.com/) (with own hosted solution).
 
-With oEmbed, it's really complicated, each social network have their own API, with some limitations, some services offer to get these data but you have to pay for it, and it's really expensive ([smashballoon](https://smashballoon.com/), [embedsocial](https://embedsocial.com/)...). Only [iframely](https://iframely.com/) offer a free plan with some limitations, with own hosted, but with some limitations with Instagram or Facebook cause by [Meta](https://www.nosto.com/blog/instagram-api-limit/)*.
+With oEmbed, it's really complicated, each social network have their own API, with some limitations, some services offer to get these data but you have to pay for it, and it's really expensive ([smashballoon](https://smashballoon.com/), [embedsocial](https://embedsocial.com/)...). Only [iframely](https://iframely.com/) offer a free plan with some limitations, with own hosted, but with some limitations with Instagram or Facebook cause by [Meta](https://www.nosto.com/blog/instagram-api-limit/)\*.
 
 **This project is an attempt to offer a free (with own hosted solution) and open source API to get OpenGraph and oEmbed data.**
 
-**: to get Instagram or Facebook data, with iframely or with Meta API, you have to register your application on Meta, with many validations. Social oEmbed offer another solution without any key from Meta.*
+\*_: to get Instagram or Facebook data, with iframely or with Meta API, you have to register your application on Meta, with many validations. Social oEmbed offer another solution without any key from Meta._
 
 You could check the React [demo](https://social-oembed-react.netlify.app) app to see how it works.
 

@@ -1,0 +1,4 @@
+{
+  "$schema": "./.fastify/config.schema.json",
+  "dotenv": {}
+}

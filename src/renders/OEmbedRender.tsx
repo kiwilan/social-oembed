@@ -1,12 +1,8 @@
-import { useState } from 'react'
-import type { IApiRouteQuery } from '~/types/route'
-import type { OEmbedRenderProps } from '~/types/social'
+import type { IApiRouteQuery, OEmbedRenderProps } from '~/types'
 
-const OEmbedRender = (
-  props: OEmbedRenderProps & {
-    query: IApiRouteQuery
-  }
-) => {
+function OEmbedRender(props: OEmbedRenderProps & {
+  query: IApiRouteQuery
+}) {
   const module = props.provider?.module
 
   const heightProvider = module?.iframe?.height?.toString()
