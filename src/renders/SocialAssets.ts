@@ -1,4 +1,4 @@
-import type { ISocial } from '~/types/social'
+import type { ISocial } from '~/types'
 
 const colors: ISocial<string> = {
   dailymotion: '#0D0D0D',

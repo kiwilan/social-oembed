@@ -5,7 +5,7 @@
 // import { getRoute } from '~/utils/Route'
 
 import { Router } from '@kiwilan/fastify-utils'
-import { metaRoutes } from '~/services'
+import ApiService from '~/services/ApiService'
 
 // async function apiRoute(fastify: FastifyInstance) {
 //   const schema: FastifySchema = {
@@ -22,10 +22,7 @@ import { metaRoutes } from '~/services'
 //     url: getRoute('/api'),
 //     schema,
 //     async handler(req) {
-//       const api = ApiService.make(req)
-//       const response = api.get()
 
-//       return response
 //     },
 //   })
 // }
@@ -34,9 +31,10 @@ import { metaRoutes } from '~/services'
 
 export default Router.newRoute({
   endpoint: '/api',
-  action: async () => {
-    return {
-      meta: metaRoutes()
-    }
+  action: async (req) => {
+    const api = ApiService.make(req)
+    const response = api.get()
+
+    return response
   }
 })

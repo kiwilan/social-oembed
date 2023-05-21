@@ -1,8 +1,7 @@
 import { renderToString } from 'react-dom/server'
 import OpenGraphRender from '~/renders/OpenGraphRender'
 import OEmbedRender from '~/renders/OEmbedRender'
-import type { IApiRouteQuery } from '~/types/route'
-import type { OEmbedRenderProps, OpenGraphRenderProps } from '~/types/social'
+import type { IApiRouteQuery, OEmbedRenderProps, OpenGraphRenderProps } from '~/types'
 
 export default class RenderService {
   protected constructor(

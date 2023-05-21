@@ -1,5 +1,5 @@
+import type { Social } from '../types'
 import { svg } from './SocialAssets'
-import type { Social } from '~/types'
 
 function SocialIcon(props: { social?: Social; color?: string }) {
   let social = props.social
@@ -27,17 +27,18 @@ function SocialIcon(props: { social?: Social; color?: string }) {
     return iconHtml
   }
 
-  return props.social && props.social !== 'unknown' ? (
-    <div
-      dangerouslySetInnerHTML={{ __html: getIcon(social) }}
-      style={{
-        width: '1.25rem',
-        height: '1.25rem',
-        margin: 'auto 0',
-        color: props.color ?? 'inherit',
-      }}
-    ></div>
-  ) : null
+  if (props.social === 'unknown' || props.social === undefined)
+    return null
+
+  return <div
+    dangerouslySetInnerHTML={{ __html: getIcon(social) }}
+    style={{
+      width: '1.25rem',
+      height: '1.25rem',
+      margin: 'auto 0',
+      color: props.color ?? 'inherit',
+    }}
+  ></div>
 }
 
 export default SocialIcon

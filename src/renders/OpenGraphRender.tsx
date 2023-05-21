@@ -1,13 +1,9 @@
+import type { IApiRouteQuery, IOpenGraph, OpenGraphRenderProps } from '../types'
 import SocialIcon from './SocialIcon'
-import type { OpenGraphRenderProps } from '~/types/social'
-import type { IOpenGraph } from '~/types/api'
-import type { IApiRouteQuery } from '~/types/route'
 
-const OpenGraphRender = (
-  props: OpenGraphRenderProps & {
-    query: IApiRouteQuery
-  }
-) => {
+function OpenGraphRender(props: OpenGraphRenderProps & {
+  query: IApiRouteQuery
+}) {
   const dark = props.query.dark || false
   const borderColor = dark ? '#374151' : '#E5E7EB'
   const backgroundColor = dark ? '#1f2937' : '#F9FAFB'

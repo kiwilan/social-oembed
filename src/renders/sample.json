@@ -82,10 +82,7 @@
     "profile": "https://vimeo.com/operagaller",
     "url": "https://vimeo.com/600970110",
     "embed": "https://player.vimeo.com/video/600970110?h=f3f6997aba",
-    "others": [
-      "https://vimeo.com/135419730",
-      "https://vimeo.com/274833676"
-    ]
+    "others": ["https://vimeo.com/135419730", "https://vimeo.com/274833676"]
   },
   "youtube": {
     "label": "Les Quatre Saisons de Antonio Vivaldi",

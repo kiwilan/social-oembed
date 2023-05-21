@@ -1,4 +1,4 @@
-import type { IApiRouteQuery, OEmbedRenderProps } from '~/types'
+import type { IApiRouteQuery, OEmbedRenderProps } from '../types'
 
 function OEmbedRender(props: OEmbedRenderProps & {
   query: IApiRouteQuery
@@ -20,9 +20,8 @@ function OEmbedRender(props: OEmbedRenderProps & {
     width: widthQuery || widthProvider,
     height: heigthQuery || heightProvider,
     title: props.model?.title,
-    allow: `fullscreen;encrypted-media;picture-in-picture;autoplay; ${
-      props.query.is_mobile ? allowMobile : ''
-    }`,
+    allow: `fullscreen;encrypted-media;picture-in-picture;autoplay; ${props.query.is_mobile ? allowMobile : ''
+      }`,
   }
 
   return (
