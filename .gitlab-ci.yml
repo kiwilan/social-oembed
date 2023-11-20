@@ -30,6 +30,6 @@ deploy-job:
       /home/$SSH_USER/.nvm/versions/node/v$NODE_VERSION/bin/pnpm i &&
       /home/$SSH_USER/.nvm/versions/node/v$NODE_VERSION/bin/pnpm build &&
       pm2 restart $PM2 &&
-      notify discord '$CI_PROJECT_TITLE deployed'"
+      notifier discord '$CI_PROJECT_TITLE deployed'"
   only:
     - main
