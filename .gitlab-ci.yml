@@ -25,10 +25,10 @@ deploy-job:
   script:
     - ssh -p $SSH_PORT $SSH_USER@$SSH_IP "
       . ~/.zshrc &&
-      cd /home/ewilan/www/$CI_PROJECT_NAME &&
+      cd /home/$SSH_USER/www/$CI_PROJECT_NAME &&
       git pull &&
-      /home/ewilan/.nvm/versions/node/v$NODE_VERSION/bin/pnpm i &&
-      /home/ewilan/.nvm/versions/node/v$NODE_VERSION/bin/pnpm build &&
+      /home/$SSH_USER/.nvm/versions/node/v$NODE_VERSION/bin/pnpm i &&
+      /home/$SSH_USER/.nvm/versions/node/v$NODE_VERSION/bin/pnpm build &&
       pm2 restart $PM2 &&
       notify discord '$CI_PROJECT_TITLE deployed'"
   only:
