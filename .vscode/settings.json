@@ -6,7 +6,7 @@
     "editor.formatOnSave": false
   },
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "eslint.validate": ["javascript", "js", "typescript"],
   "typescript.tsdk": "node_modules/typescript/lib",
