@@ -1,5 +1,8 @@
 # **Social oEmbed** <!-- omit in toc -->
 
+> [!IMPORTANT]
+> Social oEmbed is now deprecated, you can use [iframely](https://iframely.com/) with [self-hosted solution](https://iframely.com/docs/host#docker).
+
 <p align="center">
   <a href="https://github.com/kiwilan/social-oembed" target="_blank">
     <picture>
@@ -26,9 +29,6 @@
 </p>
 
 ---
-
-> **Warning**
-> In early development, not stable.
 
 ## Why ?
 
